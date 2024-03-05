@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>Registration</h2>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Get Started Section ======= -->
+<section id="get-started" class="get-started section-bg">
+  <div class="container">
+
+      <div class="col-lg-8 m-auto" data-aos="fade">
+        <form class="php-email-form">
+          <div class="row gy-3">
+
+            <div class="col-md-6">
+              <input type="text" id="firstName" class="form-control" placeholder="FirstName" required>
+            </div>
+            <div class="col-md-6">
+                <input type="text" id="lastName" class="form-control" placeholder="LastName" required>
+            </div>
+
+            <div class="col-md-6">
+              <input type="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="col-md-6">
+               <select class="custom-select form-control" id="genderId" required asp-items="@(new SelectList(@ViewBag.Gender,  "Id", "Name" ))"></select>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="phoneNumber" placeholder="PhoneNumber" required>
+            </div>
+        
+            <div class="col-md-6">
+                 <input type="text" class="form-control" id="userName" placeholder="UserName" required>
+            </div>
+            <div class="col-md-6">
+               <input type="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <div class="col-md-6">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword" required>
+            </div>
+
+
+            <div class="col-md-12 text-center">
+                        <button type="submit" id="submit_btn" onclick="register()">Submit</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+  </div>
+
+</section> 
+<!-- End Get Started Section -->

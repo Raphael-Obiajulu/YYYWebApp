@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Y.Y.F Web App/.vs/ProjectEvaluation
+/Y.Y.F Web App/.vs/Y.Y.F Web App/FileContentIndex
+/Y.Y.F Web App/.vs/Y.Y.F Web App/v17
+/Y.Y.F Web App/Core/bin/Debug/net8.0
+/Y.Y.F Web App/Core/obj
+/Y.Y.F Web App/Logic/bin/Debug/net8.0
+/Y.Y.F Web App/Logic/obj
+/Y.Y.F Web App/Y.Y.F Web App/bin/Debug/net8.0
+/Y.Y.F Web App/Y.Y.F Web App/obj
+/.vs
+/Y.Y.F Web App/.vs/Y.Y.F Web App/DesignTimeBuild
