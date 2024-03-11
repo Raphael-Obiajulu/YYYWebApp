@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Core.ViewModels.UpComingvents>
+@{
+    ViewData["Title"] = "UpComingEvents";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>UpComingEvents</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item active">UpComingEvents</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div  style="float: right">
+       @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button>
+    </div>
+
+
+    <section class="section" style="">
+        <div class="row" style="margin-top:70px;">
+            <div class="col-lg-14">
+                <div class="card">
+                        @if (Model !=null && Model.Count () > 0)
+                        {
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                        <th>S/NO</th>
+                                        <th>EventTitle</th>
+                                        <th>EventDate</th>
+                                        <th>EventTime</th>
+                                        <th>EventDetails</th>
+                                        <th>EventImage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var upComingvents in Model)
+                                    {
+                                        <tr>
+                                            <td>@upComingvents.Id</td>
+                                            <td>@upComingvents.EventTitle</td>
+                                            <td>@upComingvents.EventDate</td>
+                                            <td>@upComingvents?.EventTime</td>
+                                            <td>@upComingvents.EventDetails</td>
+                                            <td>@upComingvents?.EventImage</td>
+                                            <td>
+                                                <a asp-controller="Admin" asp-action="Edit" class="btn btn-primary">Edit</a>
+                                                <a asp-controller="Admin" asp-action="Delete" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>              
+                            </div>
+                        }
+                        else
+                        {
+                            <p>NO DATA FOUND</p>
+                        }
+                </div>
+
+            </div>
+        </div>
+
+       <!-- -- The Modal -->
+        <div class="modal fade" id="profileModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center bg-primary text-white">
+                        <h5 class="modal-title" id="profileModalLabel">Add Upcoming Events</h5>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputName">Event Title</label>
+                                    <input type="text" class="form-control" id="eventTitle" placeholder="Enter Event Title">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail">Event Date</label>
+                                    <input type="date" class="form-control" id="eventDate" placeholder="Enter  Event Date">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputPhone">Event Time</label>
+                                    <input type="time" class="form-control" id="eventTime" placeholder="Enter  Event Time">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputBio">Event Details</label>
+                                    <input type="text" class="form-control" id="eventDetails" placeholder="Enter Event Details">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputBio">Event Image</label>
+                                    <input type="file" class="form-control" id="eventImage" placeholder="Enter Event Image">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary offset-4" onclick="(CreateEvents)">Submit</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

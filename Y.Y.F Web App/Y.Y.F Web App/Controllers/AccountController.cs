@@ -96,6 +96,18 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Network failure" });
         }
 
+        public async Task<IActionResult> LogOut()
+        {
+            try
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+        }
 
     }
 }

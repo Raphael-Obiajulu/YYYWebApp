@@ -91,3 +91,97 @@ function login() {
         }
     });
 }
+
+function CreateEvents() {
+    debugger;
+    var defaultBtnValue = $('#submit_btn').html();
+    $('#submit_btn').html("Please wait...");
+    $('#submit_btn').attr("disabled", true);
+
+    var data = {};
+    data.eventTitle = $('#eventTitle').val();
+    data.eventDate = $('#eventDate').val();
+    data.eventTime = $('#eventTime').val();
+    data.eventDetails = $('#eventDetails').val();
+    //data.eventImage = $('#eventImage').val();
+    var base64 = document.getElementById("eventImage").files;
+
+    if (data.eventTitle != "" && data.eventDate != "" && data.eventTime != "" && data.eventDetails != "") {
+        const reader = new FileReader();
+        reader.readAsDataURL(base64[0]);
+        reader.onload = function () {
+            base64 = reader.result;
+        let userDetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/CreateEvent',
+            dataType: 'json',
+            data:
+            {
+                userDetails: userDetails,
+                base64: base64
+            },
+            success: function (result) {
+                debugger;
+                if (!result.isError) {
+                    var url = '/Admin/UpComingEvents';
+                    successAlertWithRedirect(result.msg, url);
+                    $('#submit_btn').html(defaultBtnValue);
+                }
+                else {
+                    $('#submit_btn').html(defaultBtnValue);
+                    $('#submit_btn').attr("disabled", false);
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                $('#submit_btn').html(defaultBtnValue);
+                $('#submit_btn').attr("disabled", false);
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    } else {
+        $('#submit_btn').html(defaultBtnValue);
+        $('#submit_btn').attr("disabled", false);
+        errorAlert("Please fill the form Correctly");
+    }
+
+
+    const reader = new FileReader();
+    reader.readAsDataURL(validId[0]);
+    reader.onload = function () {
+        validId = reader.result;
+        let userDetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Account/StaffRegistration',
+            dataType: 'json',
+            data:
+            {
+                userDetails: userDetails,
+                staffPosition: StaffPosition,
+                appLetter: appLetter,
+                validId: validId
+            },
+            success: function (result) {
+                debugger;
+                if (!result.isError) {
+                    var url = '/Account/Login';
+                    successAlertWithRedirect(result.msg, url);
+                    $('#submit_btn').html(defaultBtnValue);
+                }
+                else {
+                    $('#submit_btn').html(defaultBtnValue);
+                    $('#submit_btn').attr("disabled", false);
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                $('#submit_btn').html(defaultBtnValue);
+                $('#submit_btn').attr("disabled", false);
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            },
+        })
+
+    }
+}
