@@ -22,35 +22,34 @@
           <div class="row gy-3">
 
             <div class="col-md-6">
-              <input type="text" id="firstName" class="form-control" placeholder="FirstName" required>
+              <input type="text" id="firstName" class="form-control" placeholder="FirstName" >
             </div>
             <div class="col-md-6">
-                <input type="text" id="lastName" class="form-control" placeholder="LastName" required>
+                <input type="text" id="lastName" class="form-control" placeholder="LastName" >
             </div>
 
             <div class="col-md-6">
-              <input type="email" class="form-control" id="email" placeholder="Email" required>
+              <input type="email" class="form-control" id="email" placeholder="Email" >
             </div>
             <div class="col-md-6">
                <select class="custom-select form-control" id="genderId" required asp-items="@(new SelectList(@ViewBag.Gender,  "Id", "Name" ))"></select>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" id="phoneNumber" placeholder="PhoneNumber" required>
+                <input type="text" class="form-control" id="phoneNumber" placeholder="PhoneNumber" >
             </div>
         
             <div class="col-md-6">
-                 <input type="text" class="form-control" id="userName" placeholder="UserName" required>
+                 <input type="text" class="form-control" id="userName" placeholder="UserName" >
             </div>
             <div class="col-md-6">
-               <input type="password" class="form-control" id="password" placeholder="Password" required>
+               <input type="password" class="form-control" id="password" placeholder="Password" >
             </div>
             <div class="col-md-6">
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword" required>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="confirmPassword" >
             </div>
-
 
             <div class="col-md-12 text-center">
-                        <button type="submit" id="submit_btn" onclick="register()">Submit</button>
+                <button class="btn btn-warning" style="color: white;" onclick="register()" type="button"> Register </button>
             </div>
 
           </div>
