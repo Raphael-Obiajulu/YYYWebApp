@@ -1,5 +1,6 @@
 ﻿using Core.DB;
 using Core.Models;
+using Logic.Helpers;
 using Logic.IHelpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +23,15 @@ namespace Y.Y.F_Web_App.Controllers
             {
             return View();
             }
-        public IActionResult UserUpComingEvents()  
-        {
-            return View();
-        }
-        public IActionResult PrayerRequest() 
-        { 
-            return View();
-        }
+            public IActionResult UserUpComingEvents()  
+            {
+            var listofEvents = _userHelper.ListofEvents();
+                return View(listofEvents);
+            }
+            public IActionResult PrayerRequest() 
+            { 
+                return View();
+            }
+
     }
 }

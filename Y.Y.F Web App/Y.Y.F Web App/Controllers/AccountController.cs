@@ -109,5 +109,13 @@ namespace Y.Y.F_Web_App.Controllers
             }
         }
 
+
+        //[HttpPost]
+        //public async Task<IActionResult> UpComingEvents()
+        //{
+        //    // Your method logic here
+        //    return Json(new { success = true });
+        //}
     }
+
 }

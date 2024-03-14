@@ -1,28 +1,53 @@
-﻿@model IEnumerable<Core.ViewModels.UpComingvents>
+﻿@model IEnumerable<Core.ViewModels.UpComingEventViewModel>
 @{
     ViewData["Title"] = "UpComingEvents";
     Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
 }
 
-<div class="container mt-5">
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-lg-6 col-sm-12">
-                <div class="container">
-                    <h2>Stretched Link in Card</h2>
-                    <p>Add the .stretched-link class to a link inside the card, and it will make the whole card clickable (the card will act as a link):</p>
-                    <div class="card" style="width:400px">
-                        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title"> </h4>
-                            <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                            <a href="#" class="btn btn-primary stretched-link">See Profile</a>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>UpComingEvents</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">UpComingEvents</li>
+
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="container mt-10">
+        <div class="container mt-5">
+            <div class="row">
+                @if (Model != null && Model.Count() > 0){
+                    <h2 class="text-center mt-5">UpComingEvents</h2>
+
+                    @foreach (var upComingvents in Model){
+                        <div class="col-lg-6 col-sm-12">
+
+                            <div class="card" style="width:100%">
+                                @if (upComingvents.EventImage != null)
+                                {
+                                    <img class="card-img-top" src="@upComingvents.EventImage" alt="Card image" style="width:100%">
+                                }
+                                else{
+                                    <img class="card-img-top" src="~/assets/img/constructions-1.jpg" alt="Card image" style="width:100%">
+                                }
+                                
+                                <div class="card-body">
+                                    <h4 class="card-title">@upComingvents.EventTitle </h4>
+                                    <div>
+                                        <span>@upComingvents.EventDate </span>
+                                        <span class="float-lg-end">@upComingvents.EventTime </span>
+                                    </div>
+                                    <p class="card-text"> @upComingvents.EventDetails</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
+                    }
+                }
             </div>
-
         </div>
-
     </div>
+</main>

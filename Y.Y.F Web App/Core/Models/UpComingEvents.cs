@@ -9,7 +9,7 @@ namespace Core.Models
     public class UpComingEvents : BaseModel
     {
         public string EventTitle { get; set; }
-        public DateTime EventDate { get; set; }
+        public string EventDate { get; set; }
         public string? EventTime { get; set; }
         public string EventDetails {  get; set; }
 

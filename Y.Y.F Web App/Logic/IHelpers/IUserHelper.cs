@@ -15,5 +15,9 @@ namespace Logic.IHelpers
         ApplicationUser FindById(string Id);
         Task<ApplicationUser> FindByUserNameAsync(string username);
         Task<ApplicationUser> FindUserById(string id);
+        bool CheckEventName(string eventTitle);
+        bool CreateEvent(UpComingEventViewModel upComingEvents, string base64);
+        List<UpComingEventViewModel> ListofEvents();
+        UpComingEvents GetDetails(int id);
     }
 }

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Core.ViewModels.PrayerRequestViewModel>
+@{
+    ViewData["Title"] = "PrayerRequest";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>PrayerRequest</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item active">PrayerRequest</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div style="float: right">
+        @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
+        @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PrayerRequestModal">Add Prayer Request</button> *@
+    </div>
+
+
+    <section class="section" style="">
+        <div class="row" style="margin-top:70px;">
+            <div class="col-lg-14">
+                <div class="card">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/NO</th>
+                                        <th>PrayerRequestTitle</th>
+                                        <th>PrayerRequestDetails</th>
+                                        <th>DateCreated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var PrayerRequest in Model)
+                                    {
+                                        <tr>
+                                            <td>@PrayerRequest.Id</td>
+                                            <td>@PrayerRequest.PrayerRequestTitle</td>
+                                            <td>@PrayerRequest.PrayerRequestDetails</td>
+                                            <td>@PrayerRequest.DateCreated.ToString("D")</td>
+                                            <td>
+                                                <button class="btn btn-primary" onclick="EditPrayerRequest('@PrayerRequest.Id')">Approve Prayer Request</button>
+                                                <button class="btn btn-primary" onclick="DeletePrayerRequest('@PrayerRequest.Id')">Decline Prayer Request</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NO DATA FOUND</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+</main>
+<!-- End #main -->
