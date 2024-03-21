@@ -40,6 +40,16 @@ namespace Y.Y.F_Web_App.Controllers
                 var applicationUserViewModel = JsonConvert.DeserializeObject<ApplicationUserViewModel>(userDetails); 
                 if (applicationUserViewModel != null)
                 {
+                    var checkEmail = _userHelper.FindByEmailAsync(applicationUserViewModel?.Email).Result;
+                    if (checkEmail != null)
+                    {
+                        return Json(new { isError = true, msg = "Email Already Exists" });
+                    }
+                    var checkUserName = _userHelper.FindByUserNameAsync(applicationUserViewModel?.UserName).Result;
+                    if (checkUserName != null)
+                    {
+                        return Json(new { isError = true, msg = "Username Already Exists" });
+                    }
                     if (applicationUserViewModel.GenderId == 0)
                     {
                         return Json(new { isError = true, msg = "Please select a gender" });
@@ -63,11 +73,9 @@ namespace Y.Y.F_Web_App.Controllers
         public IActionResult Login()
         {
             return View();
-
         }
 
         [HttpPost]
-
         public JsonResult Login(string username, string password)
         {
             if (username != null && password  != null)
@@ -93,7 +101,7 @@ namespace Y.Y.F_Web_App.Controllers
                     return Json(new { isError = true, msg = "username or password not found" });
                 }
             }
-            return Json(new { isError = true, msg = "Network failure" });
+            return Json(new { isError = true, msg = "Check UserName and Password" });
         }
 
         public async Task<IActionResult> LogOut()
@@ -109,13 +117,6 @@ namespace Y.Y.F_Web_App.Controllers
             }
         }
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> UpComingEvents()
-        //{
-        //    // Your method logic here
-        //    return Json(new { success = true });
-        //}
     }
 
 }

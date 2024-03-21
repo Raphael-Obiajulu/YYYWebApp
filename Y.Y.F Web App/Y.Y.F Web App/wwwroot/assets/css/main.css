@@ -2286,14 +2286,14 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Blog Sidebar
+# Blog sidebarr
 --------------------------------------------------------------*/
-.blog .sidebar {
+.blog .sidebarr {
   padding: 30px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.blog .sidebar .sidebar-title {
+.blog .sidebarr .sidebarr-title {
   font-size: 20px;
   font-weight: 700;
   padding: 0;
@@ -2301,29 +2301,29 @@ section {
   color: var(--color-secondary);
 }
 
-.blog .sidebar .sidebar-item+.sidebar-item {
+.blog .sidebarr .sidebarr-item+.sidebarr-item {
   margin-top: 40px;
 }
 
-.blog .sidebar .search-form form {
+.blog .sidebarr .search-form form {
   background: #fff;
   border: 1px solid rgba(82, 86, 94, 0.3);
   padding: 3px 10px;
   position: relative;
 }
 
-.blog .sidebar .search-form form input[type=text] {
+.blog .sidebarr .search-form form input[type=text] {
   border: 0;
   padding: 4px;
   border-radius: 4px;
   width: calc(100% - 40px);
 }
 
-.blog .sidebar .search-form form input[type=text]:focus {
+.blog .sidebarr .search-form form input[type=text]:focus {
   outline: none;
 }
 
-.blog .sidebar .search-form form button {
+.blog .sidebarr .search-form form button {
   position: absolute;
   top: 0;
   right: 0;
@@ -2340,86 +2340,86 @@ section {
   line-height: 0;
 }
 
-.blog .sidebar .search-form form button i {
+.blog .sidebarr .search-form form button i {
   line-height: 0;
 }
 
-.blog .sidebar .search-form form button:hover {
+.blog .sidebarr .search-form form button:hover {
   background: rgba(254, 185, 0, 0.8);
 }
 
-.blog .sidebar .categories ul {
+.blog .sidebarr .categories ul {
   list-style: none;
   padding: 0;
 }
 
-.blog .sidebar .categories ul li+li {
+.blog .sidebarr .categories ul li+li {
   padding-top: 10px;
 }
 
-.blog .sidebar .categories ul a {
+.blog .sidebarr .categories ul a {
   color: var(--color-secondary);
   transition: 0.3s;
 }
 
-.blog .sidebar .categories ul a:hover {
+.blog .sidebarr .categories ul a:hover {
   color: var(--color-default);
 }
 
-.blog .sidebar .categories ul a span {
+.blog .sidebarr .categories ul a span {
   padding-left: 5px;
   color: rgba(54, 77, 89, 0.4);
   font-size: 14px;
 }
 
-.blog .sidebar .recent-posts .post-item {
+.blog .sidebarr .recent-posts .post-item {
   display: flex;
 }
 
-.blog .sidebar .recent-posts .post-item+.post-item {
+.blog .sidebarr .recent-posts .post-item+.post-item {
   margin-top: 15px;
 }
 
-.blog .sidebar .recent-posts img {
+.blog .sidebarr .recent-posts img {
   max-width: 80px;
   margin-right: 15px;
 }
 
-.blog .sidebar .recent-posts h4 {
+.blog .sidebarr .recent-posts h4 {
   font-size: 15px;
   font-weight: bold;
 }
 
-.blog .sidebar .recent-posts h4 a {
+.blog .sidebarr .recent-posts h4 a {
   color: var(--color-secondary);
   transition: 0.3s;
 }
 
-.blog .sidebar .recent-posts h4 a:hover {
+.blog .sidebarr .recent-posts h4 a:hover {
   color: var(--color-primary);
 }
 
-.blog .sidebar .recent-posts time {
+.blog .sidebarr .recent-posts time {
   display: block;
   font-style: italic;
   font-size: 14px;
   color: rgba(54, 77, 89, 0.4);
 }
 
-.blog .sidebar .tags {
+.blog .sidebarr .tags {
   margin-bottom: -10px;
 }
 
-.blog .sidebar .tags ul {
+.blog .sidebarr .tags ul {
   list-style: none;
   padding: 0;
 }
 
-.blog .sidebar .tags ul li {
+.blog .sidebarr .tags ul li {
   display: inline-block;
 }
 
-.blog .sidebar .tags ul a {
+.blog .sidebarr .tags ul a {
   color: #838893;
   font-size: 14px;
   padding: 6px 14px;
@@ -2429,13 +2429,13 @@ section {
   transition: 0.3s;
 }
 
-.blog .sidebar .tags ul a:hover {
+.blog .sidebarr .tags ul a:hover {
   color: var(--color-secondary);
   border: 1px solid var(--color-primary);
   background: var(--color-primary);
 }
 
-.blog .sidebar .tags ul a span {
+.blog .sidebarr .tags ul a span {
   padding-left: 5px;
   color: rgba(131, 136, 147, 0.8);
   font-size: 14px;

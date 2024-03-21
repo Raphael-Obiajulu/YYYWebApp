@@ -1,28 +1,20 @@
-﻿@model IEnumerable<Core.ViewModels.PrayerRequestViewModel>
+﻿@model IEnumerable<Core.ViewModels.CommentsViewModel>
 @{
-    ViewData["Title"] = "PrayerRequest";
+    ViewData["Title"] = "Comments";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
-
-
 
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>PrayerRequest</h1>
+        <h1>Comments</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
-                <li class="breadcrumb-item">Home</li>
-                <li class="breadcrumb-item active">PrayerRequest</li>
+                <li class="breadcrumb-item active">Comments</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
-
-    <div style="float: right">
-        @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
-        @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PrayerRequestModal">Add Prayer Request</button> *@
-    </div>
 
 
     <section class="section" style="">
@@ -36,25 +28,23 @@
                                 <thead>
                                     <tr>
                                         <th>S/NO</th>
-                                        <th>PrayerRequestTitle</th>
-                                        <th>PrayerRequestDetails</th>
-                                        <th>DateCreated</th>
+                                        <th> Discussion Title</th>
+                                        <th>Comment</th>
                                         <th>Username</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var PrayerRequest in Model)
+                                    @foreach (var comment in Model)
                                     {
                                         <tr>
-                                            <td>@PrayerRequest.Id</td>
-                                            <td>@PrayerRequest.PrayerRequestTitle</td>
-                                            <td>@PrayerRequest.PrayerRequestDetails</td>
-                                            <td>@PrayerRequest.DateCreated.ToString("D")</td>
-                                            <td>@PrayerRequest.Username</td>
+                                            <td>@comment.Id</td>
+                                            <td>@comment.Discussion?.DiscussionTitle</td>
+                                            <td>@comment.Message</td>
+                                            <td>@comment.UserName</td>
                                             <td class="d-flex">
-                                                <button class="btn btn-success m-1" onclick="ApprovePrayerRequest('@PrayerRequest.Id')">Approve</button>
-                                                <button class="btn btn-danger m-1" onclick="DeclinePrayerRequest('@PrayerRequest.Id')">Decline </button>
+                                                <button class="btn btn-success m-1" onclick="Approvecomment('@comment.Id')">Approve</button>
+                                                <button class="btn btn-danger m-1" onclick="Declinecomment('@comment.Id')">Decline </button>
                                             </td>
                                         </tr>
                                     }

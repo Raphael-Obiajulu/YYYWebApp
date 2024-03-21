@@ -19,5 +19,6 @@ namespace Core.Models
         public virtual ApplicationUser? User { get; set; }
 
         public StatusEnum PrayerRequestStatus  { get; set; }
+       
     }
 }

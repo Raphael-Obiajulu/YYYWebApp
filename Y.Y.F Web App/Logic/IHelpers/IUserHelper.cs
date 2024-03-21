@@ -17,7 +17,27 @@ namespace Logic.IHelpers
         Task<ApplicationUser> FindUserById(string id);
         bool CheckEventName(string eventTitle);
         bool CreateEvent(UpComingEventViewModel upComingEvents, string base64);
-        List<UpComingEventViewModel> ListofEvents();
         UpComingEvents GetDetails(int id);
+        List<PrayerRequestViewModel> ListofPrayerRequest();
+        List<UpComingEventViewModel> ListofEvents();
+        bool AddPrayerRequest(PrayerRequestViewModel prayerRequest, ApplicationUser loggedInUser);
+        List<PrayerRequestViewModel> ApprovedPrayerRequest();
+        List<PrayerRequestViewModel> ListofUsersPrayerRequest(string loggedInUser);
+        bool ApproveRequest(int id);
+        bool DeclineRequest(int id);
+        List<CommentsViewModel> ListofComments();
+        List<DiscussionForumViewModel> ListofDiscussions();
+        bool AddDiscussion(DiscussionForumViewModel discussion, ApplicationUser loggedInUser);
+        bool CreateComment(string message, int id, ApplicationUser loggedInUser);
+        int TotalLikes(int discussionId);
+        DiscussionForumViewModel GetDiscussion(int discussionId);
+        int TotalComments(int discussionId);
+        bool CheckUserLike(string userId);
+        bool AddLike(int id, ApplicationUser loggedInUser);
+        bool CheckRequestStatus(int requestId);
+        PrayerRequestViewModel GetRequest(int id);
+        bool SaveEditedRequest(PrayerRequestViewModel requestDetails, ApplicationUser loggedInUser);
+        //bool ApproveComment(int id);
+        //bool DeclineComment(int id);
     }
 }

@@ -15,6 +15,7 @@ namespace Core.ViewModels
         public int Id { get; set; }
         public string PrayerRequestTitle { get; set; }
         public string PrayerRequestDetails { get; set; }
+        public string Username { get; set; }
         public string UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
 

@@ -17,7 +17,6 @@ namespace Logic.Helpers
     {
         private readonly AppDbContext _context;
         private UserManager<ApplicationUser> _userManager;
-        public static object listofEvents;
 
         public UserHelper(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -104,7 +103,7 @@ namespace Logic.Helpers
 
         public bool CreateEvent(UpComingEventViewModel upComingEvents, string base64)
         {
-            if (upComingEvents != null && base64 !=null) 
+            if (upComingEvents != null ) 
             {
                 var createEvent = new UpComingEvents()
                 {
@@ -153,5 +152,316 @@ namespace Logic.Helpers
             }
             return null;
         }
+
+        public bool AddPrayerRequest(PrayerRequestViewModel prayerRequest, ApplicationUser loggedInUser)
+        {
+            if (prayerRequest != null)
+            {
+                var addPrayerRequest = new PrayerRequest()
+                {
+                    PrayerRequestTitle = prayerRequest?.PrayerRequestTitle,
+                    PrayerRequestDetails = prayerRequest?.PrayerRequestDetails,
+                    DateCreated = DateTime.Now,
+                    Active = true,
+                    Deleted = false,
+                    PrayerRequestStatus = YYFEnums.StatusEnum.Pending,
+                    UserId = loggedInUser.Id,
+                };
+                _context.Add(addPrayerRequest);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public List<PrayerRequestViewModel> ListofPrayerRequest()
+        {
+            var prayerRequestViewModel = new List<PrayerRequestViewModel>();
+            prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted && a.PrayerRequestStatus == YYFEnums.StatusEnum.Pending)
+                .Include(x => x.User)
+            .Select(a => new PrayerRequestViewModel()
+            {
+                PrayerRequestStatus = a.PrayerRequestStatus,
+                PrayerRequestTitle = a.PrayerRequestTitle,
+                PrayerRequestDetails = a.PrayerRequestDetails,
+                DateCreated = a.DateCreated,
+                UserId = a.UserId,
+                Username = a.User.UserName,
+                Id = a.Id,
+               
+
+            }).ToList();
+
+            return prayerRequestViewModel;
+        }
+
+        public List<PrayerRequestViewModel> ListofUsersPrayerRequest(string loggedInUser)
+        {
+            if (loggedInUser != null) 
+            {
+                var prayerRequestViewModel = new List<PrayerRequestViewModel>();
+                prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted && a.UserId == loggedInUser)
+                    .Include(x => x.User)
+                .Select(a => new PrayerRequestViewModel()
+                {
+                    PrayerRequestStatus = a.PrayerRequestStatus,
+                    PrayerRequestTitle = a.PrayerRequestTitle,
+                    PrayerRequestDetails = a.PrayerRequestDetails,
+                    DateCreated = a.DateCreated,
+                    UserId = a.UserId,
+                    Username = a.User.UserName,
+                    Id = a.Id,
+
+                }).ToList();
+
+                return prayerRequestViewModel;
+            }
+
+            return null;
+        }
+        public List<PrayerRequestViewModel> ApprovedPrayerRequest()
+        {
+            var prayerRequestViewModel = new List<PrayerRequestViewModel>();
+            prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted && a.PrayerRequestStatus == YYFEnums.StatusEnum.Approved)
+                .Include(x => x.User)
+            .Select(a => new PrayerRequestViewModel()
+            {
+                PrayerRequestStatus = a.PrayerRequestStatus,
+                PrayerRequestTitle = a.PrayerRequestTitle,
+                PrayerRequestDetails = a.PrayerRequestDetails,
+                DateCreated = a.DateCreated,
+                UserId = a.UserId,
+                Username = a.User.UserName,
+                Id = a.Id,
+
+
+            }).ToList();
+
+            return prayerRequestViewModel;
+        }
+
+        
+        public bool ApproveRequest(int id)
+        {
+            var dd = _context.PrayerRequests.Where(x => x.Id == id && x.Active && x.PrayerRequestStatus == YYFEnums.StatusEnum.Pending).FirstOrDefault();
+            if (dd != null)
+            {
+                dd.PrayerRequestStatus = YYFEnums.StatusEnum.Approved;
+                _context.Update(dd);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        public bool DeclineRequest(int id)
+        {
+            var dd = _context.PrayerRequests.Where(x => x.Id == id && x.Active && x.PrayerRequestStatus == YYFEnums.StatusEnum.Pending).FirstOrDefault();
+            if (dd != null)
+            {
+                dd.PrayerRequestStatus = YYFEnums.StatusEnum.Declined;
+                _context.Update(dd);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public List<CommentsViewModel> ListofComments()
+        {
+            var commentsViewModel = new List<CommentsViewModel>();
+            commentsViewModel = _context.Comments.Where(a => a.Id > 0 && a.CommentStatus == YYFEnums.StatusEnum.Pending)
+                .Include(x => x.User).Include( b => b.Discussion)
+            .Select(a => new CommentsViewModel()
+            {
+                Message = a.Message,
+                UserId = a.UserId,
+                UserName = a.User.UserName,
+                //User = a.User,
+                Discussion = a.Discussion,
+                DiscussionForumId = a.DiscussionForumId,
+                Id = a.Id,
+            }).ToList();
+
+            return commentsViewModel;
+        }
+
+        public List<CommentsViewModel> ListofApprovedComments()
+        {
+            var commentsViewModel = new List<CommentsViewModel>();
+            commentsViewModel = _context.Comments.Where(a => a.Id > 0 && a.CommentStatus == YYFEnums.StatusEnum.Approved)
+                .Include(x => x.User).Include(b => b.Discussion)
+            .Select(a => new CommentsViewModel()
+            {
+                Message = a.Message,
+                UserId = a.UserId,
+                UserName = a.User.UserName,
+                //User = a.User,
+                Discussion = a.Discussion,
+                DiscussionForumId = a.DiscussionForumId,
+                Id = a.Id,
+            }).ToList();
+
+            return commentsViewModel;
+        }
+        public List<DiscussionForumViewModel> ListofDiscussions()
+        {
+            var discussionViewModel = new List<DiscussionForumViewModel>();
+            discussionViewModel = _context.Discussions.Where(a => a.Id > 0 && a.Active && !a.Deleted)
+            .Select(a => new DiscussionForumViewModel()
+            {
+                DiscussionTitle = a.DiscussionTitle,
+                DiscussionDetails = a.DiscussionDetails,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+            }).ToList();
+
+            return discussionViewModel;
+        }
+
+        public bool AddDiscussion(DiscussionForumViewModel discussion, ApplicationUser loggedInUser)
+        {
+            if (discussion != null)
+            {
+                var addDiscussion = new DiscussionForum()
+                {
+                    DiscussionDetails = discussion?.DiscussionDetails,
+                    DiscussionTitle = discussion?.DiscussionTitle,
+                    DateCreated = DateTime.Now,
+                    Active = true,
+                    Deleted = false,
+                    UserId = loggedInUser.Id,
+                };
+                _context.Add(addDiscussion);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool CreateComment(string message, int id, ApplicationUser loggedInUser)
+        {
+            if (message != null && loggedInUser != null)
+            {
+                var addComment = new Comment()
+                {
+                    Message = message,
+                    UserId = loggedInUser.Id,
+                    CommentStatus = YYFEnums.StatusEnum.Pending,
+                    DiscussionForumId = id,
+                };
+                _context.Add(addComment);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public int TotalLikes(int discussionId)
+        {
+            if (discussionId > 0)
+            {
+               return _context.Likes.Where(x => x.DiscussionForumId == discussionId).Count();
+            }
+            return 0;
+        }
+
+        public int TotalComments(int discussionId)
+        {
+            if (discussionId > 0)
+            {
+                return _context.Comments.Where(x => x.DiscussionForumId == discussionId && x.CommentStatus == YYFEnums.StatusEnum.Approved).Count();
+            }
+            return 0;
+        }
+
+        public DiscussionForumViewModel GetDiscussion(int discussionId)
+        {
+            var comments = ListofApprovedComments();
+            var discussionViewModel = new DiscussionForumViewModel();
+            discussionViewModel = _context.Discussions.Where(a => a.Id == discussionId && a.Active && !a.Deleted)
+            .Select(a => new DiscussionForumViewModel()
+            {
+                DiscussionTitle = a.DiscussionTitle,
+                DiscussionDetails = a.DiscussionDetails,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+                Active = a.Active,
+                Comments = comments,
+            }).FirstOrDefault();
+
+            return discussionViewModel;
+        }
+        
+        public bool CheckUserLike(string userId)
+        {
+            var check = _context.Likes.Where(x => x.UserId == userId).FirstOrDefault();
+            if (check != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool AddLike(int id, ApplicationUser loggedInUser)
+        {
+            if (id > 0 && loggedInUser != null)
+            {
+                var addLike = new Like()
+                {
+                    UserId = loggedInUser.Id,
+                    DiscussionForumId = id,
+                };
+                _context.Add(addLike);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckRequestStatus(int requestId)
+        {
+            var check = _context.PrayerRequests.Where(x => x.Id == requestId && 
+            (x.PrayerRequestStatus == YYFEnums.StatusEnum.Approved || x.PrayerRequestStatus == YYFEnums.StatusEnum.Declined)
+            && x.Active).FirstOrDefault();
+            if (check != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public PrayerRequestViewModel GetRequest( int id)
+        {
+            var prayerRequestViewModel = new PrayerRequestViewModel();
+            prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id == id && a.Active && !a.Deleted && a.PrayerRequestStatus == YYFEnums.StatusEnum.Pending)
+            .Select(a => new PrayerRequestViewModel()
+            {
+                PrayerRequestTitle = a.PrayerRequestTitle,
+                PrayerRequestDetails = a.PrayerRequestDetails,
+                Id = a.Id,
+            }).FirstOrDefault();
+
+            return prayerRequestViewModel;
+        }
+        public bool SaveEditedRequest(PrayerRequestViewModel requestDetails, ApplicationUser loggedInUser)
+        {
+            if (requestDetails != null && loggedInUser != null)
+            {
+                var editRequest = _context.PrayerRequests.Where(x => x.Id == requestDetails.Id && x.Active && !x.Deleted).FirstOrDefault();
+                if (editRequest != null)
+                {
+                    editRequest.PrayerRequestTitle = requestDetails.PrayerRequestTitle;
+                    editRequest.PrayerRequestDetails = requestDetails.PrayerRequestDetails;
+                    editRequest.UserId = loggedInUser.Id;
+                    
+                    _context.Update(editRequest);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
     }
 }

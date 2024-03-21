@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Core.ViewModels.DiscussionForumViewModel>
+@{
+    ViewData["Title"] = "CreateDiscussion";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Create Discussion</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">Create Discussion</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div style="float: right">
+        @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#discussionModal">Create Discussion</button>
+    </div>
+
+
+    <section class="section" style="">
+        <div class="row" style="margin-top:70px;">
+            <div class="col-lg-14">
+                <div class="card">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/NO</th>
+                                        <th>DiscussionTitle</th>
+                                        <th>DiscussionDetails</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var CreateDiscussion in Model)
+                                    {
+                                        <tr>
+                                            <td>@CreateDiscussion.Id</td>
+                                            <td>@CreateDiscussion.DiscussionTitle</td>
+                                            <td>@CreateDiscussion.DiscussionDetails.Substring(1, 50)</td>
+                                            <td>
+                                                <a class="btn btn-primary" asp-controller="User" asp-action="Discussion" asp-route-id="@CreateDiscussion.Id">
+                                                    View
+                                                </a>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#discussionEditModal" onclick="EditDiscussion('@CreateDiscussion.Id')"> <i class="bi bi-pencil"></i> </button>
+                                                <button class="btn btn-danger" onclick="DeleteDiscussion('@CreateDiscussion.Id')"><i class="bi bi-trash"></i></button>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NO DATA FOUND</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <!-- -- The Modal -->
+        <div class="modal fade" id="discussionModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center bg-primary text-white">
+                        <h5 class="modal-title">Create Discussion</h5>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputName">Discussion Title</label>
+                                    <input type="text" class="form-control" id="discussionTitle" placeholder="Enter Discussion Title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputBio">Discussion Details</label>
+                                    <textarea cols="5" rows="5" type="text" class="form-control" id="discussionDetails" placeholder="Enter Discussion Full Details"> </textarea>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary offset-4" onclick="CreateDiscussion()">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="discussionEditModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center bg-primary text-white">
+                    <h5 class="modal-title">Edit Discussion</h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="inputName">Discussion Title</label>
+                                <input type="text" class="form-control" id="edit_discussionTitle" placeholder="Enter Discussion Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputBio">Discussion Details</label>
+                                <input type="text" class="form-control" id="edit_discussionDetails" placeholder="Enter Discussion Full Details">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary offset-4" onclick="EditDiscussion()">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- End #main -->

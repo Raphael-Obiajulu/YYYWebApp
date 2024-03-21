@@ -18,5 +18,8 @@ namespace Core.ViewModels
         public DateTime DateCreated { get; set; }
         public bool Active { get; set; }
         public bool Deleted { get; set; }
+        public object PrayerRequests { get; set; }
+        public string PrayerRequestTitle { get; set; }
+        public string PrayerRequestDetails { get; set; }
     }
 }

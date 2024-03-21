@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="~/Y.Y.F_Web_App.styles.css" asp-append-version="true" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    
 
     <link href="~/assetss/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/assetss/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -18,6 +17,7 @@
     <link href="~/assetss/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="~/assetss/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="~/assetss/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="~/css/sweetalert2.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
     <link href="~/assetss/css/style.css" rel="stylesheet">
@@ -324,7 +324,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" asp-controller="Admin" asp-action="UpComingEvents">
                     <i class="bi bi-person"></i>
-                    <span>UpComingEvents</span>
+                    <span>Create Events</span>
                 </a>
             </li>
 
@@ -332,7 +332,28 @@
                 <a class="nav-link collapsed" asp-controller="Admin" asp-action="PrayerRequest">
 
                     <i class="bi bi-person"></i>
-                    <span>PrayerRequest</span>
+                    <span>PrayerRequests</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="User" asp-action="ApprovedPrayerRequest">
+
+                    <i class="bi bi-person"></i>
+                    <span>Approved Prayer Request</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Admin" asp-action="CreateDiscussion">
+
+                    <i class="bi bi-person"></i>
+                    <span>Create Discussion</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Admin" asp-action="Comments">
+
+                    <i class="bi bi-person"></i>
+                    <span>Comments</span>
                 </a>
             </li>
         </ul>
@@ -372,6 +393,7 @@
     <script src="~/assetss/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="~/assetss/vendor/tinymce/tinymce.min.js"></script>
     <script src="~/assetss/vendor/php-email-form/validate.js"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>
     @* <script src="~/js/jquery-3.3.1.min.js"></script>
  *@
     <!-- Template Main JS File -->

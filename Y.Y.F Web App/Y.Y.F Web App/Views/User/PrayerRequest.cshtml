@@ -34,6 +34,8 @@
                                         <th>PrayerRequestTitle</th>
                                         <th>PrayerRequestDetails</th>
                                         <th>DateCreated</th>
+                                        <th>Status</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,8 +47,19 @@
                                             <td>@prayerRequest.PrayerRequestDetails</td>
                                             <td>@prayerRequest.DateCreated.ToString("D")</td>
                                             <td>
-                                                <button class="btn btn-primary" onclick="EditPrayerRequest('@prayerRequest.Id')">Edit Prayer Request</button>
-                                                <button class="btn btn-primary" onclick="DeletePrayerRequest('@prayerRequest.Id')">Delete Prayer Request</button>
+                                                @if (prayerRequest.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Pending)
+                                                {
+                                                    <badge class="badge badge-warning p-2"> Pending </badge>
+                                                }
+                                                else if (prayerRequest.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Approved)
+                                                {
+                                                    <badge class="badge badge-success p-2"> Approved </badge>
+                                                }else  {
+                                                    <badge class="badge badge-danger p-2"> Declined </badge>
+                                                }
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest.Id')"><i class="bi bi-pencil"></i></button>
                                             </td>
                                         </tr>
                                     }
@@ -99,26 +112,37 @@
     </div>
 </div>
 
-<div class="modal fade" id="prayerRequestModal">
+
+<div class="modal fade" id="editprayerRequestModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header text-center bg-primary text-white">
-                <h5 class="modal-title"> Details</h5>
+                <h5 class="modal-title">Edit Prayer Request</h5>
             </div>
+
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="inputBio"> Details</label>
-                                <textarea class="form-control" id="eventDetails" placeholder="Enter Event Details"></textarea>
-                            </div>
+                            <label for="prayerRequestTitle">Prayer Request Title </label>
+                            <input type="text" class="form-control" id="editprayerRequestTitle" placeholder="Edit Prayer Request Title">
+                            <input type="text" class="form-control" id="prayerRequest_Id" hidden value="prayerRequest_Id">
+                        </div>
+                        <div class="form-group">
+                            <label for="prayerRequestDetails">Prayer Request Details</label>
+                            <textarea cols="5" rows="5" class="form-control" id="editprayerRequestDetails" placeholder="Edit Prayer Request Details"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="SaveEditedPrayerRequest()">Submit</button>
+            </div>
         </div>
     </div>
-</div> 
+</div>

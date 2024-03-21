@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240312094119_addTables")]
-    partial class addTables
+    [Migration("20240313113926_addeventDate")]
+    partial class addeventDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,8 +286,9 @@ namespace Core.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EventDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventDetails")
                         .IsRequired()

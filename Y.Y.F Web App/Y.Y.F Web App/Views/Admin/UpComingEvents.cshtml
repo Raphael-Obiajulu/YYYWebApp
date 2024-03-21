@@ -29,48 +29,48 @@
         <div class="row" style="margin-top:70px;">
             <div class="col-lg-14">
                 <div class="card">
-                        @if (Model !=null && Model.Count () > 0)
-                        {
-                            <div class="card-body">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                        <th>S/NO</th>
-                                        <th>EventTitle</th>
-                                        <th>EventDate</th>
-                                        <th>EventTime</th>
-                                        <th>EventDetails</th>
-                                      @*   <th>EventImage</th> *@
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach (var upComingvents in Model)
-                                    {
-                                        <tr>
-                                            <td>@upComingvents.Id</td>
-                                            <td>@upComingvents.EventTitle</td>
-                                            <td>@upComingvents.EventDate</td>
-                                            <td>@upComingvents?.EventTime</td>
-                                            @* <td>@upComingvents.EventDetails</td> *@
-                                            <td>
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#EventDetails" onclick="geteventdetails('@upComingvents.Id')">Details</button>
-                                            </td>
-                                          @*   <td>@upComingvents?.EventImage</td> *@
-                                            <td>
-                                                <button class="btn btn-primary" onclick="Edit('@upComingvents.Id')">Edit Events</button>
-                                                <button class="btn btn-primary" onclick="Delete('@upComingvents.Id')">Delete Events</button>
+                    @if (Model !=null && Model.Count () > 0)
+                    {
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                    <th>S/NO</th>
+                                    <th>EventTitle</th>
+                                    <th>EventDate</th>
+                                    <th>EventTime</th>
+                                    <th>EventDetails</th>
+                                    <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var upComingvents in Model)
+                                {
+                                    <tr>
+                                        <td>@upComingvents.Id</td>
+                                        <td>@upComingvents.EventTitle</td>
+                                        <td>@upComingvents.EventDate</td>
+                                        <td>@upComingvents?.EventTime</td>
+                                        @* <td>@upComingvents.EventDetails</td> *@
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventDetails" onclick="geteventdetails('@upComingvents.Id')">Details</button>
+                                        </td>
+                                        @*   <td>@upComingvents?.EventImage</td> *@
+                                        <td>
+                                                @* <button class="btn btn-primary" onclick="Edit('@upComingvents.Id')"> <i class="bi bi-pencil"></i> </button> *@
+                                                <button class="btn btn-danger" onclick="Delete('@upComingvents.Id')"><i class="bi bi-trash"></i></button>
                                                
-                                            </td>
-                                        </tr>
-                                    }
-                                    </tbody>
-                                </table>              
-                            </div>
-                        }
-                        else
-                        {
-                            <p>NO DATA FOUND</p>
-                        }
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>              
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NO DATA FOUND</p>
+                    }
                 </div>
 
             </div>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary offset-4" onclick="CreateEvents()">Submit</button>
+                                <button type="button" class="btn btn-primary offset-4" onclick="CreateEvents()">Submit</button>
                             </div>
                         </div>
                         
@@ -135,7 +135,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header text-center bg-primary text-white">
-                    <h5 class="modal-title" id="EventDetails"> EventDetails</h5>
+                    <h5 class="modal-title"> EventDetails</h5>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -145,7 +145,7 @@
 
                                 <div class="form-group">
                                    @*  <label for="inputBio">Event Details</label> *@
-                                    <textarea class="form-control" id="eventDetails" ></textarea>
+                                    <textarea cols="5" rows="5" type="text" class="form-control" id="eventDet" disabled> </textarea>
                                 </div>
                             </div>
                         </div>

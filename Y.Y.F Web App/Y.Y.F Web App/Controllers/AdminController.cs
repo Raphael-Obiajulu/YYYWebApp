@@ -11,7 +11,6 @@ namespace Y.Y.F_Web_App.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IUserHelper _userHelper;
-        private object applicationUserViewModel;
 
         public AdminController(AppDbContext context, IUserHelper userHelper)
         {
@@ -34,7 +33,7 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpPost]
         public JsonResult Events(string userDetails, string base64)
         {
-            if (userDetails != null && base64 != null)
+            if (userDetails != null )
             {
                 var upComingEvents = JsonConvert.DeserializeObject<UpComingEventViewModel>(userDetails);
                 if (upComingEvents != null)
@@ -67,15 +66,105 @@ namespace Y.Y.F_Web_App.Controllers
                 }
 
             }
-            return Json(new { isError = true, msg = "The event name already exists" });
+            return Json(new { isError = true, msg = "Did not see the event" });
         }
-
-
 
         public IActionResult PrayerRequest()
         {
-            return View();
+            var listofPrayerRequest = _userHelper.ListofPrayerRequest();
+            return View(listofPrayerRequest);
         }
+
+        public JsonResult ApproveRequest(int id)
+        {
+            if (id > 0)
+            {
+                var approveRequest = _userHelper.ApproveRequest(id);
+                if (approveRequest )
+                {
+                    return Json(new { isError = false, msg = " Approved Successfully" });
+                }
+                return Json(new { isError = true, msg = "Did not approve prayer request" });
+            }
+            return Json(new { isError = true, msg = "Did not find the event" });
+        }
+
+        public JsonResult DeclineRequest(int id)
+        {
+            if (id > 0)
+            {
+                var declineRequest = _userHelper.DeclineRequest(id);
+                if (declineRequest)
+                {
+                    return Json(new { isError = false, msg = " Declined Successfully" });
+                }
+                return Json(new { isError = true, msg = "Did not decline prayer request" });
+            }
+            return Json(new { isError = true, msg = "Did not find the event" });
+        }
+
+
+        public IActionResult CreateDiscussion()
+        {
+            var listofDiscussions = _userHelper.ListofDiscussions();
+            return View(listofDiscussions);
+        }
+        public IActionResult Comments()
+        {
+            var listofComments = _userHelper.ListofComments();
+            return View(listofComments);
+        }
+        
+        public JsonResult AddDiscussion(string details)
+        {
+            if (details != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var discussionDetails = JsonConvert.DeserializeObject<DiscussionForumViewModel>(details);
+                if (discussionDetails != null)
+                {
+                    var discussion = _userHelper.AddDiscussion(discussionDetails, loggedInUser);
+                    if (discussion)
+                    {
+                        return Json(new { isError = false, msg = "Discussion added successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to add " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+
+
+        //public JsonResult ApproveComment(int id)
+        //{
+        //    if (id > 0)
+        //    {
+        //        var approveComment = _userHelper.ApproveComment(id);
+        //        if (approveComment)
+        //        {
+        //            return Json(new { isError = false, msg = " Approved Successfully" });
+        //        }
+        //        return Json(new { isError = true, msg = "Did not approve comment" });
+        //    }
+        //    return Json(new { isError = true, msg = "Did not find the event" });
+        //}
+
+        //public JsonResult DeclineComment(int id)
+        //{
+        //    if (id > 0)
+        //    {
+        //        var declineComment = _userHelper.DeclineComment(id);
+        //        if (declineComment)
+        //        {
+        //            return Json(new { isError = false, msg = " Declined Successfully" });
+        //        }
+        //        return Json(new { isError = true, msg = "Did not decline comment" });
+        //    }
+        //    return Json(new { isError = true, msg = "Did not find the event" });
+        //}
+
+
     }
 
 }

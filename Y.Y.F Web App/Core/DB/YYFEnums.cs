@@ -15,8 +15,8 @@ namespace Core.DB
             Pending = 1,
             [Description("Approved")]
             Approved = 2,
-            [Description("Rejected")]
-            Rejected = 3,
+            [Description("Declined")]
+            Declined = 3,
         }
     }
 }

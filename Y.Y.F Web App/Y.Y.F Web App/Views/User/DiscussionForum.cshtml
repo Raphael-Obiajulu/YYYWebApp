@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Core.ViewModels.DiscussionForumViewModel>
+@{
+    ViewData["Title"] = "DiscussionForum";
+    Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>DiscussionForum</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">DiscussionForum</li>
+
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row-cols-4"></div>
+            <div class="section-header">
+                <h2 class="text-center">Recent Discussions</h2>
+                <p class="text-center">It repulses some people's pleasure in carrying it out, not that the result is that it will turn out to be the most gentle of them</p>
+            </div>
+
+            <div class="row gy-4 mt-5">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    @foreach (var discussion in Model)
+                    {
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="service-item  position-relative">
+                                <div class="icon">
+                                    <i class="fa-solid fa-mountain-city"></i>
+                                </div>
+                                <h3> @discussion?.DiscussionTitle</h3>
+                                <p> @discussion?.DiscussionDetails.Substring(1,115)...</p>
+                                <a class="readmore stretched-link" asp-controller="User" asp-action="Discussion" asp-route-id="@discussion?.Id"> Read more <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- End Service Item -->
+                    }
+                } 
+               
+            </div>
+        </div>
+    </section>
+</main>
