@@ -37,7 +37,8 @@ namespace Logic.IHelpers
         bool CheckRequestStatus(int requestId);
         PrayerRequestViewModel GetRequest(int id);
         bool SaveEditedRequest(PrayerRequestViewModel requestDetails, ApplicationUser loggedInUser);
-        //bool ApproveComment(int id);
-        //bool DeclineComment(int id);
+        bool ApproveComment(int id);
+        bool DeclineComment(int id);
+       
     }
 }

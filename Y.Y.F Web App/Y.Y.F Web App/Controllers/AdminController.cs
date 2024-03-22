@@ -136,33 +136,33 @@ namespace Y.Y.F_Web_App.Controllers
 
 
 
-        //public JsonResult ApproveComment(int id)
-        //{
-        //    if (id > 0)
-        //    {
-        //        var approveComment = _userHelper.ApproveComment(id);
-        //        if (approveComment)
-        //        {
-        //            return Json(new { isError = false, msg = " Approved Successfully" });
-        //        }
-        //        return Json(new { isError = true, msg = "Did not approve comment" });
-        //    }
-        //    return Json(new { isError = true, msg = "Did not find the event" });
-        //}
+        public JsonResult ApproveComment(int commentId)
+        {
+            if (commentId > 0)
+            {
+                var approveComment = _userHelper.ApproveComment(commentId);
+                if (approveComment)
+                {
+                    return Json(new { isError = false, msg = " Approved Successfully" });
+                }
+                return Json(new { isError = true, msg = "Did not approve comment" });
+            }
+            return Json(new { isError = true, msg = "Did not find the event" });
+        }
 
-        //public JsonResult DeclineComment(int id)
-        //{
-        //    if (id > 0)
-        //    {
-        //        var declineComment = _userHelper.DeclineComment(id);
-        //        if (declineComment)
-        //        {
-        //            return Json(new { isError = false, msg = " Declined Successfully" });
-        //        }
-        //        return Json(new { isError = true, msg = "Did not decline comment" });
-        //    }
-        //    return Json(new { isError = true, msg = "Did not find the event" });
-        //}
+        public JsonResult DeclineComment(int commentId)
+        {
+            if (commentId > 0)
+            {
+                var declineComment = _userHelper.DeclineComment(commentId);
+                if (declineComment)
+                {
+                    return Json(new { isError = false, msg = " Decline Successfully" });
+                }
+                return Json(new { isError = true, msg = "Unable to decline comment" });
+            }
+            return Json(new { isError = true, msg = "Did not find the event" });
+        }
 
 
     }

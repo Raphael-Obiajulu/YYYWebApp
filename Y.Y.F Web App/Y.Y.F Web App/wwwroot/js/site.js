@@ -1,6 +1,6 @@
 ﻿
 function register() {
-    debugger;
+    
     var defaultBtnValue = $('#submit_btn').html();
     $('#submit_btn').html("Please wait...");
     $('#submit_btn').attr("disabled", true);
@@ -27,7 +27,7 @@ function register() {
                 userDetails: userDetails,
             },
             success: function (result) {
-                debugger;
+                
                 if (!result.isError) {
                     var url = '/Account/Login';
                     successAlertWithRedirect(result.msg, url);
@@ -53,7 +53,7 @@ function register() {
 }
 
 function login() {
-    debugger
+    
     var defaultBtnValue = $('#submit_btn').html();
     $('#submit_btn').html("Please wait...");
     $('#submit_btn').attr("disabled", true);
@@ -93,7 +93,7 @@ function login() {
 }
 
 function CreateEvents() {
-    debugger;
+    
     var data = {};
     data.eventTitle = $('#eventTitle').val();
     data.eventDate = $('#eventDate').val();
@@ -110,7 +110,7 @@ function CreateEvents() {
         base64 = "";
     }
     if (data.eventTitle != "" && data.eventDate != "" && data.eventTime != "" && data.eventDetails != "") {
-        debugger
+        
             let userDetails = JSON.stringify(data);
             $.ajax({
                 type: 'Post',
@@ -199,13 +199,13 @@ function geteventdetails(id) {
 }
 
 function submitPrayerRequest() {
-    debugger;
+    
     var data = {};
     data.PrayerRequestTitle = $('#prayerRequestTitle').val();
     data.PrayerRequestDetails = $('#prayerRequestDetails').val();
   
     if (data.PrayerRequestTitle != "" && data.PrayerRequestDetails != "") {
-        debugger
+        
         let prayerDetails = JSON.stringify(data);
         $.ajax({
             type: 'Post',
@@ -217,7 +217,7 @@ function submitPrayerRequest() {
                 
             },
             success: function (result) {
-                debugger;
+                
                 if (!result.isError) {
                     var url = '/User/PrayerRequest';
                     successAlertWithRedirect(result.msg, url);
@@ -255,7 +255,7 @@ function EditPrayerRequest(id) {
                 $("#prayerRequest_Id").val(result.id);
                 $("#editprayerRequestTitle").val(result.prayerRequestTitle);
                 $("#editprayerRequestDetails").val(result.prayerRequestDetails);
-                //$("#editprayerRequestModal").model("show");
+                $("#editprayerRequestModal").modal("show");
             }
             else {
                 errorAlert(result.msg);
@@ -268,14 +268,13 @@ function EditPrayerRequest(id) {
 }
 
 function SaveEditedPrayerRequest() {
-    debugger;
     var data = {};
     data.Id = $('#prayerRequest_Id').val();
     data.PrayerRequestTitle = $('#editprayerRequestTitle').val();
     data.PrayerRequestDetails = $('#editprayerRequestDetails').val();
 
     if (data.PrayerRequestTitle != "" && data.PrayerRequestDetails != "") {
-        debugger
+        
         let prayerDetails = JSON.stringify(data);
         $.ajax({
             type: 'Post',
@@ -287,7 +286,6 @@ function SaveEditedPrayerRequest() {
 
             },
             success: function (result) {
-                debugger;
                 if (!result.isError) {
                     var url = '/User/PrayerRequest';
                     successAlertWithRedirect(result.msg, url);
@@ -308,7 +306,7 @@ function SaveEditedPrayerRequest() {
 }
 
 function ApprovePrayerRequest(id) {
-    debugger
+    
     $.ajax({
         type: 'Post',
         url: '/Admin/ApproveRequest',
@@ -333,7 +331,7 @@ function ApprovePrayerRequest(id) {
 }
 
 function DeclinePrayerRequest(id) {
-    debugger
+   
     $.ajax({
         type: 'Post',
         url: '/Admin/DeclineRequest',
@@ -358,13 +356,13 @@ function DeclinePrayerRequest(id) {
 }
 
 function CreateDiscussion() {
-    debugger;
+    
     var data = {};
     data.DiscussionTitle = $('#discussionTitle').val();
     data.DiscussionDetails = $('#discussionDetails').val();
 
     if (data.DiscussionTitle != "" && data.DiscussionDetails != "") {
-        debugger
+        
         let details = JSON.stringify(data);
         $.ajax({
             type: 'Post',
@@ -399,12 +397,12 @@ function CreateDiscussion() {
 }
 
 function CreateComment() {
-    debugger;
+    
     Message = $('#mainComment').val();
     DiscussionForumId = $('#discussion_Id').val();
     
     if (Message != "" && DiscussionForumId > 0) {
-        debugger
+        
         $.ajax({
             type: 'Post',
             url: '/User/CreateComment',
@@ -415,7 +413,7 @@ function CreateComment() {
                 id: DiscussionForumId,
             },
             success: function (result) {
-                debugger;
+                
                 if (!result.isError) {
                     var url = '/User/Discussion';
                     successAlertWithRedirect(result.msg, url);
@@ -456,4 +454,52 @@ function SaveLike(id) {
         });
     }
 
+}
+function Approvecomment(id) {
+    
+    $.ajax({
+        type: 'Post',
+        url: '/Admin/ApproveComment',
+        dataType: 'json',
+        data:
+        {
+            commentId: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                var url = '/Admin/Comments';
+                successAlertWithRedirect(result.msg, url);
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
+}
+function Declinecomment(id) {
+    
+    $.ajax({
+        type: 'Post',
+        url: '/Admin/DeclineComment',
+        dataType: 'json',
+        data:
+        {
+            commentId: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                var url = '/Admin/Comments';
+                successAlertWithRedirect(result.msg, url);
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
 }

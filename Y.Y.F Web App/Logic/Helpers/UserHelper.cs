@@ -462,6 +462,30 @@ namespace Logic.Helpers
             return false;
         }
 
+        public bool ApproveComment(int id)
+        {
+            var dd = _context.Comments.Where(x => x.Id == id && x.CommentStatus == YYFEnums.StatusEnum.Pending).FirstOrDefault();
+            if (dd != null)
+            {
+                dd.CommentStatus = YYFEnums.StatusEnum.Approved;
+                _context.Update(dd);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
+        public bool DeclineComment(int id)
+        {
+            var dd = _context.Comments.Where(x => x.Id == id && x.CommentStatus == YYFEnums.StatusEnum.Pending).FirstOrDefault();
+            if (dd != null)
+            {
+                dd.CommentStatus = YYFEnums.StatusEnum.Declined;
+                _context.Update(dd);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
