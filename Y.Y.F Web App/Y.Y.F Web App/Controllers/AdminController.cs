@@ -134,8 +134,6 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Network Failure" });
         }
 
-
-
         public JsonResult ApproveComment(int commentId)
         {
             if (commentId > 0)
@@ -164,6 +162,19 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Did not find the event" });
         }
 
+        public IActionResult AddAnnouncement()
+        {
+            return View();
+        }
+
+        public IActionResult AddBibleStudy()
+        {
+            return View();
+        }
+        public IActionResult MediaGallery()
+        {
+            return View();
+        }
 
     }
 

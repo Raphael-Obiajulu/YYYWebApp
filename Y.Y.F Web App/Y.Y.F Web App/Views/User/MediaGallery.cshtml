@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Core.ViewModels.MediaGalleryViewModel>
+@{
+    ViewData["Title"] = "MediaGallery";
+    Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>MediaGallery</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">MediaGallery</li>
+
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="container mt-10">
+        <div class="container mt-5">
+            <div class="row">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <h2 class="text-center mt-5 mb-5 font-weight-bold">MediaGallery</h2>
+
+                    @foreach (var media in Model)
+                    {
+                        <div class="col-lg-6 col-sm-12">
+
+                            <div class="card" style="width:100%">
+                                @if (media.Title != null)
+                                {
+                                    <img class="card-img-top" src="@media.Title" alt="Card image" style="width:100%">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="~/assets/img/constructions-1.jpg" alt="Card image" style="width:100%">
+                                }
+
+                                <div class="card-body">
+                                    <h4 class="card-title">@media.Title </h4>
+                                    <div>
+                                        <span>@media.Description </span>
+                                        <span class="float-lg-end">@media.Description </span>
+                                    </div>
+                                    <p class="card-text"> @media.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</main>

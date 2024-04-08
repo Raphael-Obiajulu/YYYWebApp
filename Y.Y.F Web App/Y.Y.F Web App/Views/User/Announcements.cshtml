@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Core.ViewModels.AnnouncementViewModel>
+@{
+    ViewData["Title"] = "Announcements";
+    Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+}
+
+<style>
+
+    body {
+        counter-reset: Serial; /* / Set the Serial counter to 0 /*/
+    }
+
+    tr td:first-child:before {
+        counter-increment: Serial; /* / Increment the Serial counter /*/
+        content: counter(Serial); /*  / Display the counter /*/
+    }
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1> Announcement</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                <li class="breadcrumb-item active">Announcements</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <section class="section" style="">
+        <div class="row" style="margin-top:70px;">
+            <div class="col-lg-12">
+                <div class="card">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S/NO</th>
+                                        <th>AnnouncementTitle</th>
+                                        <th>AnnouncementDetails</th>
+                                        @* <th>Actions</th> *@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var AddAnnouncement in Model)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td>@AddAnnouncement.AnnouncementTitle</td>
+                                            <td>@AddAnnouncement.AnnouncementDetails</td>
+                                           @*  <td>
+                                                <button class="btn btn-Success" data-toggle="modal" data-target="#announcementEditModal" onclick="EditAnnouncement('@AddAnnouncement.Id')"> <i class="bi bi-pencil"></i> </button>
+                                                <button class="btn btn-Success" onclick="DeleteAnnouncement('@AddAnnouncement.Id')"><i class="bi bi-trash"></i></button>
+
+                                            </td> *@
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NO DATA FOUND</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <!-- -- The Modal -->
+    </section>
+
+   
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> 
+</main>
+<!-- End #main -->

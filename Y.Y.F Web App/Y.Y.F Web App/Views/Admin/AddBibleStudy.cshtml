@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Core.ViewModels.BibleStudyViewModel>
+@{
+    ViewData["Title"] = "AddBibleStudy";
+    Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+}
+
+<style>
+
+    body {
+        counter-reset: Serial; /* / Set the Serial counter to 0 /*/
+    }
+
+    tr td:first-child:before {
+        counter-increment: Serial; /* / Increment the Serial counter /*/
+        content: counter(Serial); /*  / Display the counter /*/
+    }
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Add BibleStudy</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">Add BibleStudy</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div style="float: right">
+        @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#biblestudyModal">Add BibleStudy</button>
+    </div>
+
+
+    <section class="section" style="">
+        <div class="row" style="margin-top:70px;">
+            <div class="col-lg-14">
+                <div class="card">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <div class="card-body">
+                            <table class=" table table-striped table-borderless datatable">
+                                <thead>
+                                    <tr>
+                                        <th>S/NO</th>
+                                        <th>BibleStudyTitle</th>
+                                        <th>BibleStudyDetails</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var AddBibleStudy in Model)
+                                    {
+                                        <tr>
+                                            <td>@AddBibleStudy.Id</td>
+                                            <td>@AddBibleStudy.Title</td>
+                                            <td>@AddBibleStudy.Details.Substring(1, 50)</td>
+                                            <td class="d-flex">
+                                                <button class="btn btn-Success" data-toggle="modal" data-target="#biblestudyEditModal" onclick="EditBibleStudy('@AddBibleStudy.Id')"> <i class="bi bi-pencil"></i> </button>
+                                                <button class="btn btn-Success" onclick="DeleteBibleStudy('@AddBibleStudy.Id')"><i class="bi bi-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NO DATA FOUND</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <!-- -- The Modal -->
+        <div class="modal fade" id="biblestudyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center bg-success text-white">
+                        <h5 class="modal-title">Add BibleStudy</h5>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputName">BibleStudy Title</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Enter BibleStudy Title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputBio">BibleStudy Details</label>
+                                    <textarea cols="5" rows="5" type="text" class="form-control" id="biblestudyDetails" placeholder="Enter Biblestudy Full Details"> </textarea>
+                                </div>
+                               @*  <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPhone">Date From</label>
+                                        <input type="date" class="form-control" id="dateFrom" placeholder="Enter  Date From">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputBio">Date Till</label>
+                                        <input type="date" class="form-control" id="dateTill" placeholder="Enter Date Till">
+                                    </div>
+                                </div>
+                            </div> *@
+
+                            <div class="modal-footer">
+                                    <button type="button" class="btn btn-success offset-4" onclick="addBibleStudy()">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="biblestudyEditModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header text-center bg-success text-white">
+                    <h5 class="modal-title">Edit BibleStudy</h5>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="inputName">BibleStudy Title</label>
+                                <input type="text" class="form-control" id="edit_biblestudyTitle" placeholder="Enter Biblestudy Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputBio">BibleStudy Details</label>
+                                <input type="text" class="form-control" id="edit_biblestudyDetails" placeholder="Enter Biblestudy Full Details">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success offset-4" onclick="EditBibleStudy()">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- End #main -->
