@@ -487,5 +487,27 @@ namespace Logic.Helpers
             }
             return false;
         }
+
+
+        //public bool AddMediaGallery(MediaGalleryViewModel mediaGallery)
+        //{
+        //    if (mediaGallery != null)
+        //    {
+
+        //        var addMediaGallery = new AddMediaGallery()
+        //        {
+        //            MediaTitle = mediaGallery?.Title,
+        //            MediaDescription = mediaGallery?.Description,
+        //            DateCreated = DateTime.Now,
+        //            Active = true,
+        //            Deleted = false,
+        //            UserId = mediaGallery.Id,
+        //        };
+        //        _context.Add(addMediaGallery);
+        //        _context.SaveChanges();
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

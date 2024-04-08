@@ -167,6 +167,25 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Could not be found" });
         }
 
+        [HttpGet]
+        public IActionResult Announcements()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult BibleStudy()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MediaGallery()
+        {
+            return View();
+        }
+
 
 
     }
