@@ -177,7 +177,7 @@ namespace Y.Y.F_Web_App.Controllers
             if (details != null)
             {
                 var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
-                var announcementDetails = JsonConvert.DeserializeObject<AnnouncenentsViewModel>(details);
+                var announcementDetails = JsonConvert.DeserializeObject<AnnouncementViewModel>(details);
                 if (announcementDetails != null)
                 {
                     var announcement = _userHelper.AddAnnouncements(announcementDetails, loggedInUser);

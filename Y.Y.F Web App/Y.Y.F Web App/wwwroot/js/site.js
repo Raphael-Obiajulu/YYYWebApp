@@ -649,7 +649,6 @@ function EditProfileDetails() {
     }
 }
 
-
 function AddAnnouncement() {
     debugger
     var data = {};
