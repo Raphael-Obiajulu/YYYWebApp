@@ -48,7 +48,7 @@ namespace Logic.IHelpers
         bool DeactivateUser(string userId);
         ApplicationUserViewModel GetUserDetails(string userId);
         bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64);
-        bool AddAnnouncements(AnnouncenentsViewModel announcenent, ApplicationUser loggedInUser);
-        List<AnnouncenentsViewModel> ListofAnnouncement();
+        bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser);
+        List<AnnouncementViewModel> ListofAnnouncement();
     }
 }

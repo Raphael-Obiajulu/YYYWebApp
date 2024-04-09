@@ -624,9 +624,7 @@ namespace Logic.Helpers
             return false;
         }
 
-
-
-        public bool AddAnnouncements(AnnouncenentsViewModel announcenent, ApplicationUser loggedInUser)
+        public bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser)
         {
             if (announcenent != null)
             {
@@ -646,12 +644,12 @@ namespace Logic.Helpers
                 return true;
             }
             return false;
-
-            public List<AnnouncenentsViewModel> ListofAnnouncement()
+        }
+        public List<AnnouncementViewModel> ListofAnnouncement()
         {
-            var announcementViewModel = new List<AnnouncenentsViewModel>();
+            var announcementViewModel = new List<AnnouncementViewModel>();
             announcementViewModel = _context.Announcements.Where(a => a.Id > 0 && a.Active && !a.Deleted)
-            .Select(a => new AnnouncenentsViewModel()
+            .Select(a => new AnnouncementViewModel()
             {
                 AnnouncementTitle = a.AnnouncementTitle,
                 AnnouncementDetails = a.AnnouncementDetails,
