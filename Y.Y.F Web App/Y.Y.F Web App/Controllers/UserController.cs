@@ -170,10 +170,9 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpGet]
         public IActionResult Announcements()
         {
-            return View();
+            var listofAnnouncement = _userHelper.ListofAnnouncement();
+            return View(listofAnnouncement);
         }
-
-
         [HttpGet]
         public IActionResult BibleStudy()
         {
@@ -185,6 +184,7 @@ namespace Y.Y.F_Web_App.Controllers
         {
             return View();
         }
+
 
 
 

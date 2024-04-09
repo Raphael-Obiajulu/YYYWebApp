@@ -39,6 +39,7 @@ namespace Logic.IHelpers
         bool SaveEditedRequest(PrayerRequestViewModel requestDetails, ApplicationUser loggedInUser);
         bool ApproveComment(int id);
         bool DeclineComment(int id);
-       
+        bool AddAnnouncements(AnnouncenentsViewModel announcenent, ApplicationUser loggedInUser);
+        List<AnnouncenentsViewModel> ListofAnnouncement();
     }
 }

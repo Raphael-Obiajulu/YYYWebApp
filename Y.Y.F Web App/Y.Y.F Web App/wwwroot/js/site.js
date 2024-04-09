@@ -503,3 +503,46 @@ function Declinecomment(id) {
         }
     });
 }
+
+function AddAnnouncement() {
+    debugger
+    var data = {};
+    data.AnnouncementTitle = $('#announcementTitle').val();
+    data.AnnouncementDetails = $('#announcementDetails').val();
+    data.DurationFrom = $('#dateFrom').val();
+    data.DurationTill = $('#dateTill').val();
+
+    if (data.AnnouncementTitle != "" && data.AnnouncementDetails != "" && data.DurationFrom != "" && data.DurationTill != "") {
+
+        let details = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/CreateAnnouncement',
+            dataType: 'json',
+            data:
+            {
+                details: details,
+
+            },
+            success: function (result) {
+                debugger;
+                if (!result.isError) {
+                    var url = '/Admin/AddAnnouncement';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    }
+    else {
+        //$('#submit_btn').html(defaultBtnValue);
+        //$('#submit_btn').attr("disabled", false);
+        errorAlert("Please fill the form Correctly");
+    }
+
+}

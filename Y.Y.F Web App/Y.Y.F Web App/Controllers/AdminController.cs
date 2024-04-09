@@ -162,9 +162,29 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Did not find the event" });
         }
 
+        public JsonResult CreateAnnouncement(string details)
+        {
+            if (details != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var announcementDetails = JsonConvert.DeserializeObject<AnnouncenentsViewModel>(details);
+                if (announcementDetails != null)
+                {
+                    var announcement = _userHelper.AddAnnouncements(announcementDetails, loggedInUser);
+                    if (announcement)
+                    {
+                        return Json(new { isError = false, msg = "Announcement added successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to add " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
         public IActionResult AddAnnouncement()
         {
-            return View();
+            var listofAnnouncement = _userHelper.ListofAnnouncement();
+            return View(listofAnnouncement);
         }
 
         public IActionResult AddBibleStudy()
