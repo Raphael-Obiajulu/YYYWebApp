@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.ViewModels
 {
-    internal class AnnouncenentsViewModel : BaseModel
+    public class AnnouncementViewModel : BaseModel
     {
         public string AnnouncementTitle { get; set; }
         public DateTime DurationFrom { get; set; }
