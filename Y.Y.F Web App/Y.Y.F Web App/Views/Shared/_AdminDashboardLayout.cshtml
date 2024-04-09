@@ -212,13 +212,19 @@
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         
-
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="User" asp-action="Profile">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
                         </li>
+
+                       @*  <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li> *@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -252,6 +258,13 @@
                 <a class="nav-link collapsed" asp-controller="Admin" asp-action="UpComingEvents">
                     <i class="bi bi-grid"></i>
                     <span>Create Events</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="User" asp-action="PrayerRequest">
+
+                    <i class="bi bi-grid"></i>
+                    <span>Add Prayer Request</span>
                 </a>
             </li>
 
@@ -302,6 +315,26 @@
 
                     <i class="bi bi-grid"></i>
                     <span>Add Media Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Admin" asp-action="AllUsers">
+                    <i class="bi bi-person"></i>
+                    <span> Registered Users</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="User" asp-action="Profile">
+                    <i class="bi bi-gear"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed">
+                    <form asp-action="Logout" asp-controller="Account" method="post">
+                        <button class="btn" style="margin-left: -10px;"> <i class="bi bi-box-arrow-right"></i> <span class="text-success"> <b> Logout </b> </span></button>
+                    </form>
                 </a>
             </li>
         </ul>

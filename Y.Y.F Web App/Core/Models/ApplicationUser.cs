@@ -19,6 +19,7 @@ namespace Core.Models
         [Display(Name = "Gender")]
         [ForeignKey("GenderId")]
         public virtual CommonDropdown? Gender { get; set; }
+        public string? ProfileImage { get; set; }
 
     }
 }
