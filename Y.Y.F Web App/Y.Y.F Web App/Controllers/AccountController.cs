@@ -70,6 +70,49 @@ namespace Y.Y.F_Web_App.Controllers
         }
 
         [HttpGet]
+        public IActionResult AdminRegister()
+        {
+            ViewBag.Gender = _dropdownhelper.DropdownOfGender();
+            return View();
+        }
+        [HttpPost]
+        public async Task<JsonResult> AdminRegistration(string userDetails)
+        {
+            if (userDetails != null)
+            {
+                var applicationUserViewModel = JsonConvert.DeserializeObject<ApplicationUserViewModel>(userDetails);
+                if (applicationUserViewModel != null)
+                {
+                    var checkEmail = _userHelper.FindByEmailAsync(applicationUserViewModel?.Email).Result;
+                    if (checkEmail != null)
+                    {
+                        return Json(new { isError = true, msg = "Email Already Exists" });
+                    }
+                    var checkUserName = _userHelper.FindByUserNameAsync(applicationUserViewModel?.UserName).Result;
+                    if (checkUserName != null)
+                    {
+                        return Json(new { isError = true, msg = "Username Already Exists" });
+                    }
+                    if (applicationUserViewModel.GenderId == 0)
+                    {
+                        return Json(new { isError = true, msg = "Please select a gender" });
+                    };
+                    if (applicationUserViewModel.Password != applicationUserViewModel.ConfirmPassword)
+                    {
+                        return Json(new { isError = true, msg = "Password and confirm password did not match" });
+                    }
+                    var createUser = await _userHelper.CreateAdmin(applicationUserViewModel).ConfigureAwait(false);
+                    if (createUser)
+                    {
+                        return Json(new { isError = false, msg = "Registration Successful" });
+                    }
+                    return Json(new { isError = true, msg = "Could not register" });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Issue" });
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();

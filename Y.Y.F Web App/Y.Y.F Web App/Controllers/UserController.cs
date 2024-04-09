@@ -22,7 +22,18 @@ namespace Y.Y.F_Web_App.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+            var totalAnnouncements = _userHelper.GetTotalAnnouncements();
+            var totalPrayerRequests = _userHelper.GetTotalRequests(loggedInUser.Id);
+            var totalUpcomingEvents = _userHelper.GetTotalEvents();
+
+            var model = new ApplicationUserViewModel()
+            {
+                TotalAnnouncements = totalAnnouncements,
+                TotalPrayerRequests = totalPrayerRequests,
+                TotalUpcomingEvents = totalUpcomingEvents,
+            };
+            return View(model);
         }
         public IActionResult UserUpComingEvents()  
         {
@@ -184,6 +195,33 @@ namespace Y.Y.F_Web_App.Controllers
         {
             return View();
         }
+		public IActionResult Profile()
+		{
+            var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+            var user = _userHelper.GetUserDetails(loggedInUser.Id);
+			return View(user);
+		}
+
+        [HttpPost]
+        public JsonResult EditProfile(string profileDetails, string base64)
+        {
+            if (profileDetails != null)
+            {
+                var details = JsonConvert.DeserializeObject<ApplicationUserViewModel>(profileDetails);
+                if (details != null)
+                {
+                    var editProfile = _userHelper.SaveEditedProfile(details, base64);
+                    if (editProfile)
+                    {
+                        return Json(new { isError = false, msg = "Profile Edited Succesfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to Edit" });
+                }
+            }
+            return Json(new { isError = true, msg = "Network" });
+        }
+
+
 
 
 

@@ -87,7 +87,41 @@ namespace Logic.Helpers
             }
            
         }
-        
+
+        public async Task<bool> CreateAdmin(ApplicationUserViewModel applicationUserViewModel)
+        {
+            try
+            {
+                if (applicationUserViewModel != null)
+                {
+                    var user = new ApplicationUser()
+                    {
+                        UserName = applicationUserViewModel.UserName,
+                        Email = applicationUserViewModel.Email,
+                        PhoneNumber = applicationUserViewModel.PhoneNumber,
+                        FirstName = applicationUserViewModel.FirstName,
+                        LastName = applicationUserViewModel.LastName,
+                        GenderId = applicationUserViewModel.GenderId,
+                        DateCreated = DateTime.Now,
+                        Deactivated = false,
+                    };
+                    var createUser = await _userManager.CreateAsync(user, applicationUserViewModel.Password);
+                    if (createUser.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin").ConfigureAwait(false);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public bool CheckEventName(string eventTitle)
         {
             if (eventTitle != null)
@@ -488,6 +522,110 @@ namespace Logic.Helpers
             return false;
         }
 
+        public int GetTotalAnnouncements()
+        {
+            return _context.Announcements.Where(x => x.Id > 0 && x.Active && !x.Deleted).Count();
+        }
+        public int GetTotalRequests(string userId)
+        {
+            if (userId != null)
+            {
+                return _context.PrayerRequests.Where(x => x.UserId == userId && x.Active && !x.Deleted).Count();
+            }
+            return 0;
+        }
+        public int GetTotalEvents()
+        {
+            return _context.UpComingEvents.Where(x => x.Id > 0 && x.Active && !x.Deleted).Count();
+        }
+
+        public int GetTotalDiscussions()
+        {
+            return _context.Discussions.Where(x => x.Id > 0 && x.Active && !x.Deleted).Count();
+        }
+        public List<ApplicationUserViewModel> ListofUsers()
+        {
+            var appViewModel = new List<ApplicationUserViewModel>();
+                appViewModel = _context.ApplicationUsers.Where(a => a.Id != null && !a.Deactivated)
+                .Include(x => x.Gender)
+                .Select(a => new ApplicationUserViewModel()
+                {
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    UserName = a.UserName,
+                    PhoneNumber = a.PhoneNumber,
+                    DateCreated = a.DateCreated,
+                    Email = a.Email,
+                    GenderName = a.Gender.Name,
+                    Id = a.Id,
+                }).ToList();
+
+            return appViewModel;
+        }
+
+        public bool DeactivateUser(string userId)
+        {
+            var userToDeactivate = _context.ApplicationUsers.Where(a => a.Id == userId && a.UserName != null && !a.Deactivated).FirstOrDefault();
+            if (userToDeactivate != null)
+            {
+                userToDeactivate.Deactivated = true;
+                _context.Update(userToDeactivate);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public ApplicationUserViewModel GetUserDetails(string userId)
+        {
+            if (userId != null)
+            {
+                var appViewModel = new ApplicationUserViewModel();
+                    appViewModel = _context.ApplicationUsers.Where(a => a.Id == userId && !a.Deactivated)
+                .Include(x => x.Gender)
+                .Select(a => new ApplicationUserViewModel()
+                {
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    UserName = a.UserName,
+                    PhoneNumber = a.PhoneNumber,
+                    DateCreated = a.DateCreated,
+                    Email = a.Email,
+                    GenderName = a.Gender.Name,
+                    Id = a.Id,
+                    Name = a.FirstName + " " + a.LastName,
+                    ProfileImage = a.ProfileImage,
+                }).FirstOrDefault();
+
+                return appViewModel;
+            }
+            return null;
+        }
+
+        public bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64)
+        {
+            if (profileDetails != null)
+            {
+                var edit = _context.ApplicationUsers.Where(x => x.Id == profileDetails.Id && !x.Deactivated).FirstOrDefault();
+                var image = edit?.ProfileImage;
+                if (edit != null)
+                {
+                    edit.FirstName = profileDetails.FirstName;
+                    edit.LastName = profileDetails.LastName;
+                    edit.PhoneNumber = profileDetails.PhoneNumber;
+                    edit.Email = profileDetails.Email;
+                    edit.ProfileImage = base64 != null ? base64 : image;
+
+                    _context.Update(edit);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         public bool AddAnnouncements(AnnouncenentsViewModel announcenent, ApplicationUser loggedInUser)
         {
             if (announcenent != null)
@@ -508,9 +646,8 @@ namespace Logic.Helpers
                 return true;
             }
             return false;
-        }
 
-        public List<AnnouncenentsViewModel> ListofAnnouncement()
+            public List<AnnouncenentsViewModel> ListofAnnouncement()
         {
             var announcementViewModel = new List<AnnouncenentsViewModel>();
             announcementViewModel = _context.Announcements.Where(a => a.Id > 0 && a.Active && !a.Deleted)

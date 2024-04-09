@@ -39,6 +39,15 @@ namespace Logic.IHelpers
         bool SaveEditedRequest(PrayerRequestViewModel requestDetails, ApplicationUser loggedInUser);
         bool ApproveComment(int id);
         bool DeclineComment(int id);
+        Task<bool> CreateAdmin(ApplicationUserViewModel applicationUserViewModel);
+        int GetTotalAnnouncements();
+        int GetTotalEvents();
+        int GetTotalRequests(string userId);
+        int GetTotalDiscussions();
+        List<ApplicationUserViewModel> ListofUsers();
+        bool DeactivateUser(string userId);
+        ApplicationUserViewModel GetUserDetails(string userId);
+        bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64);
         bool AddAnnouncements(AnnouncenentsViewModel announcenent, ApplicationUser loggedInUser);
         List<AnnouncenentsViewModel> ListofAnnouncement();
     }

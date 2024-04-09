@@ -19,7 +19,17 @@ namespace Y.Y.F_Web_App.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var totalAnnouncements = _userHelper.GetTotalAnnouncements();
+            var totalDiscussions = _userHelper.GetTotalDiscussions();
+            var totalUpcomingEvents = _userHelper.GetTotalEvents();
+
+            var model = new ApplicationUserViewModel()
+            {
+                TotalAnnouncements = totalAnnouncements,
+                TotalDiscussions = totalDiscussions,
+                TotalUpcomingEvents = totalUpcomingEvents,
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -196,6 +206,25 @@ namespace Y.Y.F_Web_App.Controllers
             return View();
         }
 
+        public IActionResult AllUsers()
+        {
+            var listofUsers = _userHelper.ListofUsers();
+            return View(listofUsers);
+        }
+
+        public JsonResult DeactivateUser(string userId)
+        {
+            if (userId != null)
+            {
+                var deactivateUser = _userHelper.DeactivateUser(userId);
+                if (deactivateUser)
+                {
+                    return Json(new { isError = false, msg = "Member Deactivated" });
+                }
+            }
+            return Json(new{ isError = false, msg = "Member not found" });
+        }
+        
     }
 
 }

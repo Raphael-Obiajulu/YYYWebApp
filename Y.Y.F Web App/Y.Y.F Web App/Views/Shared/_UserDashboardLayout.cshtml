@@ -205,19 +205,24 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-
+                        @* <img src="user?.ProfileImage" asp-append-version="true" alt="Image" class="rounded-circle" /> *@
                         <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
                     </a><!-- End Profile Image Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-
-
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="User" asp-action="Profile">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
                         </li>
+
+                       @*  <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li> *@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -296,6 +301,19 @@
                 <a class="nav-link collapsed" asp-controller="User" asp-action="MediaGallery">
                     <i class="bi bi-grid"></i>
                     <span> Media Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="User" asp-action="Profile">
+                    <i class="bi bi-gear"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed">
+                    <form asp-action="Logout" asp-controller="Account" method="post">
+                        <button class="btn" style="margin-left: -10px;"> <i class="bi bi-box-arrow-right"></i> <span class="text-success"> <b> Logout </b> </span></button>
+                    </form>
                 </a>
             </li>
         </ul>

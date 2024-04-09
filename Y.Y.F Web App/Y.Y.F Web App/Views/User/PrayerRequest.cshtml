@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<Core.ViewModels.PrayerRequestViewModel>
 @{
     ViewData["Title"] = "PrayerRequest";
-    Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+    // Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
+    }
 }
 
 <main id="main" class="main">
@@ -10,7 +18,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
-                <li class="breadcrumb-item active">PrayerRequest</li>
+                <li class="breadcrumb-item active">Add Prayer Request</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -57,8 +65,9 @@
                                                     <badge class="badge badge-danger p-2"> Declined </badge>
                                                 }
                                             </td>
-                                            <td>
-                                                <button class="btn btn-success" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest.Id')"><i class="bi bi-pencil"></i></button>
+                                            <td class="d-flex">
+                                                <button class="btn btn-outline-success mr-1" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest.Id')"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-success ml-1" onclick="DeletePrayer('@prayerRequest.Id')"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     }
