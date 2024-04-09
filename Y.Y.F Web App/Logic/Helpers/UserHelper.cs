@@ -624,28 +624,46 @@ namespace Logic.Helpers
             return false;
         }
 
+        public bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser)
+        {
+            if (announcenent != null)
+            {
+                var addAnnouncement = new Announcements()
+                {
+                    AnnouncementTitle = announcenent?.AnnouncementTitle,
+                    AnnouncementDetails = announcenent?.AnnouncementDetails,
+                    DurationFrom = announcenent.DurationFrom,
+                    DurationTill = announcenent.DurationTill,
+                    DateCreated = DateTime.Now,
+                    Active = true,
+                    Deleted = false,
+                    UserId = loggedInUser.Id,
+                };
+                _context.Add(addAnnouncement);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        public List<AnnouncementViewModel> ListofAnnouncement()
+        {
+            var announcementViewModel = new List<AnnouncementViewModel>();
+            announcementViewModel = _context.Announcements.Where(a => a.Id > 0 && a.Active && !a.Deleted)
+            .Select(a => new AnnouncementViewModel()
+            {
+                AnnouncementTitle = a.AnnouncementTitle,
+                AnnouncementDetails = a.AnnouncementDetails,
+                DurationFrom = a.DurationFrom,
+                DurationTill = a.DurationTill,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+            }).ToList();
+
+            return announcementViewModel;
+        }
+       
 
 
 
-        //public bool AddMediaGallery(MediaGalleryViewModel mediaGallery)
-        //{
-        //    if (mediaGallery != null)
-        //    {
-
-        //        var addMediaGallery = new AddMediaGallery()
-        //        {
-        //            MediaTitle = mediaGallery?.Title,
-        //            MediaDescription = mediaGallery?.Description,
-        //            DateCreated = DateTime.Now,
-        //            Active = true,
-        //            Deleted = false,
-        //            UserId = mediaGallery.Id,
-        //        };
-        //        _context.Add(addMediaGallery);
-        //        _context.SaveChanges();
-        //        return true;
-        //    }
-        //    return false;
-        //}
     }
 }

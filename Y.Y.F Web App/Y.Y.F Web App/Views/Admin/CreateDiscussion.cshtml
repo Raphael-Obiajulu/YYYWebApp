@@ -48,7 +48,7 @@
                                             <td>@CreateDiscussion.DiscussionTitle</td>
                                             <td>@CreateDiscussion.DiscussionDetails.Substring(1, 50)</td>
                                             <td>
-                                                <a class="btn btn-primary" asp-controller="User" asp-action="Discussion" asp-route-id="@CreateDiscussion.Id">
+                                                <a class="btn btn-success" asp-controller="User" asp-action="Discussion" asp-route-id="@CreateDiscussion.Id">
                                                     View
                                                 </a>
                                                 <button class="btn btn-outline-success" data-toggle="modal" data-target="#discussionEditModal" onclick="EditDiscussion('@CreateDiscussion.Id')"> <i class="bi bi-pencil"></i> </button>
