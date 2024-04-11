@@ -187,7 +187,8 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpGet]
         public IActionResult BibleStudy()
         {
-            return View();
+            var listofBibleStudy = _userHelper.listofBibleStudy();
+            return View(listofBibleStudy);
         }
 
         [HttpGet]

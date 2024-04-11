@@ -50,5 +50,8 @@ namespace Logic.IHelpers
         bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64);
         bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser);
         List<AnnouncementViewModel> ListofAnnouncement();
+
+        List<BibleStudyViewModel> listofBibleStudy();
+        //bool BibleStudy(BibleStudyViewModel bibleStudy, ApplicationUser loggedInUser);
     }
 }

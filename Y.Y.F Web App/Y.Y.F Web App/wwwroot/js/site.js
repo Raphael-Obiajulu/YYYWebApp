@@ -691,3 +691,44 @@ function AddAnnouncement() {
     }
 
 }
+
+function addBibleStudy() {
+    debugger
+    var data = {};
+    data.Title = $('#title').val();
+    data.Details = $('#biblestudyDetails').val();
+
+    if (data.Title != "" && data.Details != "") {
+       
+        let details = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/CreateBibleStudy',
+            dataType: 'json',
+            data:
+            {
+                details: details,
+
+            },
+            success: function (result) {
+                debugger;
+                if (!result.isError) {
+                    var url = '/Admin/AddBibleStudy';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    }
+    else {
+        //$('#submit_btn').html(defaultBtnValue);
+        //$('#submit_btn').attr("disabled", false);
+        errorAlert("Please fill the form Correctly");
+    }
+
+}

@@ -661,7 +661,23 @@ namespace Logic.Helpers
 
             return announcementViewModel;
         }
-       
+
+        public List<BibleStudyViewModel> listofBibleStudy()
+        {
+            var biblestudyViewModel = new List<BibleStudyViewModel>();
+            biblestudyViewModel = _context.BibleStudies.Where(a => a.Id > 0 && a.Active && !a.Deleted)
+            .Select(a => new BibleStudyViewModel()
+            {
+                Title = a.Title,
+                Details = a.Details,
+                User = a.User,
+                Id = a.Id,
+                DateCreated = a.DateCreated,
+            }).ToList();
+
+            return biblestudyViewModel;
+        }
+
 
 
 
