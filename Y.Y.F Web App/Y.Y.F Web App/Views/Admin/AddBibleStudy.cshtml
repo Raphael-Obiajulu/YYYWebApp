@@ -23,7 +23,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
-                <li class="breadcrumb-item active">Add BibleStudy</li>
+                <li class="breadcrumb-item active"> Add BibleStudy</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -57,9 +57,14 @@
                                             <td>@AddBibleStudy.Id</td>
                                             <td>@AddBibleStudy.Title</td>
                                             <td>@AddBibleStudy.Details.Substring(1, 50)</td>
+                                            <td>
+                                                <a class="btn btn-success" asp-controller="User" asp-action="BibleStudy">
+                                                    View Full Study
+                                                </a>
+                                            </td>
                                             <td class="d-flex">
                                                 <button class="btn btn-Success" data-toggle="modal" data-target="#biblestudyEditModal" onclick="EditBibleStudy('@AddBibleStudy.Id')"> <i class="bi bi-pencil"></i> </button>
-                                                <button class="btn btn-Success" onclick="DeleteBibleStudy('@AddBibleStudy.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-Success" data-toggle="modal" data-target="#biblestudyToDelete" onclick="DeleteBibleStudy('@AddBibleStudy.Id')"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     }
@@ -90,29 +95,16 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputName">BibleStudy Title</label>
-                                    <input type="text" class="form-control" id="title" placeholder="Enter BibleStudy Title">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputBio">BibleStudy Details</label>
-                                    <textarea cols="5" rows="5" type="text" class="form-control" id="biblestudyDetails" placeholder="Enter Biblestudy Full Details"> </textarea>
-                                </div>
-                               @*  <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inputPhone">Date From</label>
-                                        <input type="date" class="form-control" id="dateFrom" placeholder="Enter  Date From">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="inputBio">Date Till</label>
-                                        <input type="date" class="form-control" id="dateTill" placeholder="Enter Date Till">
-                                    </div>
-                                </div>
-                            </div> *@
-
+                            <div class="form-group">
+                                <label for="inputName">BibleStudy Title</label>
+                                <input type="text" class="form-control" id="title" placeholder="Enter BibleStudy Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputBio">BibleStudy Details</label>
+                                <textarea cols="5" rows="5" type="text" class="form-control" id="biblestudyDetails" placeholder="Enter Biblestudy Full Details"> </textarea>
+                            </div>
                             <div class="modal-footer">
-                                    <button type="button" class="btn btn-success offset-4" onclick="addBibleStudy()">Submit</button>
+                                <button type="button" class="btn btn-success offset-4" onclick="addBibleStudy()">Submit</button>
                             </div>
                         </div>
 
@@ -150,6 +142,31 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="studyDeleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <b> Delete BibleStudy </b> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Are you sure you want to delete?</p>
+                    <div class="modal-btn delete-action">
+                        <div class="row m-auto">
+                            <input class="form-control" hidden type="text" id="del_disId">
+                            <div class="col-6">
+                                <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeleteDiscussion()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

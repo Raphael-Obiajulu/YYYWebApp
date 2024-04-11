@@ -26,14 +26,14 @@
             <div class="row">
                 @if (Model != null && Model.Any())
                 {
-                    <h2 class="text-center mt-5 mb-5 font-weight-bold">Bible Study</h2>
+                    <h2 class="text-center mt-5 mb-5 font-weight-bold text-sucess">Bible Study</h2>
 
                     @foreach (var bibleStudy in Model)
                     {
-                        <div class="col-lg-12 col-sm-12">
+                        <div class="col-lg-10 col-sm-10 m-auto">
                             <div class="card p-4" style="width:100%">
-                                <div class="card-body d-flex">
-                                    <span class="font-weight-bold">@bibleStudy.Title :</span>
+                                <div class="card-body">
+                                    <h3 class="font-weight-bold text-center mb-2">@bibleStudy.Title </h3>
                                     <p class="card-text ml-4">@bibleStudy.Details <i> <b> <small>  Requested by @bibleStudy.UserId</small></b></i></p>
                                 </div>
                             </div>

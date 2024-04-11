@@ -37,6 +37,9 @@
                                         <th>S/NO</th>
                                         <th>AnnouncementTitle</th>
                                         <th>AnnouncementDetails</th>
+                                        <th>Available From</th>
+                                        <th>Available Till</th>
+                                        <th>Date Added</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -47,10 +50,13 @@
                                             <td>@AddAnnouncement.Id</td>
                                             <td>@AddAnnouncement.AnnouncementTitle</td>
                                             <td>@AddAnnouncement.AnnouncementDetails</td>
+                                            <td>@AddAnnouncement.DurationFrom.ToString("D")</td>
+                                            <td>@AddAnnouncement.DurationTill.ToString("D")</td>
+                                            <td>@AddAnnouncement.DateCreated.ToString("D")</td>
+
                                             <td class="d-inline-flex">
                                                 <button class="btn btn-outline-success" data-toggle="modal" data-target="#announcementEditModal" onclick="EditAnnouncement('@AddAnnouncement.Id')"> <i class="bi bi-pencil"></i> </button>
-                                                <button class="btn btn-outline-success" onclick="DeleteAnnouncement('@AddAnnouncement.Id')"><i class="bi bi-trash"></i></button>
-
+                                                <button class="btn btn-outline-success" data-toggle="modal" data-target="#announcementToDelete" onclick="DeleteAnnouncement('@AddAnnouncement.Id')"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     }
@@ -93,11 +99,11 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="DateFrom"> Date From</label>
-                                    <input type="date" class="form-control" id="dateFrom" placeholder="Enter Announcement Title">
+                                    <input type="date" class="form-control" id="dateFrom" placeholder="Enter Date From">
                                 </div>
                                 <div class="form-group">
-                                    <label for="DateTill">Date From</label>
-                                    <textarea cols="5" rows="5" type="date" class="form-control" id="dateTill" placeholder="Enter Announcement Full Details"> </textarea>
+                                    <label for="DateTill">Date Till</label>
+                                    <input type="date" class="form-control" id="dateTill" placeholder="Enter DateTill">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -126,19 +132,56 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="inputName">Announcement Title</label>
-                                <input type="text" class="form-control" id="edit_announcementTitle" placeholder="Enter Announcement Title">
+                                <input type="text" class="form-control" id="edit_announcementTitle">
+                                <input class="form-control" hidden type="text" id="annouce_Id">
                             </div>
                             <div class="form-group">
                                 <label for="inputBio">Announcement Details</label>
-                                <input type="text" class="form-control" id="edit_announcementDetails" placeholder="Enter Announcement Full Details">
+                                <input type="text" class="form-control" id="edit_announcementDetails" >
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="DateFrom"> Date From</label>
+                                <input type="date" class="form-control" id="edit_dateFrom">
+                            </div>
+                            <div class="form-group">
+                                <label for="DateTill">Date Till</label>
+                                <input type="date" class="form-control" id="edit_dateTill">
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success offset-4" onclick="EditAnnouncement()">Submit</button>
+                            <button type="button" class="btn btn-success offset-4" onclick="SaveEditedAnnouncement()">Submit</button>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="announcementToDelete" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <b> Delete Announcement </b> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Are you sure you want to delete?</p>
+                    <div class="modal-btn delete-action">
+                        <div class="row m-auto">
+                            <input class="form-control" hidden type="text" id="annouce_Id">
+                            <div class="col-6">
+                                <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeleteAnnounce()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

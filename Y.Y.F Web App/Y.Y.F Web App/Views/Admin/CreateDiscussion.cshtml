@@ -52,7 +52,7 @@
                                                     View
                                                 </a>
                                                 <button class="btn btn-outline-success" data-toggle="modal" data-target="#discussionEditModal" onclick="EditDiscussion('@CreateDiscussion.Id')"> <i class="bi bi-pencil"></i> </button>
-                                                <button class="btn btn-outline-success" onclick="DeleteDiscussion('@CreateDiscussion.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-outline-success" data-toggle="modal" data-target="#discussionDeleteModal" onclick="DiscussionToDelete('@CreateDiscussion.Id')"><i class="bi bi-trash"></i></button>
 
                                             </td>
                                         </tr>
@@ -120,19 +120,46 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="inputName">Discussion Title</label>
-                                <input type="text" class="form-control" id="edit_discussionTitle" placeholder="Enter Discussion Title">
+                                <input type="text" class="form-control" id="discussion_Id" hidden>
+                                <input type="text" class="form-control" id="edit_discussionTitle">
                             </div>
                             <div class="form-group">
                                 <label for="inputBio">Discussion Details</label>
-                                <input type="text" class="form-control" id="edit_discussionDetails" placeholder="Enter Discussion Full Details">
+                                <input type="text" class="form-control" id="edit_discussionDetails">
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success offset-4" onclick="EditDiscussion()">Submit</button>
+                            <button type="button" class="btn btn-success offset-4" onclick="SaveDiscussion()">Submit</button>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="discussionDeleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <b> Delete Discussion </b> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Are you sure you want to delete?</p>
+                    <div class="modal-btn delete-action">
+                        <div class="row m-auto">
+                            <input class="form-control" hidden type="text" id="del_disId">
+                            <div class="col-6">
+                                <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeleteDiscussion()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

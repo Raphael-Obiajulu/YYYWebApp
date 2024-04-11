@@ -558,6 +558,7 @@ namespace Logic.Helpers
                     Email = a.Email,
                     GenderName = a.Gender.Name,
                     Id = a.Id,
+                    ProfileImage = a.ProfileImage,
                 }).ToList();
 
             return appViewModel;
@@ -645,7 +646,25 @@ namespace Logic.Helpers
             }
             return false;
         }
+
         public List<AnnouncementViewModel> ListofAnnouncement()
+        {
+            var announcementViewModel = new List<AnnouncementViewModel>();
+            announcementViewModel = _context.Announcements.Where(a => a.Id > 0 && a.Active && !a.Deleted && DateTime.Now.Date <= a.DurationTill.Date)
+            .Select(a => new AnnouncementViewModel()
+            {
+                AnnouncementTitle = a.AnnouncementTitle,
+                AnnouncementDetails = a.AnnouncementDetails,
+                DurationFrom = a.DurationFrom,
+                DurationTill = a.DurationTill,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+            }).ToList();
+
+            return announcementViewModel;
+        }
+
+        public List<AnnouncementViewModel> ListofAnnouncementForAdmin()
         {
             var announcementViewModel = new List<AnnouncementViewModel>();
             announcementViewModel = _context.Announcements.Where(a => a.Id > 0 && a.Active && !a.Deleted)
@@ -661,7 +680,146 @@ namespace Logic.Helpers
 
             return announcementViewModel;
         }
-       
+
+        public bool CheckIfDeactivated(string userName)
+        {
+            if (userName != null)
+            {
+                var check = _context.ApplicationUsers.Where(x => x.UserName == userName && x.Deactivated).FirstOrDefault();
+                if (check != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+		public bool DeleteEvent(int id)
+		{
+			var eventToDelete = _context.UpComingEvents.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+			if (eventToDelete != null)
+			{
+				eventToDelete.Deleted = true;
+                eventToDelete.Active = false;
+				_context.Update(eventToDelete);
+				_context.SaveChanges();
+				return true;
+			}
+			return false;
+		}
+
+        public DiscussionForumViewModel GetDisccusion(int id)
+        {
+            var discussionViewModel = new DiscussionForumViewModel();
+                discussionViewModel = _context.Discussions.Where(a => a.Id == id && a.Active && !a.Deleted)
+            .Select(a => new DiscussionForumViewModel()
+            {
+                DiscussionTitle = a.DiscussionTitle,
+                DiscussionDetails = a.DiscussionDetails,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+            }).FirstOrDefault();
+
+            return discussionViewModel;
+        }
+
+        public bool EditDiscussion(DiscussionForumViewModel discussion, ApplicationUser loggedInUser)
+        {
+            if (discussion != null)
+            {
+                var discussTOEdit = _context.Discussions.Where(x => x.Id == discussion.Id && x.Active && !x.Deleted).FirstOrDefault();
+                if (discussTOEdit != null)
+                {
+                    discussTOEdit.DiscussionTitle = discussion?.DiscussionTitle;
+                    discussTOEdit.DiscussionDetails = discussion?.DiscussionDetails;
+                    discussTOEdit.UserId = loggedInUser.Id;
+
+                    _context.Update(discussTOEdit);
+                    _context.SaveChanges();
+                    return true;
+                }
+               
+            }
+            return false;
+        }
+
+        public bool DeleteDiscussion(int id)
+        {
+            var discussToDelete = _context.Discussions.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (discussToDelete != null)
+            {
+                discussToDelete.Deleted = true;
+                discussToDelete.Active = false;
+                _context.Update(discussToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public AnnouncementViewModel GetAnnouncement(int id)
+        {
+            var announceViewModel = new AnnouncementViewModel();
+                announceViewModel = _context.Announcements.Where(a => a.Id == id && a.Active && !a.Deleted)
+            .Select(a => new AnnouncementViewModel()
+            {
+                AnnouncementDetails = a.AnnouncementDetails,
+                AnnouncementTitle = a.AnnouncementTitle,
+                DurationFrom = a.DurationFrom,
+                DurationTill = a.DurationTill,
+                DateCreated = a.DateCreated,
+                Id = a.Id,
+            }).FirstOrDefault();
+
+            return announceViewModel;
+        }
+        public bool EditAnnouncement(AnnouncementViewModel announcementdetails, ApplicationUser loggedInUser)
+        {
+            if (announcementdetails != null)
+            {
+                var editAnnoucement = _context.Announcements.Where(x => x.Id == announcementdetails.Id && x.Active && !x.Deleted).FirstOrDefault();
+                if (editAnnoucement != null)
+                {
+                    editAnnoucement.AnnouncementTitle = announcementdetails.AnnouncementTitle;
+                    editAnnoucement.AnnouncementDetails = announcementdetails.AnnouncementDetails;
+                    editAnnoucement.DurationFrom = announcementdetails.DurationFrom;
+                    editAnnoucement.DurationTill = announcementdetails.DurationTill;
+                    editAnnoucement.UserId = loggedInUser.Id;
+
+                    _context.Update(editAnnoucement);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteAnnounce(int id)
+        {
+            var announceToDelete = _context.Announcements.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (announceToDelete != null)
+            {
+                announceToDelete.Deleted = true;
+                announceToDelete.Active = false;
+                _context.Update(announceToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        public bool DeletePrayer(int id)
+        {
+            var requestToDelete = _context.PrayerRequests.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (requestToDelete != null)
+            {
+                requestToDelete.Deleted = true;
+                requestToDelete.Active = false;
+                _context.Update(requestToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
 
 

@@ -691,3 +691,283 @@ function AddAnnouncement() {
     }
 
 }
+
+function viewIDImage(imageUrl) {
+    var imageElement = document.getElementById('ImageId');
+    imageElement.src = imageUrl;
+}
+
+function EventToDelete(id) {
+    debugger
+    $('#event_Id').val(id);
+    $('#eventDeleteModal').modal('show');
+}
+
+function DeleteEvent() {
+    debugger
+    var id = $('#event_Id').val();
+    $.ajax({
+        type: 'Post',
+        url: '/Admin/DeleteEvent',
+        dataType: 'json',
+        data:
+        {
+            id: id,
+        },
+        success: function (result) {
+            debugger
+            if (!result.isError) {
+                var url = '/Admin/UpComingEvents';
+                successAlertWithRedirect(result.msg, url);
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
+}
+
+function EditDiscussion(id) {
+    debugger
+    $.ajax({
+        type: 'Get',
+        url: '/Admin/GetDiscussionToEdit',
+        dataType: 'json',
+        data:
+        {
+            id: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                $("#discussion_Id").val(result.id);
+                $("#edit_discussionTitle").val(result.discussionTitle);
+                $("#edit_discussionDetails").val(result.discussionDetails);
+                $("#discussionEditModal").modal("show");
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
+}
+
+function SaveDiscussion() {
+    var data = {};
+    data.Id = $('#discussion_Id').val();
+    data.DiscussionTitle = $('#edit_discussionTitle').val();
+    data.DiscussionDetails = $('#edit_discussionDetails').val();
+
+    if (data.DiscussionTitle != "" && data.DiscussionDetails != "") {
+
+        let details = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/SaveEditedDiscussion',
+            dataType: 'json',
+            data:
+            {
+                details: details,
+
+            },
+            success: function (result) {
+                if (!result.isError) {
+                    var url = '/Admin/CreateDiscussion';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+
+}
+
+function DeleteDiscussion() {
+    debugger
+    var id = $('#del_disId').val();
+    $.ajax({
+        type: 'Post',
+        dataType: 'Json',
+        url: '/Admin/DelDiscussion',
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                var url = '/Admin/CreateDiscussion'
+                successAlertWithRedirect(result.msg, url)
+            }
+            else {
+                errorAlert(result.msg)
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please check and try again. Please contact admin if issue persists..");
+        }
+    })
+}
+
+function DiscussionToDelete(id) {
+    debugger
+    $('#del_disId').val(id);
+    $('#discussionDeleteModal').modal('show');
+}
+
+function EditAnnouncement(id) {
+    debugger
+    $.ajax({
+        type: 'Get',
+        url: '/Admin/GetAnnounceToEdit',
+        dataType: 'json',
+        data:
+        {
+            id: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                //var joinDate;
+                //if (result.data.dateRegistered != "0001-01-01T00:00:00") {
+                //    var DateRegister = result.data.dateRegistered.split("T");
+                //    joinDate = DateRegister[0];
+                //} else {
+                //    joinDate = null;
+                //}
+                $("#annouce_Id").val(result.id);
+                $("#edit_announcementTitle").val(result.annoucementTitle);
+                $("#edit_announcementDetails").val(result.announcementDetails);
+
+                $("#edit_dateFrom").val(result.durationFrom);
+                $("#edit_dateTill").val(result.durationTill);
+                $("#announcementEditModal").modal("show");
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
+}
+
+function SaveEditedAnnouncement() {
+    debugger
+    var data = {};
+    data.Id = $('#annouce_Id').val();
+    data.AnnouncementTitle = $('#edit_announcementTitle').val();
+    data.AnnouncementDetails = $('#edit_announcementDetails').val();
+    data.DurationFrom = $('#edit_dateFrom').val();
+    data.DurationTill = $('#edit_dateTill').val();
+
+    if (data.AnnouncementTitle != "" && data.AnnouncementDetails != "" && data.DurationFrom != "" && data.DurationTill != "") {
+
+        let announcedetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/SaveEditedAnnouncement',
+            dataType: 'json',
+            data:
+            {
+                announcedetails: announcedetails,
+
+            },
+            success: function (result) {
+                debugger
+                if (!result.isError) {
+                    var url = '/Admin/AddAnnouncement';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+
+}
+
+function DeleteAnnounce() {
+    debugger
+    var id = $('#annouce_Id').val();
+    $.ajax({
+        type: 'Post',
+        dataType: 'Json',
+        url: '/Admin/DelAnnounce',
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                var url = '/Admin/AddAnnouncement'
+                successAlertWithRedirect(result.msg, url)
+            }
+            else {
+                errorAlert(result.msg)
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please check and try again. Please contact admin if issue persists..");
+        }
+    })
+}
+
+function DeleteAnnouncement(id) {
+    debugger
+    $('#annouce_Id').val(id);
+    $('#announcementToDelete').modal('show');
+}
+
+function DeletePrayerRequest() {
+    debugger
+    var id = $('#request_Id').val();
+    $.ajax({
+        type: 'Post',
+        dataType: 'Json',
+        url: '/User/DeleteRequest',
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                var url = '/User/PrayerRequest'
+                successAlertWithRedirect(result.msg, url)
+            }
+            else {
+                errorAlert(result.msg)
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please check and try again. Please contact admin if issue persists..");
+        }
+    })
+}
+
+function DeletePrayer(id) {
+    debugger
+    $('#request_Id').val(id);
+    $('#userPrayerDeleteModal').modal('show');
+}
