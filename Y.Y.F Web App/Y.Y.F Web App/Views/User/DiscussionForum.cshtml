@@ -11,7 +11,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
-                <li class="breadcrumb-item active">DiscussionForum</li>
+                <li class="breadcrumb-item active">Discussion Forum</li>
 
             </ol>
         </nav>
@@ -38,7 +38,7 @@
                                 </div>
                                 <h3> @discussion?.DiscussionTitle</h3>
                                 <p> @discussion?.DiscussionDetails.Substring(1,115)...</p>
-                                <a class="readmore stretched-link" asp-controller="User" asp-action="Discussion" asp-route-id="@discussion?.Id"> Read more <i class="bi bi-arrow-right"></i></a>
+                                <a class="readmore stretched-link" asp-controller="User" asp-action="Discussion" asp-route-id="@discussion?.Id"> <b> Read more </b> <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
 

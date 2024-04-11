@@ -113,7 +113,6 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Did not find the event" });
         }
 
-
         public IActionResult CreateDiscussion()
         {
             var listofDiscussions = _userHelper.ListofDiscussions();
@@ -180,6 +179,10 @@ namespace Y.Y.F_Web_App.Controllers
                 var announcementDetails = JsonConvert.DeserializeObject<AnnouncementViewModel>(details);
                 if (announcementDetails != null)
                 {
+                    if (announcementDetails.DurationTill < announcementDetails.DurationFrom)
+                    {
+                        return Json(new { isError = true, msg = "Add the correct duration" });
+                    }
                     var announcement = _userHelper.AddAnnouncements(announcementDetails, loggedInUser);
                     if (announcement)
                     {
@@ -193,7 +196,7 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpGet]
         public IActionResult AddAnnouncement()
         {
-            var listofAnnouncement = _userHelper.ListofAnnouncement();
+            var listofAnnouncement = _userHelper.ListofAnnouncementForAdmin();
             return View(listofAnnouncement);
         }
         public IActionResult AddBibleStudy()
@@ -241,9 +244,120 @@ namespace Y.Y.F_Web_App.Controllers
                     return Json(new { isError = false, msg = "Member Deactivated" });
                 }
             }
-            return Json(new{ isError = false, msg = "Member not found" });
+            return Json(new{ isError = true, msg = "Member not found" });
         }
-        
+
+		public JsonResult DeleteEvent(int id)
+		{
+			if (id > 0)
+			{
+				var deleteEvent = _userHelper.DeleteEvent(id);
+				if (deleteEvent)
+				{
+					return Json(new { isError = false, msg = "Event Deleted" });
+				}
+			}
+			return Json(new { isError = true, msg = "Member not found" });
+		}
+
+        public JsonResult GetDiscussionToEdit(int id)
+        {
+            if (id > 0)
+            {
+                var getDiscus = _userHelper.GetDisccusion(id);
+                if (getDiscus != null)
+                {
+                    return Json(getDiscus);
+                }
+                return Json(new { isError = true, msg = " Could not get discussion" });
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+        public JsonResult SaveEditedDiscussion(string details)
+        {
+            if (details != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var discussionDetails = JsonConvert.DeserializeObject<DiscussionForumViewModel>(details);
+                if (discussionDetails != null)
+                {
+                    var discussion = _userHelper.EditDiscussion(discussionDetails, loggedInUser);
+                    if (discussion)
+                    {
+                        return Json(new { isError = false, msg = "Discussion Edited successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to Edit " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+        public JsonResult DelDiscussion(int id)
+        {
+            if (id > 0)
+            {
+                var delete = _userHelper.DeleteDiscussion(id);
+                if (delete)
+                {
+                    return Json(new { isError = false, msg = "Discussion Deleted sucessfully" });
+                }
+            }
+            return Json(new { isError = true, msg = "Discussion not found" });
+        }
+
+        public JsonResult GetAnnounceToEdit(int id)
+        {
+            if (id > 0)
+            {
+                var get = _userHelper.GetAnnouncement(id);
+                if (get != null)
+                {
+                    return Json(get);
+                }
+                return Json(new { isError = true, msg = " Could not get Annoucement" });
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+        public JsonResult SaveEditedAnnouncement(string announcedetails)
+        {
+            if (announcedetails != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var announcementDetails = JsonConvert.DeserializeObject<AnnouncementViewModel>(announcedetails);
+                if (announcementDetails != null)
+                {
+                    if (announcementDetails.DurationTill < announcementDetails.DurationFrom)
+                    {
+                        return Json(new { isError = true, msg = "Add the correct durations" });
+                    }
+                    var editannouncement = _userHelper.EditAnnouncement(announcementDetails, loggedInUser);
+                    if (editannouncement)
+                    {
+                        return Json(new { isError = false, msg = "Announcement Edited successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to Edit " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+
+        public JsonResult DelAnnounce(int id)
+        {
+            if (id > 0)
+            {
+                var delete = _userHelper.DeleteAnnounce(id);
+                if (delete)
+                {
+                    return Json(new { isError = false, msg = "Announcement Deleted sucessfully" });
+                }
+            }
+            return Json(new { isError = true, msg = "Announcement not found" });
+        }
+
+
     }
 
 }

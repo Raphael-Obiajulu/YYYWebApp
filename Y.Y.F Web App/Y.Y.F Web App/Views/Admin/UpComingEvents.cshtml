@@ -57,7 +57,7 @@
                                         @*   <td>@upComingvents?.EventImage</td> *@
                                         <td>
                                                 @* <button class="btn btn-primary" onclick="Edit('@upComingvents.Id')"> <i class="bi bi-pencil"></i> </button> *@
-                                                <button class="btn btn-outline-success" onclick="Delete('@upComingvents.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-outline-success" data-toggle="modal" data-target="#eventDeleteModal" onclick="EventToDelete('@upComingvents.Id')"><i class="bi bi-trash"></i></button>
                                                
                                         </td>
                                     </tr>
@@ -152,7 +152,32 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+
+    <div class="modal fade" id="eventDeleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <b> Delete Event </b> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Are you sure you want to delete?</p>
+                    <div class="modal-btn delete-action">
+                        <div class="row m-auto">
+                            <input class="form-control" hidden type="text" id="event_Id">
+                            <div class="col-6">
+                                <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeleteEvent()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </main>
 <!-- End #main -->

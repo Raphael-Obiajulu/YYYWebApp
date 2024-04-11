@@ -50,7 +50,16 @@ namespace Logic.IHelpers
         bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64);
         bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser);
         List<AnnouncementViewModel> ListofAnnouncement();
-
+        bool CheckIfDeactivated(string userName);
+		bool DeleteEvent(int id);
+        bool DeleteDiscussion(int id);
+        DiscussionForumViewModel GetDisccusion(int id);
+        bool EditDiscussion(DiscussionForumViewModel discussion, ApplicationUser loggedInUser);
+        bool DeleteAnnounce(int id);
+        List<AnnouncementViewModel> ListofAnnouncementForAdmin();
+        AnnouncementViewModel GetAnnouncement(int id);
+        bool EditAnnouncement(AnnouncementViewModel announcementdetails, ApplicationUser loggedInUser);
+        bool DeletePrayer(int id);
         List<BibleStudyViewModel> listofBibleStudy();
         //bool BibleStudy(BibleStudyViewModel bibleStudy, ApplicationUser loggedInUser);
     }

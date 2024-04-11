@@ -222,7 +222,18 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Network" });
         }
 
-
+        public JsonResult DeleteRequest(int id)
+        {
+            if (id > 0)
+            {
+                var deleteRequest = _userHelper.DeletePrayer(id);
+                if (deleteRequest)
+                {
+                    return Json(new { isError = false, msg = "Prayer Request Deleted sucessfully" });
+                }
+            }
+            return Json(new { isError = true, msg = "Request not found" });
+        }
 
 
 

@@ -126,6 +126,12 @@ namespace Y.Y.F_Web_App.Controllers
                 var userName =  _userHelper.FindByUserNameAsync(username).Result;
                 if (userName != null)
                 {
+                    var checkIfDeactivated = _userHelper.CheckIfDeactivated(username);
+                    if (checkIfDeactivated)
+                    {
+                        return Json(new { isError = true, msg = "You have been Deactivated" });
+                    }
+
                     var result =  _signInManager.PasswordSignInAsync(userName, password, true, false).ConfigureAwait(false).GetAwaiter().GetResult();
                     if (result.Succeeded)
                     {
