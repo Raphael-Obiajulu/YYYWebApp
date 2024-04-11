@@ -219,7 +219,6 @@ function CreateEvents() {
 }
 
 function geteventdetails(id) {
-    debugger
     $.ajax({
         type: 'Post',
         url: '/Admin/GetEventDetails',
@@ -285,7 +284,6 @@ function submitPrayerRequest() {
 }
 
 function EditPrayerRequest(id) {
-    debugger
     $.ajax({
         type: 'Get',
         url: '/User/GetPrayerRequest',
@@ -650,7 +648,7 @@ function EditProfileDetails() {
 }
 
 function AddAnnouncement() {
-    debugger
+   
     var data = {};
     data.AnnouncementTitle = $('#announcementTitle').val();
     data.AnnouncementDetails = $('#announcementDetails').val();
@@ -698,13 +696,13 @@ function viewIDImage(imageUrl) {
 }
 
 function EventToDelete(id) {
-    debugger
+   
     $('#event_Id').val(id);
     $('#eventDeleteModal').modal('show');
 }
 
 function DeleteEvent() {
-    debugger
+   
     var id = $('#event_Id').val();
     $.ajax({
         type: 'Post',
@@ -731,7 +729,7 @@ function DeleteEvent() {
 }
 
 function EditDiscussion(id) {
-    debugger
+    
     $.ajax({
         type: 'Get',
         url: '/Admin/GetDiscussionToEdit',
@@ -797,7 +795,7 @@ function SaveDiscussion() {
 }
 
 function DeleteDiscussion() {
-    debugger
+   
     var id = $('#del_disId').val();
     $.ajax({
         type: 'Post',
@@ -823,13 +821,13 @@ function DeleteDiscussion() {
 }
 
 function DiscussionToDelete(id) {
-    debugger
+   
     $('#del_disId').val(id);
     $('#discussionDeleteModal').modal('show');
 }
 
 function EditAnnouncement(id) {
-    debugger
+   
     $.ajax({
         type: 'Get',
         url: '/Admin/GetAnnounceToEdit',
@@ -867,7 +865,7 @@ function EditAnnouncement(id) {
 }
 
 function SaveEditedAnnouncement() {
-    debugger
+   
     var data = {};
     data.Id = $('#annouce_Id').val();
     data.AnnouncementTitle = $('#edit_announcementTitle').val();
@@ -909,7 +907,7 @@ function SaveEditedAnnouncement() {
 }
 
 function DeleteAnnounce() {
-    debugger
+    
     var id = $('#annouce_Id').val();
     $.ajax({
         type: 'Post',
@@ -935,13 +933,13 @@ function DeleteAnnounce() {
 }
 
 function DeleteAnnouncement(id) {
-    debugger
+    
     $('#annouce_Id').val(id);
     $('#announcementToDelete').modal('show');
 }
 
 function DeletePrayerRequest() {
-    debugger
+   
     var id = $('#request_Id').val();
     $.ajax({
         type: 'Post',
@@ -967,13 +965,13 @@ function DeletePrayerRequest() {
 }
 
 function DeletePrayer(id) {
-    debugger
+    
     $('#request_Id').val(id);
     $('#userPrayerDeleteModal').modal('show');
 }
 
 function addBibleStudy() {
-    debugger
+    
     var data = {};
     data.Title = $('#title').val();
     data.Details = $('#biblestudyDetails').val();
