@@ -60,5 +60,7 @@ namespace Logic.IHelpers
         AnnouncementViewModel GetAnnouncement(int id);
         bool EditAnnouncement(AnnouncementViewModel announcementdetails, ApplicationUser loggedInUser);
         bool DeletePrayer(int id);
+        List<BibleStudyViewModel> listofBibleStudy();
+        //bool BibleStudy(BibleStudyViewModel bibleStudy, ApplicationUser loggedInUser);
     }
 }
