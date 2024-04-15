@@ -971,7 +971,6 @@ function DeletePrayer(id) {
 }
 
 function addBibleStudy() {
-    
     var data = {};
     data.Title = $('#title').val();
     data.Details = $('#biblestudyDetails').val();
@@ -1009,4 +1008,48 @@ function addBibleStudy() {
         errorAlert("Please fill the form Correctly");
     }
 
+}
+
+function DeleteBibleStudy(id) {
+
+    $('#bible_Id').val(id);
+    $('#biblestudyToDelete').modal('show');
+}
+
+function EditBibleStudy(id) {
+
+    $.ajax({
+        type: 'Get',
+        url: '/Admin/GetBibleToEdit',
+        dataType: 'json',
+        data:
+        {
+            id: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                //var joinDate;
+                //if (result.data.dateRegistered != "0001-01-01T00:00:00") {
+                //    var DateRegister = result.data.dateRegistered.split("T");
+                //    joinDate = DateRegister[0];
+                //} else {
+                //    joinDate = null;
+                //}
+                $("#bible_Id").val(result.id);
+                $("#edit_biblestudyTitle").val(result.biblestudyTitle);
+                $("#edit_biblestudyDetails").val(result.biblestudyDetails);
+
+                // $("#edit_dateFrom").val(result.durationFrom);
+                //$("#edit_dateTill").val(result.durationTill);
+                    $("#biblestudyEditModal").modal("show");
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
 }

@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<Core.ViewModels.AnnouncementViewModel>
 @{
     ViewData["Title"] = "Announcements";
-    if (User.IsInRole("Admin"))
-    {
-        Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
-    }
+    Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
 }
+
+
 <main id="main" class="main">
     <div class="pagetitle">
         <h1>Announcements</h1>
@@ -17,33 +12,33 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
                 <li class="breadcrumb-item active">Announcements</li>
+
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <div class="container mt-10">
         <div class="container mt-5">
-            <div class="row">
-                @if (Model != null && Model.Any())
+            <div class="row justify-content-center">
+                @if (Model != null && Model.Count() > 0)
                 {
-                    <h2 class="text-center mt-5 mb-5 font-weight-bold text-success">Announcements</h2>
+                    <h2 class="text-center mt-5 mb-5 font-weight-bold">Announcements</h2>
 
-                    @foreach (var announcement in Model)
+                    @foreach (var announcements in Model)
                     {
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="card p-4" style="width:100%">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-lg-2">
-                                            <span class="font-weight-bold">@announcement.AnnouncementTitle :</span>
-                                        </div>
-                                        <div class="col-sm-12 col-lg-10">
-                                            <p class="card-text mb-0">@announcement.AnnouncementDetails <i> <b> <small> @announcement.UserId</small></b></i></p>
-                                            <p class="text-success mt-0"> <small> This announcement will be available from @announcement.DurationFrom.ToString("D") to @announcement.DurationTill.ToString("D")</small></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-lg-10 col-sm-12">
 
+                            <div class="card" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">@announcements.AnnouncementTitle</h4>
+                                    <p>@announcements.AnnouncementDetails</p>
+                                    <div>
+                                        This announcement will be available from <span>@announcements.DurationFrom.ToString("D")</span> to
+                                        <span>@announcements.DurationTill.ToString("D")</span>
+                                        @* <span class="float-lg-end">@announcements.Id</span> *@
+                                    </div>
+                                    @* <p class="card-text">@announcements.DateCreated</p> *@
+                                </div>
                             </div>
                         </div>
                     }
