@@ -74,8 +74,8 @@ namespace Logic.Helpers
                     var createUser = await _userManager.CreateAsync(user, applicationUserViewModel.Password);
                     if (createUser.Succeeded)
                     {
-                       await _userManager.AddToRoleAsync(user, "User").ConfigureAwait(false);
-                       return true;
+                        await _userManager.AddToRoleAsync(user, "User").ConfigureAwait(false);
+                        return true;
                     }
                 }
                 return false;
@@ -85,7 +85,7 @@ namespace Logic.Helpers
 
                 throw;
             }
-           
+
         }
 
         public async Task<bool> CreateAdmin(ApplicationUserViewModel applicationUserViewModel)
@@ -127,7 +127,7 @@ namespace Logic.Helpers
             if (eventTitle != null)
             {
                 var checkName = _context.UpComingEvents.Where(x => x.EventTitle == eventTitle && x.Active && !x.Deleted).FirstOrDefault();
-                if (checkName != null) 
+                if (checkName != null)
                 {
                     return true;
                 }
@@ -137,7 +137,7 @@ namespace Logic.Helpers
 
         public bool CreateEvent(UpComingEventViewModel upComingEvents, string base64)
         {
-            if (upComingEvents != null ) 
+            if (upComingEvents != null)
             {
                 var createEvent = new UpComingEvents()
                 {
@@ -157,8 +157,8 @@ namespace Logic.Helpers
             return false;
         }
 
-       public List<UpComingEventViewModel> ListofEvents()
-       {
+        public List<UpComingEventViewModel> ListofEvents()
+        {
             var upComingEventsviewmodel = new List<UpComingEventViewModel>();
             upComingEventsviewmodel = _context.UpComingEvents.Where(a => a.Id > 0 && a.Active && !a.Deleted)
             .Select(a => new UpComingEventViewModel()
@@ -175,7 +175,7 @@ namespace Logic.Helpers
             }).ToList();
 
             return upComingEventsviewmodel;
-       }
+        }
 
         public UpComingEvents GetDetails(int id)
         {
@@ -222,7 +222,7 @@ namespace Logic.Helpers
                 UserId = a.UserId,
                 Username = a.User.UserName,
                 Id = a.Id,
-               
+
 
             }).ToList();
 
@@ -231,7 +231,7 @@ namespace Logic.Helpers
 
         public List<PrayerRequestViewModel> ListofUsersPrayerRequest(string loggedInUser)
         {
-            if (loggedInUser != null) 
+            if (loggedInUser != null)
             {
                 var prayerRequestViewModel = new List<PrayerRequestViewModel>();
                 prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted && a.UserId == loggedInUser)
@@ -274,7 +274,7 @@ namespace Logic.Helpers
             return prayerRequestViewModel;
         }
 
-        
+
         public bool ApproveRequest(int id)
         {
             var dd = _context.PrayerRequests.Where(x => x.Id == id && x.Active && x.PrayerRequestStatus == YYFEnums.StatusEnum.Pending).FirstOrDefault();
@@ -304,7 +304,7 @@ namespace Logic.Helpers
         {
             var commentsViewModel = new List<CommentsViewModel>();
             commentsViewModel = _context.Comments.Where(a => a.Id > 0 && a.CommentStatus == YYFEnums.StatusEnum.Pending)
-                .Include(x => x.User).Include( b => b.Discussion)
+                .Include(x => x.User).Include(b => b.Discussion)
             .Select(a => new CommentsViewModel()
             {
                 Message = a.Message,
@@ -394,7 +394,7 @@ namespace Logic.Helpers
         {
             if (discussionId > 0)
             {
-               return _context.Likes.Where(x => x.DiscussionForumId == discussionId).Count();
+                return _context.Likes.Where(x => x.DiscussionForumId == discussionId).Count();
             }
             return 0;
         }
@@ -425,7 +425,7 @@ namespace Logic.Helpers
 
             return discussionViewModel;
         }
-        
+
         public bool CheckUserLike(string userId)
         {
             var check = _context.Likes.Where(x => x.UserId == userId).FirstOrDefault();
@@ -454,7 +454,7 @@ namespace Logic.Helpers
 
         public bool CheckRequestStatus(int requestId)
         {
-            var check = _context.PrayerRequests.Where(x => x.Id == requestId && 
+            var check = _context.PrayerRequests.Where(x => x.Id == requestId &&
             (x.PrayerRequestStatus == YYFEnums.StatusEnum.Approved || x.PrayerRequestStatus == YYFEnums.StatusEnum.Declined)
             && x.Active).FirstOrDefault();
             if (check != null)
@@ -464,7 +464,7 @@ namespace Logic.Helpers
             return false;
         }
 
-        public PrayerRequestViewModel GetRequest( int id)
+        public PrayerRequestViewModel GetRequest(int id)
         {
             var prayerRequestViewModel = new PrayerRequestViewModel();
             prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id == id && a.Active && !a.Deleted && a.PrayerRequestStatus == YYFEnums.StatusEnum.Pending)
@@ -487,7 +487,7 @@ namespace Logic.Helpers
                     editRequest.PrayerRequestTitle = requestDetails.PrayerRequestTitle;
                     editRequest.PrayerRequestDetails = requestDetails.PrayerRequestDetails;
                     editRequest.UserId = loggedInUser.Id;
-                    
+
                     _context.Update(editRequest);
                     _context.SaveChanges();
                     return true;
@@ -546,20 +546,20 @@ namespace Logic.Helpers
         public List<ApplicationUserViewModel> ListofUsers()
         {
             var appViewModel = new List<ApplicationUserViewModel>();
-                appViewModel = _context.ApplicationUsers.Where(a => a.Id != null && !a.Deactivated)
-                .Include(x => x.Gender)
-                .Select(a => new ApplicationUserViewModel()
-                {
-                    FirstName = a.FirstName,
-                    LastName = a.LastName,
-                    UserName = a.UserName,
-                    PhoneNumber = a.PhoneNumber,
-                    DateCreated = a.DateCreated,
-                    Email = a.Email,
-                    GenderName = a.Gender.Name,
-                    Id = a.Id,
-                    ProfileImage = a.ProfileImage,
-                }).ToList();
+            appViewModel = _context.ApplicationUsers.Where(a => a.Id != null && !a.Deactivated)
+            .Include(x => x.Gender)
+            .Select(a => new ApplicationUserViewModel()
+            {
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                UserName = a.UserName,
+                PhoneNumber = a.PhoneNumber,
+                DateCreated = a.DateCreated,
+                Email = a.Email,
+                GenderName = a.Gender.Name,
+                Id = a.Id,
+                ProfileImage = a.ProfileImage,
+            }).ToList();
 
             return appViewModel;
         }
@@ -582,21 +582,21 @@ namespace Logic.Helpers
             if (userId != null)
             {
                 var appViewModel = new ApplicationUserViewModel();
-                    appViewModel = _context.ApplicationUsers.Where(a => a.Id == userId && !a.Deactivated)
-                .Include(x => x.Gender)
-                .Select(a => new ApplicationUserViewModel()
-                {
-                    FirstName = a.FirstName,
-                    LastName = a.LastName,
-                    UserName = a.UserName,
-                    PhoneNumber = a.PhoneNumber,
-                    DateCreated = a.DateCreated,
-                    Email = a.Email,
-                    GenderName = a.Gender.Name,
-                    Id = a.Id,
-                    Name = a.FirstName + " " + a.LastName,
-                    ProfileImage = a.ProfileImage,
-                }).FirstOrDefault();
+                appViewModel = _context.ApplicationUsers.Where(a => a.Id == userId && !a.Deactivated)
+            .Include(x => x.Gender)
+            .Select(a => new ApplicationUserViewModel()
+            {
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                UserName = a.UserName,
+                PhoneNumber = a.PhoneNumber,
+                DateCreated = a.DateCreated,
+                Email = a.Email,
+                GenderName = a.Gender.Name,
+                Id = a.Id,
+                Name = a.FirstName + " " + a.LastName,
+                ProfileImage = a.ProfileImage,
+            }).FirstOrDefault();
 
                 return appViewModel;
             }
@@ -694,31 +694,31 @@ namespace Logic.Helpers
             return false;
         }
 
-		public bool DeleteEvent(int id)
-		{
-			var eventToDelete = _context.UpComingEvents.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
-			if (eventToDelete != null)
-			{
-				eventToDelete.Deleted = true;
+        public bool DeleteEvent(int id)
+        {
+            var eventToDelete = _context.UpComingEvents.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (eventToDelete != null)
+            {
+                eventToDelete.Deleted = true;
                 eventToDelete.Active = false;
-				_context.Update(eventToDelete);
-				_context.SaveChanges();
-				return true;
-			}
-			return false;
-		}
+                _context.Update(eventToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
         public DiscussionForumViewModel GetDisccusion(int id)
         {
             var discussionViewModel = new DiscussionForumViewModel();
-                discussionViewModel = _context.Discussions.Where(a => a.Id == id && a.Active && !a.Deleted)
-            .Select(a => new DiscussionForumViewModel()
-            {
-                DiscussionTitle = a.DiscussionTitle,
-                DiscussionDetails = a.DiscussionDetails,
-                DateCreated = a.DateCreated,
-                Id = a.Id,
-            }).FirstOrDefault();
+            discussionViewModel = _context.Discussions.Where(a => a.Id == id && a.Active && !a.Deleted)
+        .Select(a => new DiscussionForumViewModel()
+        {
+            DiscussionTitle = a.DiscussionTitle,
+            DiscussionDetails = a.DiscussionDetails,
+            DateCreated = a.DateCreated,
+            Id = a.Id,
+        }).FirstOrDefault();
 
             return discussionViewModel;
         }
@@ -738,7 +738,7 @@ namespace Logic.Helpers
                     _context.SaveChanges();
                     return true;
                 }
-               
+
             }
             return false;
         }
@@ -760,16 +760,16 @@ namespace Logic.Helpers
         public AnnouncementViewModel GetAnnouncement(int id)
         {
             var announceViewModel = new AnnouncementViewModel();
-                announceViewModel = _context.Announcements.Where(a => a.Id == id && a.Active && !a.Deleted)
-            .Select(a => new AnnouncementViewModel()
-            {
-                AnnouncementDetails = a.AnnouncementDetails,
-                AnnouncementTitle = a.AnnouncementTitle,
-                DurationFrom = a.DurationFrom,
-                DurationTill = a.DurationTill,
-                DateCreated = a.DateCreated,
-                Id = a.Id,
-            }).FirstOrDefault();
+            announceViewModel = _context.Announcements.Where(a => a.Id == id && a.Active && !a.Deleted)
+        .Select(a => new AnnouncementViewModel()
+        {
+            AnnouncementDetails = a.AnnouncementDetails,
+            AnnouncementTitle = a.AnnouncementTitle,
+            DurationFrom = a.DurationFrom,
+            DurationTill = a.DurationTill,
+            DateCreated = a.DateCreated,
+            Id = a.Id,
+        }).FirstOrDefault();
 
             return announceViewModel;
         }
@@ -820,6 +820,7 @@ namespace Logic.Helpers
             }
             return false;
         }
+
         public List<BibleStudyViewModel> listofBibleStudy()
         {
             var biblestudyViewModel = new List<BibleStudyViewModel>();
@@ -834,6 +835,41 @@ namespace Logic.Helpers
             }).ToList();
 
             return biblestudyViewModel;
+        }
+
+        public bool CreateBibleStudy(BibleStudyViewModel biblestudyDetails, ApplicationUser loggedInUser)
+        {
+            if (biblestudyDetails != null && loggedInUser != null)
+            {
+                var addBibleStudy = new BibleStudy()
+                {
+                    Title = biblestudyDetails.Title,
+                    Details = biblestudyDetails.Details,
+                    
+                    DateCreated = DateTime.Now,
+                    UserId = loggedInUser.Id,
+                    Active = true,
+                    Deleted = false,
+                };
+                _context.Add(addBibleStudy);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteBibleStudy(int id)
+        {
+            var bibleToDelete = _context.BibleStudies.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (bibleToDelete != null)
+            {
+                bibleToDelete.Deleted = true;
+                bibleToDelete.Active = false;
+                _context.Update(bibleToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
 

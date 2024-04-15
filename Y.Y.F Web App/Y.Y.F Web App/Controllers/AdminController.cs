@@ -43,7 +43,7 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpPost]
         public JsonResult Events(string userDetails, string base64)
         {
-            if (userDetails != null )
+            if (userDetails != null)
             {
                 var upComingEvents = JsonConvert.DeserializeObject<UpComingEventViewModel>(userDetails);
                 if (upComingEvents != null)
@@ -65,12 +65,12 @@ namespace Y.Y.F_Web_App.Controllers
         }
 
 
-        public JsonResult GetEventDetails(int id) 
+        public JsonResult GetEventDetails(int id)
         {
-            if(id > 0)
+            if (id > 0)
             {
                 var eventdetails = _userHelper.GetDetails(id);
-                if (eventdetails != null) 
+                if (eventdetails != null)
                 {
                     return Json(eventdetails);
                 }
@@ -90,7 +90,7 @@ namespace Y.Y.F_Web_App.Controllers
             if (id > 0)
             {
                 var approveRequest = _userHelper.ApproveRequest(id);
-                if (approveRequest )
+                if (approveRequest)
                 {
                     return Json(new { isError = false, msg = " Approved Successfully" });
                 }
@@ -123,7 +123,7 @@ namespace Y.Y.F_Web_App.Controllers
             var listofComments = _userHelper.ListofComments();
             return View(listofComments);
         }
-        
+
         public JsonResult AddDiscussion(string details)
         {
             if (details != null)
@@ -199,13 +199,8 @@ namespace Y.Y.F_Web_App.Controllers
             var listofAnnouncement = _userHelper.ListofAnnouncementForAdmin();
             return View(listofAnnouncement);
         }
-        public IActionResult AddBibleStudy()
-        {
-            var listofBibleStudy = _userHelper.listofBibleStudy();
-            return View(listofBibleStudy);
-        }
 
-        //public JsonResult CreateBibleStudy(string details)
+        //public JsonResult addBibleStudy(string details)
         //{
         //    if (details != null)
         //    {
@@ -213,8 +208,12 @@ namespace Y.Y.F_Web_App.Controllers
         //        var biblestudyDetails = JsonConvert.DeserializeObject<BibleStudyViewModel>(details);
         //        if (biblestudyDetails != null)
         //        {
-        //            var biblestudy = _userHelper.BibleStudy(biblestudyDetails, loggedInUser);
-        //            if (biblestudy != null)
+        //            if (biblestudyDetails.Details < biblestudyDetails.Details)
+        //            {
+        //                return Json(new { isError = true, msg = "Add the correct duration" });
+        //            }
+        //            var biblestudy = _userHelper.(biblestudyDetails, loggedInUser);
+        //            if (biblestudy)
         //            {
         //                return Json(new { isError = false, msg = "BibleStudy added successfully" });
         //            }
@@ -223,6 +222,30 @@ namespace Y.Y.F_Web_App.Controllers
         //    }
         //    return Json(new { isError = true, msg = "Network Failure" });
         //}
+        public IActionResult AddBibleStudy()
+        {
+            var listofBibleStudy = _userHelper.listofBibleStudy();
+            return View(listofBibleStudy);
+        }
+
+        public JsonResult CreateBibleStudy(string details)
+        {
+            if (details != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var biblestudyDetails = JsonConvert.DeserializeObject<BibleStudyViewModel>(details);
+                if (biblestudyDetails != null)
+                {
+                    var biblestudy = _userHelper.CreateBibleStudy(biblestudyDetails, loggedInUser);
+                    if (biblestudy != null)
+                    {
+                        return Json(new { isError = false, msg = "BibleStudy added successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to add " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
         public IActionResult MediaGallery()
         {
             return View();
@@ -244,21 +267,21 @@ namespace Y.Y.F_Web_App.Controllers
                     return Json(new { isError = false, msg = "Member Deactivated" });
                 }
             }
-            return Json(new{ isError = true, msg = "Member not found" });
+            return Json(new { isError = true, msg = "Member not found" });
         }
 
-		public JsonResult DeleteEvent(int id)
-		{
-			if (id > 0)
-			{
-				var deleteEvent = _userHelper.DeleteEvent(id);
-				if (deleteEvent)
-				{
-					return Json(new { isError = false, msg = "Event Deleted" });
-				}
-			}
-			return Json(new { isError = true, msg = "Member not found" });
-		}
+        public JsonResult DeleteEvent(int id)
+        {
+            if (id > 0)
+            {
+                var deleteEvent = _userHelper.DeleteEvent(id);
+                if (deleteEvent)
+                {
+                    return Json(new { isError = false, msg = "Event Deleted" });
+                }
+            }
+            return Json(new { isError = true, msg = "Member not found" });
+        }
 
         public JsonResult GetDiscussionToEdit(int id)
         {
@@ -356,8 +379,23 @@ namespace Y.Y.F_Web_App.Controllers
             }
             return Json(new { isError = true, msg = "Announcement not found" });
         }
+        public JsonResult DeleteBibleStudy(int id)
+        {
+            if (id > 0)
+            {
+                var delete = _userHelper.DeleteBibleStudy(id);
 
+                if (delete)
+                {
+                    return Json(new
+                    {
+                        isError = false,
+                        msg = "BibleStudy deleted successfully"
+                    });
+                }
+            }
 
+            return Json(new { isError = true, msg = "BibleStudy not found" });
+        }
     }
-
 }
