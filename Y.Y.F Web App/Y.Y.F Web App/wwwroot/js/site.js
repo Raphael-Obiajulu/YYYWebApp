@@ -284,6 +284,7 @@ function submitPrayerRequest() {
 }
 
 function EditPrayerRequest(id) {
+    debugger
     $.ajax({
         type: 'Get',
         url: '/User/GetPrayerRequest',
@@ -293,15 +294,17 @@ function EditPrayerRequest(id) {
             id: id,
         },
         success: function (result) {
+            debugger
             if (!result.isError) {
-                debugger
                 $("#prayerRequest_Id").val(result.id);
                 $("#editprayerRequestTitle").val(result.prayerRequestTitle);
                 $("#editprayerRequestDetails").val(result.prayerRequestDetails);
                 $("#editprayerRequestModal").modal("show");
             }
             else {
+                debugger
                 errorAlert(result.msg);
+               $("#editprayerRequestModal").modal("hide");
             }
         },
         error: function (ex) {
@@ -440,7 +443,6 @@ function CreateDiscussion() {
 }
 
 function CreateComment() {
-    
     Message = $('#mainComment').val();
     DiscussionForumId = $('#discussion_Id').val();
     
@@ -458,8 +460,7 @@ function CreateComment() {
             success: function (result) {
                 
                 if (!result.isError) {
-                    var url = '/User/Discussion';
-                    successAlertWithRedirect(result.msg, url);
+                    successAlertWithRedirect(result.msg, result.url);
                 }
                 else {
                     errorAlert(result.msg);
@@ -471,15 +472,12 @@ function CreateComment() {
         });
     }
     else {
-        //$('#submit_btn').html(defaultBtnValue);
-        //$('#submit_btn').attr("disabled", false);
         errorAlert("Please fill the form Correctly");
     }
 
 }
 
 function SaveLike(id) {
-
     if ( id > 0) {
         $.ajax({
             type: 'Post',
