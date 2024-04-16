@@ -372,7 +372,7 @@ namespace Logic.Helpers
             return false;
         }
 
-        public bool CreateComment(string message, int id, ApplicationUser loggedInUser)
+        public Comment CreateComment(string message, int id, ApplicationUser loggedInUser)
         {
             if (message != null && loggedInUser != null)
             {
@@ -385,9 +385,9 @@ namespace Logic.Helpers
                 };
                 _context.Add(addComment);
                 _context.SaveChanges();
-                return true;
+                return addComment;
             }
-            return false;
+            return null;
         }
 
         public int TotalLikes(int discussionId)

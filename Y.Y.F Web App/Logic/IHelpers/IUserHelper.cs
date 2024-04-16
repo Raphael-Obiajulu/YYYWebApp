@@ -28,7 +28,7 @@ namespace Logic.IHelpers
         List<CommentsViewModel> ListofComments();
         List<DiscussionForumViewModel> ListofDiscussions();
         bool AddDiscussion(DiscussionForumViewModel discussion, ApplicationUser loggedInUser);
-        bool CreateComment(string message, int id, ApplicationUser loggedInUser);
+        Comment CreateComment(string message, int id, ApplicationUser loggedInUser);
         int TotalLikes(int discussionId);
         DiscussionForumViewModel GetDiscussion(int discussionId);
         int TotalComments(int discussionId);

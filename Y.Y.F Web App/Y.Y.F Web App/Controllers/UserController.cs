@@ -107,9 +107,9 @@ namespace Y.Y.F_Web_App.Controllers
                 if (loggedInUser != null)
                 {
                     var addComment = _userHelper.CreateComment(message, id, loggedInUser);
-                    if (addComment)
+                    if (addComment != null)
                     {
-                        return Json(new { isError = false, msg = "Comment added successfully" });
+                        return Json(new { isError = false, msg = "Comment added successfully", url = "/User/Discussion?id=" + id });
                     }
                     return Json(new { isError = true, msg = "Unable to add" });
                 }

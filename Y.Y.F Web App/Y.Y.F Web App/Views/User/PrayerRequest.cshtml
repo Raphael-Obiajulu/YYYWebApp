@@ -49,16 +49,16 @@
                                     @foreach (var prayerRequest in Model)
                                     {
                                         <tr>
-                                            <td>@prayerRequest.Id</td>
-                                            <td>@prayerRequest.PrayerRequestTitle</td>
-                                            <td>@prayerRequest.PrayerRequestDetails</td>
-                                            <td>@prayerRequest.DateCreated.ToString("D")</td>
+                                            <td>@prayerRequest?.Id</td>
+                                            <td>@prayerRequest?.PrayerRequestTitle</td>
+                                            <td>@prayerRequest?.PrayerRequestDetails</td>
+                                            <td>@prayerRequest?.DateCreated.ToString("D")</td>
                                             <td>
-                                                @if (prayerRequest.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Pending)
+                                                @if (prayerRequest?.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Pending)
                                                 {
                                                     <badge class="badge badge-warning p-2"> Pending </badge>
                                                 }
-                                                else if (prayerRequest.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Approved)
+                                                else if (prayerRequest?.PrayerRequestStatus == Core.DB.YYFEnums.StatusEnum.Approved)
                                                 {
                                                     <badge class="badge badge-success p-2"> Approved </badge>
                                                 }else  {
@@ -66,8 +66,8 @@
                                                 }
                                             </td>
                                             <td class="d-flex">
-                                                <button class="btn btn-outline-success mr-1" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest.Id')"><i class="bi bi-pencil"></i></button>
-                                                <button class="btn btn-outline-success ml-1" data-toggle="modal" data-target="#userPrayerDeleteModal" onclick="DeletePrayer('@prayerRequest.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-outline-success mr-1" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest?.Id')"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-outline-success ml-1" data-toggle="modal" data-target="#userPrayerDeleteModal" onclick="DeletePrayer('@prayerRequest?.Id')"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     }
@@ -120,7 +120,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="editprayerRequestModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -171,11 +170,14 @@
                             <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeletePrayerRequest()">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                            <a data-bs-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
+
