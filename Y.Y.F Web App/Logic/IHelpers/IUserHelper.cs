@@ -70,6 +70,9 @@ namespace Logic.IHelpers
         bool SaveMediaGallery(MediaGalleryViewModel mediaDetails, string base64, string userId);
         bool DeleteMediaGallery(int id);
         List<MediaGalleryViewModel> ListofMedia();
+        BibleStudyViewModel Getbiblestudy(int id);
+
+        bool SaveEditedBibleStudy(BibleStudyViewModel biblestudy, ApplicationUser loggedInUser);
         List<Video> ListofVideos();
         bool SaveVideo(Video videoDetails);
     }

@@ -926,17 +926,52 @@ namespace Logic.Helpers
 
             return mediaViewModel;
         }
+        public BibleStudyViewModel Getbiblestudy(int id)
+        {
+            var bibleStudyViewModel = new BibleStudyViewModel();
+            bibleStudyViewModel = _context.BibleStudies.Where(a => a.Id == id && a.Active && !a.Deleted)
+        .Select(a => new BibleStudyViewModel()
+        {
+            Title = a.Title,
+            Details = a.Details,
+            Id = a.Id,
+            DateCreated = a.DateCreated,
+        }).FirstOrDefault();
+
+            return bibleStudyViewModel;
+        }
+
+        public bool SaveEditedBibleStudy(BibleStudyViewModel biblestudy, ApplicationUser loggedInUser)
+        {
+            if (biblestudy != null)
+            {
+                var biblestudyTOEdit = _context.BibleStudies.Where(x => x.Id == biblestudy.Id && x.Active && !x.Deleted).FirstOrDefault();
+                if (biblestudyTOEdit != null)
+                {
+                    biblestudyTOEdit.Id = biblestudy.Id;
+                    biblestudyTOEdit.Title = biblestudy?.Title;
+                    biblestudyTOEdit.Details = biblestudy.Details;
+
+                    _context.Update(biblestudyTOEdit);
+                    _context.SaveChanges();
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
         public List<Video> ListofVideos()
         {
             var videoViewModel = new List<Video>();
-                videoViewModel = _context.Videos.Where(a => a.Id > 0 && a.Active && !a.Deleted)
-            .Select(a => new Video()
-            {
-                VideoTitle = a.VideoTitle,
-                MediaVideo = a.MediaVideo,
-                DateCreated = a.DateCreated,
-                Id = a.Id,
-            }).ToList();
+            videoViewModel = _context.Videos.Where(a => a.Id > 0 && a.Active && !a.Deleted)
+        .Select(a => new Video()
+        {
+            VideoTitle = a.VideoTitle,
+            MediaVideo = a.MediaVideo,
+            DateCreated = a.DateCreated,
+            Id = a.Id,
+        }).ToList();
 
             return videoViewModel;
         }
@@ -947,7 +982,7 @@ namespace Logic.Helpers
             {
                 var createVideo = new Video()
                 {
-                    VideoTitle = videoDetails.VideoTitle, 
+                    VideoTitle = videoDetails.VideoTitle,
                     MediaVideo = videoDetails.MediaVideo,
                     DateCreated = DateTime.Now,
                     Active = true,
@@ -959,7 +994,5 @@ namespace Logic.Helpers
             }
             return false;
         }
-
-
     }
 }

@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>@AddBibleStudy.Id</td>
                                             <td>@AddBibleStudy.Title</td>
-                                            <td>@AddBibleStudy.Details.Substring(1, 50)</td>
+                                            <td>@AddBibleStudy.Details</td>
                                             <td>
                                                 <a class="btn btn-success" asp-controller="User" asp-action="BibleStudy">
                                                     View Full Study
@@ -127,6 +127,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <input class="form-control" hidden type="text" id="bible_Id">
                             <div class="form-group">
                                 <label for="inputName">BibleStudy Title</label>
                                 <input type="text" class="form-control" id="edit_biblestudyTitle" placeholder="Enter Biblestudy Title">
@@ -138,7 +139,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success offset-4" onclick="EditBibleStudy()">Submit</button>
+                            <button type="button" class="btn btn-success offset-4" onclick="SaveEditedBibleStudy()">Submit</button>
                         </div>
                     </div>
 
