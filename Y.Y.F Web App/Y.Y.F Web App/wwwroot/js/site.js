@@ -1042,8 +1042,6 @@ function EditBibleStudy(id) {
 }
 
 function AddMedia() {
-    debugger
-
     var data = {};
     data.MediaTitle = $('#mediaTitle').val();
     data.Sermons = $('#mediasermon').val();
@@ -1093,6 +1091,43 @@ function AddMedia() {
     }
 }
 
+function AddMediaVideo() {
+    debugger
+    var data = {};
+    data.VideoTitle = $('#mediaVidTitle').val();
+    data.MediaVideo = $('#mediaVid').val();
+
+    if (data.MediaVideo != "" && data.VideoTitle != "") {
+        let videoDetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/CreateVideo',
+            dataType: 'json',
+            data:
+            {
+                videoDetails: videoDetails,
+            },
+            success: function (result) {
+                if (!result.isError) {
+                    debugger;
+                    var url = '/Admin/MediaGallery';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+}
+
 function DeleteMedia() {
     var id = $('#media_Id').val(); 
     $.ajax({
@@ -1118,7 +1153,5 @@ function DeleteMedia() {
 }
 
 function MediaToDelete(id) {
-    debugger
     $('#media_Id').val(id);
-/*    $('#delete_media').modal('show');*/
 }

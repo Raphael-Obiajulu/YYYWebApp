@@ -23,5 +23,7 @@ namespace Core.ViewModels
         public string? Video { get; set; }
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
+        public List<Video>? MediaVideos { get; set; }
+        public List<MediaGalleryViewModel>? AllMedia { get; set; }
     }
 }

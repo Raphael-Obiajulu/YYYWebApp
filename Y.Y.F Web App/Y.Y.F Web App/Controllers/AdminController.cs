@@ -1,4 +1,5 @@
 ﻿using Core.DB;
+using Core.Migrations;
 using Core.Models;
 using Core.ViewModels;
 using Logic.IHelpers;
@@ -231,7 +232,13 @@ namespace Y.Y.F_Web_App.Controllers
         public IActionResult MediaGallery()
         {
             var listofMedia = _userHelper.ListofMedia();
-            return View(listofMedia);
+            var listOfVideos = _userHelper.ListofVideos();
+            var model = new MediaGalleryViewModel()
+            {
+                MediaVideos = listOfVideos,
+                AllMedia = listofMedia,
+            };
+            return View(model);
         }
 
         public IActionResult AllUsers()
@@ -394,6 +401,24 @@ namespace Y.Y.F_Web_App.Controllers
                     if (addMediaGallery)
                     {
                         return Json(new { isError = false, msg = "Media Added Succesfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to Add" });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
+
+        public JsonResult CreateVideo(string videoDetails)
+        {
+            if (videoDetails != null)
+            {
+                var details = JsonConvert.DeserializeObject<Video>(videoDetails);
+                if (details != null)
+                {
+                    var addVideo = _userHelper.SaveVideo(details);
+                    if (addVideo)
+                    {
+                        return Json(new { isError = false, msg = "Video Added Succesfully" });
                     }
                     return Json(new { isError = true, msg = "Unable to Add" });
                 }
