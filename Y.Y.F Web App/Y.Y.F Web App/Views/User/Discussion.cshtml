@@ -1,15 +1,14 @@
 ﻿@inject Logic.IHelpers.IUserHelper _userHelper;
 @model Core.ViewModels.DiscussionForumViewModel
 
-
 @{
     ViewData["Title"] = "Discussion";
     Layout = "~/Views/Shared/_LayoutTwo.cshtml";
 
     var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
-    var userLike = _userHelper.CheckUserLike(loggedInUser.Id);
+    var id = Model.SingleDiscussion.Id;
+    var userLike = _userHelper.CheckUserLike(loggedInUser.Id, id);
 }
-
 
     <section id="blog" class="blog">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -73,13 +72,6 @@
                                 </button>
                             }
 
-                           @*  <button onclick="SaveLike('@Model?.SingleDiscussion?.Id')" style="border: none" id="likeButton">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" id="heartIcon">
-                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-                                </svg>
-                            </button> *@
-
-
                             <ul class="tags">
                                 <li><a> </a></li>
 
@@ -93,48 +85,49 @@
                         </div><!-- End meta bottom -->
                         </article>
                     }
-
-
                     <div class="mt-5"> 
                         <div class="mt-3"> 
                             <ul>
                             <li class="d-flex align-items-center" style="font-size:1.8em;"><i class="bi bi-chat-dots"></i> &nbsp; &nbsp; <b> Comments </b></li>
                             </ul>
                         </div>
+                        @if (Model != null)
+                        {
+                            @foreach (var comment in Model?.SingleDiscussion?.Comments)
+                            {
+                                <div class="post-item mt-3 mr-4" style="margin: 30px;">
+                                    <div>
+                                        <h6>@comment?.Message</h6>
+                                        <p>Added by @comment?.UserName</p>
+                                        <hr />
+                                    </div>
+                                </div>
+                            }
+                        }
+                           
+                    </div>
+                    
+                    <div class="reply-form mt-3">
 
-                    @foreach (var comment in Model?.SingleDiscussion?.Comments)
-                    {
-                            <div class="post-item mt-3 mr-4" style="margin: 30px;">
-                                <div>
-                                    <h6>@comment?.Message</h6>
-                                    <p>Added by @comment?.UserName</p>
-                                    <hr />
+                        <h4>Leave a Comment</h4>
+                      @*   <p>Your name address will not be published. Required fields are marked* </p> *@
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-md-12 form-group">
+                                    <input id="msgName" type="text" class="form-control p-2" placeholder="Your Name*">
                                 </div>
                             </div>
-                        }
+                            <div class="row mb-3">
+                                <div class="col form-group">
+                                    <input id="discussion_Id" type="text" class="form-control p-2" value="@Model?.SingleDiscussion?.Id" hidden>
+                                    <textarea cols="5" rows="5" id="mainComment" class="form-control p-2" placeholder="Your Comment*"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" onclick="CreateComment()" class="btn btn-success"> Post Comment</button>
+
+                        </form>
+
                     </div>
-
-                <div class="reply-form mt-3">
-
-                    <h4>Leave a Comment</h4>
-                    <p>Your name address will not be published. Required fields are marked* </p>
-                    <form>
-                        <div class="row mb-3">
-                            <div class="col-md-12 form-group">
-                                <input id="msgName" type="text" class="form-control p-2" placeholder="Your Name*">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col form-group">
-                                <input id="discussion_Id" type="text" class="form-control p-2" value="@Model?.SingleDiscussion?.Id" hidden>
-                                <textarea cols="5" rows="5" id="mainComment" class="form-control p-2" placeholder="Your Comment*"></textarea>
-                            </div>
-                        </div>
-                        <button type="button" onclick="CreateComment()" class="btn btn-success"> Post Comment</button>
-
-                    </form>
-
-                </div>
 
                 </div>
 

@@ -319,10 +319,10 @@ namespace Logic.Helpers
             return commentsViewModel;
         }
 
-        public List<CommentsViewModel> ListofApprovedComments()
+        public List<CommentsViewModel> ListofApprovedComments(int discussionId)
         {
             var commentsViewModel = new List<CommentsViewModel>();
-            commentsViewModel = _context.Comments.Where(a => a.Id > 0 && a.CommentStatus == YYFEnums.StatusEnum.Approved)
+            commentsViewModel = _context.Comments.Where(a => a.Id > 0 && a.CommentStatus == YYFEnums.StatusEnum.Approved && a.DiscussionForumId == discussionId)
                 .Include(x => x.User).Include(b => b.Discussion)
             .Select(a => new CommentsViewModel()
             {
@@ -372,7 +372,7 @@ namespace Logic.Helpers
             return false;
         }
 
-        public bool CreateComment(string message, int id, ApplicationUser loggedInUser)
+        public Comment CreateComment(string message, int id, ApplicationUser loggedInUser)
         {
             if (message != null && loggedInUser != null)
             {
@@ -385,9 +385,9 @@ namespace Logic.Helpers
                 };
                 _context.Add(addComment);
                 _context.SaveChanges();
-                return true;
+                return addComment;
             }
-            return false;
+            return null;
         }
 
         public int TotalLikes(int discussionId)
@@ -410,7 +410,7 @@ namespace Logic.Helpers
 
         public DiscussionForumViewModel GetDiscussion(int discussionId)
         {
-            var comments = ListofApprovedComments();
+            var comments = ListofApprovedComments(discussionId);
             var discussionViewModel = new DiscussionForumViewModel();
             discussionViewModel = _context.Discussions.Where(a => a.Id == discussionId && a.Active && !a.Deleted)
             .Select(a => new DiscussionForumViewModel()
@@ -426,9 +426,9 @@ namespace Logic.Helpers
             return discussionViewModel;
         }
 
-        public bool CheckUserLike(string userId)
+        public bool CheckUserLike(string userId, int id)
         {
-            var check = _context.Likes.Where(x => x.UserId == userId).FirstOrDefault();
+            var check = _context.Likes.Where(x => x.UserId == userId && x.DiscussionForumId == id).FirstOrDefault();
             if (check != null)
             {
                 return true;
@@ -546,7 +546,7 @@ namespace Logic.Helpers
         public List<ApplicationUserViewModel> ListofUsers()
         {
             var appViewModel = new List<ApplicationUserViewModel>();
-            appViewModel = _context.ApplicationUsers.Where(a => a.Id != null && !a.Deactivated)
+            appViewModel = _context.ApplicationUsers.Where(a => a.Id != null)
             .Include(x => x.Gender)
             .Select(a => new ApplicationUserViewModel()
             {
@@ -559,6 +559,7 @@ namespace Logic.Helpers
                 GenderName = a.Gender.Name,
                 Id = a.Id,
                 ProfileImage = a.ProfileImage,
+                Deactivated = a.Deactivated,
             }).ToList();
 
             return appViewModel;
@@ -845,7 +846,6 @@ namespace Logic.Helpers
                 {
                     Title = biblestudyDetails.Title,
                     Details = biblestudyDetails.Details,
-                    
                     DateCreated = DateTime.Now,
                     UserId = loggedInUser.Id,
                     Active = true,
@@ -872,6 +872,60 @@ namespace Logic.Helpers
             return false;
         }
 
+        public bool SaveMediaGallery(MediaGalleryViewModel mediaDetails, string base64, string userId)
+        {
+            if (mediaDetails != null)
+            {
+                var createMedia = new MediaGallery()
+                {
+                    MediaTitle = mediaDetails.MediaTitle,
+                    DateCreated = DateTime.Now,
+                    Active = true,
+                    Deleted = false,
+                    //Sermons = mediaDetails.Sermons,
+                    //WorshipMusic = mediaDetails.WorshipMusic,
+                    //Video = mediaDetails.Video,
+                    MediaImage = base64 != null ? base64 : null,
+                    UserId = userId,
+                };
+                _context.Add(createMedia);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteMediaGallery(int id)
+        {
+            var mediaToDelete = _context.MediaGalleries.Where(a => a.Id == id && !a.Deleted).FirstOrDefault();
+            if (mediaToDelete != null)
+            {
+                mediaToDelete.Deleted = true;
+                mediaToDelete.Active = false;
+                _context.Update(mediaToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public List<MediaGalleryViewModel> ListofMedia()
+        {
+            var mediaViewModel = new List<MediaGalleryViewModel>();
+                mediaViewModel = _context.MediaGalleries.Where(a => a.Id > 0 && a.Active && !a.Deleted)
+                .Select(a => new MediaGalleryViewModel()
+                {
+                    MediaTitle = a.MediaTitle,
+                    MediaImage = a.MediaImage,
+                    Sermons = a.Sermons,
+                    WorshipMusic = a.WorshipMusic,
+                    Video = a.Video,
+                    DateCreated = a.DateCreated,
+                    Id = a.Id,
+                }).ToList();
+
+            return mediaViewModel;
+        }
         public BibleStudyViewModel Getbiblestudy(int id)
         {
             var bibleStudyViewModel = new BibleStudyViewModel();
@@ -906,7 +960,6 @@ namespace Logic.Helpers
             }
             return false;
         }
-
 
     }
 }

@@ -284,6 +284,7 @@ function submitPrayerRequest() {
 }
 
 function EditPrayerRequest(id) {
+    debugger
     $.ajax({
         type: 'Get',
         url: '/User/GetPrayerRequest',
@@ -293,15 +294,17 @@ function EditPrayerRequest(id) {
             id: id,
         },
         success: function (result) {
+            debugger
             if (!result.isError) {
-                debugger
                 $("#prayerRequest_Id").val(result.id);
                 $("#editprayerRequestTitle").val(result.prayerRequestTitle);
                 $("#editprayerRequestDetails").val(result.prayerRequestDetails);
                 $("#editprayerRequestModal").modal("show");
             }
             else {
+                debugger
                 errorAlert(result.msg);
+               $("#editprayerRequestModal").modal("hide");
             }
         },
         error: function (ex) {
@@ -440,7 +443,6 @@ function CreateDiscussion() {
 }
 
 function CreateComment() {
-    
     Message = $('#mainComment').val();
     DiscussionForumId = $('#discussion_Id').val();
     
@@ -458,8 +460,7 @@ function CreateComment() {
             success: function (result) {
                 
                 if (!result.isError) {
-                    var url = '/User/Discussion';
-                    successAlertWithRedirect(result.msg, url);
+                    successAlertWithRedirect(result.msg, result.url);
                 }
                 else {
                     errorAlert(result.msg);
@@ -471,15 +472,12 @@ function CreateComment() {
         });
     }
     else {
-        //$('#submit_btn').html(defaultBtnValue);
-        //$('#submit_btn').attr("disabled", false);
         errorAlert("Please fill the form Correctly");
     }
 
 }
 
 function SaveLike(id) {
-
     if ( id > 0) {
         $.ajax({
             type: 'Post',
@@ -648,7 +646,6 @@ function EditProfileDetails() {
 }
 
 function AddAnnouncement() {
-   
     var data = {};
     data.AnnouncementTitle = $('#announcementTitle').val();
     data.AnnouncementDetails = $('#announcementDetails').val();
@@ -698,7 +695,6 @@ function viewIDImage(imageUrl) {
 function EventToDelete(id) {
    
     $('#event_Id').val(id);
-    $('#eventDeleteModal').modal('show');
 }
 
 function DeleteEvent() {
@@ -713,7 +709,6 @@ function DeleteEvent() {
             id: id,
         },
         success: function (result) {
-            debugger
             if (!result.isError) {
                 var url = '/Admin/UpComingEvents';
                 successAlertWithRedirect(result.msg, url);
@@ -794,9 +789,8 @@ function SaveDiscussion() {
 
 }
 
-function DeleteDiscussion() {
-   
-    var id = $('#del_disId').val();
+function DeleteDiscussion(id) {
+   /* var id = $('#del_disId').val();*/
     $.ajax({
         type: 'Post',
         dataType: 'Json',
@@ -820,14 +814,13 @@ function DeleteDiscussion() {
     })
 }
 
-function DiscussionToDelete(id) {
+//function DiscussionToDelete(id) {
    
-    $('#del_disId').val(id);
-    $('#discussionDeleteModal').modal('show');
-}
+//    $('#del_disId').val(id);
+//    $('#discussionDeleteModal').modal('show');
+//}
 
 function EditAnnouncement(id) {
-   
     $.ajax({
         type: 'Get',
         url: '/Admin/GetAnnounceToEdit',
@@ -838,20 +831,27 @@ function EditAnnouncement(id) {
         },
         success: function (result) {
             if (!result.isError) {
-                debugger
-                //var joinDate;
-                //if (result.data.dateRegistered != "0001-01-01T00:00:00") {
-                //    var DateRegister = result.data.dateRegistered.split("T");
-                //    joinDate = DateRegister[0];
-                //} else {
-                //    joinDate = null;
-                //}
+                var durationFrom;
+                if (result.durationFrom != "0001-01-01T00:00:00") {
+                    var fromDate = result.durationFrom.split("T");
+                    durationFrom = fromDate[0];
+                } else {
+                    durationFrom = null;
+                }
+                var durationTill;
+                if (result.durationTill != "0001-01-01T00:00:00") {
+                    var tillDate = result.durationTill.split("T");
+                    durationTill = tillDate[0];
+                } else {
+                    durationTill = null;
+                }
+
                 $("#annouce_Id").val(result.id);
-                $("#edit_announcementTitle").val(result.annoucementTitle);
+                $("#edit_announcementTitle").val(result.announcementTitle);
                 $("#edit_announcementDetails").val(result.announcementDetails);
 
-                $("#edit_dateFrom").val(result.durationFrom);
-                $("#edit_dateTill").val(result.durationTill);
+                $("#edit_dateFrom").val(durationFrom);
+                $("#edit_dateTill").val(durationTill);
                 $("#announcementEditModal").modal("show");
             }
             else {
@@ -906,9 +906,9 @@ function SaveEditedAnnouncement() {
 
 }
 
-function DeleteAnnounce() {
+function DeleteAnnounce(id) {
     
-    var id = $('#annouce_Id').val();
+   /* var id = $('#annouce_Id').val();*/
     $.ajax({
         type: 'Post',
         dataType: 'Json',
@@ -918,7 +918,6 @@ function DeleteAnnounce() {
         },
         success: function (result) {
             if (!result.isError) {
-                debugger
                 var url = '/Admin/AddAnnouncement'
                 successAlertWithRedirect(result.msg, url)
             }
@@ -932,15 +931,15 @@ function DeleteAnnounce() {
     })
 }
 
-function DeleteAnnouncement(id) {
+//function DeleteAnnouncement(id) {
     
-    $('#annouce_Id').val(id);
-    $('#announcementToDelete').modal('show');
-}
+//    $('#annouce_Id').val(id);
+//    $('#announcementToDelete').modal('show');
+//}
 
-function DeletePrayerRequest() {
+function DeletePrayerRequest(id) {
    
-    var id = $('#request_Id').val();
+   /* var id = $('#request_Id').val();*/
     $.ajax({
         type: 'Post',
         dataType: 'Json',
@@ -950,7 +949,6 @@ function DeletePrayerRequest() {
         },
         success: function (result) {
             if (!result.isError) {
-                debugger
                 var url = '/User/PrayerRequest'
                 successAlertWithRedirect(result.msg, url)
             }
@@ -964,11 +962,11 @@ function DeletePrayerRequest() {
     })
 }
 
-function DeletePrayer(id) {
+//function DeletePrayer(id) {
     
-    $('#request_Id').val(id);
-    $('#userPrayerDeleteModal').modal('show');
-}
+//    $('#request_Id').val(id);
+//    $('#userPrayerDeleteModal').modal('show');
+//}
 
 function addBibleStudy() {
     var data = {};
@@ -1011,7 +1009,6 @@ function addBibleStudy() {
 }
 
 function DeleteBibleStudy(id) {
-
     $('#bible_Id').val(id);
    
 }
@@ -1029,20 +1026,10 @@ function EditBibleStudy(id) {
         success: function (result) {
             if (!result.isError) {
                 debugger
-                //var joinDate;
-                //if (result.data.dateRegistered != "0001-01-01T00:00:00") {
-                //    var DateRegister = result.data.dateRegistered.split("T");
-                //    joinDate = DateRegister[0];
-                //} else {
-                //    joinDate = null;
-                //}
                 $("#bible_Id").val(result.id);
-                $("#edit_biblestudyTitle").val(result.title);
-                $("#edit_biblestudyDetails").val(result.details);
-
-                // $("#edit_dateFrom").val(result.durationFrom);
-                //$("#edit_dateTill").val(result.durationTill);
-                    $("#biblestudyEditModal").modal("show");
+                $("#edit_biblestudyTitle").val(result.biblestudyTitle);
+                $("#edit_biblestudyDetails").val(result.biblestudyDetails);
+                $("#biblestudyEditModal").modal("show");
             }
             else {
                 errorAlert(result.msg);
@@ -1054,8 +1041,89 @@ function EditBibleStudy(id) {
     });
 }
 
+function AddMedia() {
+    debugger
+
+    var data = {};
+    data.MediaTitle = $('#mediaTitle').val();
+    data.Sermons = $('#mediasermon').val();
+    data.Video = $('#mediaVideo').val();
+    data.WorshipMusic = $('#mediamusic').val();
+    var base64 = document.getElementById("mediaImage").files;
+
+    if (data.MediaTitle != "") {
+        debugger
+        if (base64[0] != null) {
+            const reader = new FileReader();
+            reader.readAsDataURL(base64[0]);
+            reader.onload = function () {
+                base64 = reader.result;
+                let mediaDetails = JSON.stringify(data);
+                $.ajax({
+                    type: 'Post',
+                    url: '/Admin/CreateMedia',
+                    dataType: 'json',
+                    data:
+                    {
+                        mediaDetails: mediaDetails,
+                        base64: base64
+                    },
+                    success: function (result) {
+                        if (!result.isError) {
+                            debugger;
+                            var url = '/Admin/MediaGallery';
+                            successAlertWithRedirect(result.msg, url);
+                        }
+                        else {
+                            errorAlert(result.msg);
+                        }
+                    },
+                    error: function (ex) {
+                        errorAlert("Please check and try again. Contact Admin if issue persists..");
+                    }
+                });
+            }
+        } else {
+            errorAlert("Please fill the form Correctly");
+        }
+
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+}
+
+function DeleteMedia() {
+    var id = $('#media_Id').val(); 
+    $.ajax({
+        type: 'Post',
+        dataType: 'Json',
+        url: '/Admin/DelMedia',
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (!result.isError) {
+                var url = '/Admin/MediaGallery'
+                successAlertWithRedirect(result.msg, url)
+            }
+            else {
+                errorAlert(result.msg)
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please check and try again. Please contact admin if issue persists..");
+        }
+    })
+}
+
+function MediaToDelete(id) {
+    debugger
+    $('#media_Id').val(id);
+/*    $('#delete_media').modal('show');*/
+}
 function SaveEditedBibleStudy() {
-   
+
     var data = {};
     data.id = $('#bible_Id').val();
     data.title = $('#edit_biblestudyTitle').val();
@@ -1063,7 +1131,7 @@ function SaveEditedBibleStudy() {
     //data.DurationFrom = $('#edit_dateFrom').val();
     //data.DurationTill = $('#edit_dateTill').val();
 
-    if (data.title != "" && data.details !=  "") {
+    if (data.title != "" && data.details != "") {
 
         let bibledetails = JSON.stringify(data);
         $.ajax({
