@@ -695,7 +695,6 @@ function viewIDImage(imageUrl) {
 function EventToDelete(id) {
    
     $('#event_Id').val(id);
-    $('#eventDeleteModal').modal('show');
 }
 
 function DeleteEvent() {
