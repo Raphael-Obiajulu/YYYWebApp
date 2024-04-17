@@ -27,7 +27,7 @@
     <section class="section" style="">
         <div class="row" style="margin-top:70px;">
             <div class="col-lg-14">
-                <div class="card">
+                <div class="">
                     @if (Model != null && Model.Count() > 0)
                     {
                         <div class="card-body">
@@ -52,7 +52,7 @@
                                                     View
                                                 </a>
                                                 <button class="btn btn-outline-success" data-toggle="modal" data-target="#discussionEditModal" onclick="EditDiscussion('@CreateDiscussion.Id')"> <i class="bi bi-pencil"></i> </button>
-                                                <button class="btn btn-outline-success" data-toggle="modal" data-target="#discussionDeleteModal" onclick="DiscussionToDelete('@CreateDiscussion.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-outline-success" onclick="DeleteDiscussion('@CreateDiscussion.Id')"><i class="bi bi-trash"></i></button>
 
                                             </td>
                                         </tr>
@@ -140,7 +140,7 @@
     </div>
 
 
-    <div class="modal fade" id="discussionDeleteModal" tabindex="-1">
+   @*  <div class="modal fade" id="discussionDeleteModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,6 +163,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
 </main>
 <!-- End #main -->

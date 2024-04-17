@@ -1,15 +1,14 @@
 ﻿@inject Logic.IHelpers.IUserHelper _userHelper;
 @model Core.ViewModels.DiscussionForumViewModel
 
-
 @{
     ViewData["Title"] = "Discussion";
     Layout = "~/Views/Shared/_LayoutTwo.cshtml";
 
     var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
-    var userLike = _userHelper.CheckUserLike(loggedInUser.Id);
+    var id = Model.SingleDiscussion.Id;
+    var userLike = _userHelper.CheckUserLike(loggedInUser.Id, id);
 }
-
 
     <section id="blog" class="blog">
         <div class="container" data-aos="fade-up" data-aos-delay="100">

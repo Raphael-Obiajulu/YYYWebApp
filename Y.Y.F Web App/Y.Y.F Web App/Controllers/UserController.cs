@@ -125,7 +125,7 @@ namespace Y.Y.F_Web_App.Controllers
                 var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
                 if (loggedInUser != null)
                 {
-                    var checkIfUserHasLikedBefore = _userHelper.CheckUserLike(loggedInUser.Id);
+                    var checkIfUserHasLikedBefore = _userHelper.CheckUserLike(loggedInUser.Id, id);
                     if (!checkIfUserHasLikedBefore)
                     {
                         var addLike = _userHelper.AddLike(id, loggedInUser);
@@ -194,7 +194,8 @@ namespace Y.Y.F_Web_App.Controllers
         [HttpGet]
         public IActionResult MediaGallery()
         {
-            return View();
+            var listofMedia = _userHelper.ListofMedia();
+            return View(listofMedia);
         }
 		public IActionResult Profile()
 		{
