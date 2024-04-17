@@ -32,7 +32,7 @@ namespace Logic.IHelpers
         int TotalLikes(int discussionId);
         DiscussionForumViewModel GetDiscussion(int discussionId);
         int TotalComments(int discussionId);
-        bool CheckUserLike(string userId);
+        bool CheckUserLike(string userId, int id);
         bool AddLike(int id, ApplicationUser loggedInUser);
         bool CheckRequestStatus(int requestId);
         PrayerRequestViewModel GetRequest(int id);
@@ -67,5 +67,8 @@ namespace Logic.IHelpers
         //bool BibleStudy(BibleStudyViewModel bibleStudy, ApplicationUser loggedInUser);
 
         bool DeleteBibleStudy(int id);
+        bool SaveMediaGallery(MediaGalleryViewModel mediaDetails, string base64, string userId);
+        bool DeleteMediaGallery(int id);
+        List<MediaGalleryViewModel> ListofMedia();
     }
 }

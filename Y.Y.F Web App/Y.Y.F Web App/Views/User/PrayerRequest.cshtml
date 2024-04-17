@@ -67,7 +67,7 @@
                                             </td>
                                             <td class="d-flex">
                                                 <button class="btn btn-outline-success mr-1" data-toggle="modal" data-target="#editprayerRequestModal" onclick="EditPrayerRequest('@prayerRequest?.Id')"><i class="bi bi-pencil"></i></button>
-                                                <button class="btn btn-outline-success ml-1" data-toggle="modal" data-target="#userPrayerDeleteModal" onclick="DeletePrayer('@prayerRequest?.Id')"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-outline-success ml-1" onclick="DeletePrayerRequest('@prayerRequest?.Id')"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     }
@@ -147,14 +147,14 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+                @* <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button> *@
                 <button type="button" class="btn btn-outline-success" onclick="SaveEditedPrayerRequest()">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="userPrayerDeleteModal" tabindex="-1">
+@* <div class="modal fade" id="userPrayerDeleteModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -179,5 +179,5 @@
 
         </div>
     </div>
-</div>
+</div> *@
 

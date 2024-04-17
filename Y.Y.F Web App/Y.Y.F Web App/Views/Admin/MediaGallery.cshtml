@@ -1,187 +1,154 @@
-﻿@* @model IEnumerable<Core.ViewModels.MediaGalleryViewModel> *@
+﻿@model IEnumerable<Core.ViewModels.MediaGalleryViewModel>
 @{
     ViewData["Title"] = "MediaGallery";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
 }
 
 
-
 <main id="main" class="main">
-
     <div class="pagetitle">
-        <h1>MediaGallery</h1>
+        <h1>Media Gallery</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Home</a></li>
                 <li class="breadcrumb-item active">Media Gallery</li>
+
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
-    <div style="float: right">
+    <div class="mb-5" style="float: right">
         @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#profileModal">Add Media Gallery</button>
+        <button type="button" class="btn btn-outline-success mb-5" data-toggle="modal" data-target="#MediaModal">Add Media Image</button>
     </div>
 
-
-    <section class="section" style="">
-        <div class="row" style="margin-top:70px;">
-            <div class="col-lg-14">
-                <div class="card">
-                    @if (Model != null && Model.Count() > 0)
+    <div class="container mt-10">
+        <div class="container mt-5">
+            <div class="row mt-5">
+                @if (Model != null && Model?.Count() > 0)
+                {
+                    <h3 class="font-weight-bold lead"> Media Images </h3>
+                    @foreach (var images in Model)
                     {
-                        <div class="card-body">
-                            <table class="table table-striped table-borderless datatable">
-                                <thead>
-                                    <tr>
-                                        <th>S/NO</th>
-                                        <th>MediaTitle</th>
-                                        <th>MediaDate</th>
-                                        <th>MediaTime</th>
-                                        <th>MediaDescription</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var mediaGallery in Model)
-                                    {
-                                        <tr>
-                                            <td>@mediaGallery.Id</td>
-                                            <td>@mediaGallery.Title</td>
-                                            <td>@mediaGallery.Description</td>
-                                            <td>@mediaGallery?.ImageUrl</td>
-                                            @* <td>@upComingvents.EventDetails</td> *@
-                                            <td>
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#MediaGallery" onclick="getmediaGallery('@mediaGallery.Id')">Description</button>
-                                            </td>
-                                            @*   <td>@upComingvents?.EventImage</td> *@
-                                            <td>
-                                                <button class="btn btn-outline-success" onclick="EditMedia('@mediaGallery.Id')"> <i class="bi bi-pencil"></i> </button>
-                                                <button class="btn btn-outline-success" onclick="DeleteMedia('@mediaGallery.Id')"><i class="bi bi-trash"></i></button>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card" style="width:100%">
+                                <img class="card-img-top" src="@images?.MediaImage" alt="Card image" style="width:100%">
 
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    }
-                    else
-                    {
-                        <p>NO DATA FOUND</p>
-                    }
-                </div>
-
-            </div>
-        </div>
-
-        <!-- -- The Modal -->
-        <div class="modal fade" id="profileModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header text-center bg-success text-white">
-                        <h5 class="modal-title" id="profileModalLabel">Add Media Gallery</h5>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputName">Media Title</label>
-                                    <input type="text" class="form-control" id="mediaTitle" placeholder="Enter Media Title">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail">Media Date</label>
-                                    <input type="date" class="form-control" id="mediaDate" placeholder="Enter  Media Date">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPhone">Media Time</label>
-                                    <input type="text" class="form-control" id="mediaTime" placeholder="Enter  Media Time">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputBio">Media Description</label>
-                                    <input type="text" class="form-control" id="mediaDescription" placeholder="Enter Media Description">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputBio">ImageUrl</label>
-                                    <input type="file" class="form-control" id="ImageUrl" placeholder="Enter ImageUrl">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success offset-4" onclick="CreateMediaGallery()">Submit</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="modal fade" id="MediaGallery">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header text-center bg-success text-white">
-                    <h5 class="modal-title"> Media Description</h5>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-
-                                <div class="form-group">
-                                    @*  <label for="inputBio">Event Details</label> *@
-                                    <textarea cols="5" rows="5" type="text" class="form-control" id="mediaGal" disabled> </textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Delete Modal -->
-
-                <div class="modal fade" id="delete_subject" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"> <b> Delete Subject </b> </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-center">Are you sure you want to delete?</p>
-                                <div class="modal-btn delete-action">
-                                    <div class="row m-auto">
-                                        <input class="form-control" hidden type="text" id="subject_id">
-                                        <div class="col-6">
-                                            <a class="btn btn-outline-success rounded-pill p-2 d-block" id="deleteSubject" onclick="DeleteSubject()">Delete</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
-                                        </div>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">@images?.MediaTitle</h4>
+                                    <div class="mt-0">
+                                        @*  <a href="#" class="btn btn-primary btn-sm" title="Edit Media"><i class="bi bi-pencil"></i></a> *@
+                                        <a class="btn btn-danger btn-lg" title="Delete Media" data-toggle="modal" 
+                                            data-target="#delete_media" onclick="MediaToDelete('@images?.Id')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- /Delete Modal -->
+                    }
+                }
             </div>
         </div>
     </div>
 
+   @*  <div class="container mt-10">
+        <div class="container mt-5">
+            <div class="row">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <h3 class="font-weight-bold lead"> Media Videos </h3>
+                    @foreach (var videos in Model)
+                    {
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card" style="width:100%">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="@videos?.Video"></iframe>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">@videos?.MediaTitle</h4>
+                                    <div class="mt-0">
+                                         <a href="#" class="btn btn-primary btn-sm" title="Edit Media"><i class="bi bi-pencil"></i></a> 
+                                        <a class="btn btn-danger btn-lg" title="Delete Media" data-toggle="modal"
+                                            data-target="#delete_media" onclick="MediaToDelete('@videos?.Id')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div> *@
+
 </main>
 <!-- End #main -->
+
+<div class="modal fade" id="MediaModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header text-center bg-success text-white">
+                <h5 class="modal-title" id="profileModalLabel">Add Media Image </h5>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inputName">Media Title</label>
+                            <input type="text" class="form-control" id="mediaTitle" placeholder="Enter Media Title">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inputBio">Media Image </label>
+                            <input type="file" class="form-control" id="mediaImage" placeholder="Choose image">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success offset-4" onclick="AddMedia()"> Add Media </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+
+<div class="modal fade" id="delete_media" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> <b> Delete Media </b> </h5>
+               @*  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to delete?</p>
+                <div class="modal-btn delete-action">
+                    <div class="row m-auto">
+                        <input class="form-control" hidden type="text" id="media_Id">
+                        <div class="col-6">
+                            <a class="btn btn-outline-success rounded-pill p-2 d-block" onclick="DeleteMedia()">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a data-dismiss="modal" class="btn btn-outline-success rounded-pill p-2 d-block">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Delete Modal -->

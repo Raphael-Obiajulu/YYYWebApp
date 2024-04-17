@@ -63,7 +63,14 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <button class="btn btn-outline-success" onclick="Deactivate('@user.Id')"> Deactivate</button>
+                                                @if (user.Deactivated == true)
+                                                {
+                                                    <button class="btn btn-danger"> Deactivated</button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-outline-success" onclick="Deactivate('@user.Id')"> Deactivate</button>
+                                                }
                                             </td>
                                         </tr>
                                     }
@@ -93,7 +100,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 m-auto">
-                        <img src="" height="100%" width="100%" class="rounded" alt="img" id="ImageId">
+                        <img src="" width="100%" class="rounded" alt="img" id="ImageId">
                     </div>
                 </div>
             </div>
