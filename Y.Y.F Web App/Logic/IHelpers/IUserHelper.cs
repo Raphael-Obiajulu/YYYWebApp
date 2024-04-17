@@ -67,5 +67,9 @@ namespace Logic.IHelpers
         //bool BibleStudy(BibleStudyViewModel bibleStudy, ApplicationUser loggedInUser);
 
         bool DeleteBibleStudy(int id);
+
+        BibleStudyViewModel Getbiblestudy(int id);
+
+        bool SaveEditedBibleStudy(BibleStudyViewModel biblestudy, ApplicationUser loggedInUser);
     }
 }
