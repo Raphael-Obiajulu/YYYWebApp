@@ -414,6 +414,37 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = " Media not found" });
         }
 
+        public JsonResult GetBibleToEdit(int id)
+        {
+            if (id > 0)
+            {
+                var getbiblestudy = _userHelper.Getbiblestudy(id);
+                if (getbiblestudy != null)
+                {
+                    return Json(getbiblestudy);
+                }
+                return Json(new { isError = true, msg = " Could not get Annoucement" });
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
 
+        public JsonResult SaveEditedBibleStudy(string details)
+        {
+            if (details != null)
+            {
+                var loggedInUser = _userHelper.FindByUserNameAsync(User.Identity.Name).Result;
+                var bibleStudyDetails = JsonConvert.DeserializeObject<BibleStudyViewModel>(details);
+                if (bibleStudyDetails != null)
+                {
+                    var biblestudy = _userHelper.SaveEditedBibleStudy(bibleStudyDetails, loggedInUser);
+                    if (biblestudy)
+                    {
+                        return Json(new { isError = false, msg = "BibleStudy Edited successfully" });
+                    }
+                    return Json(new { isError = true, msg = "Unable to Edit " });
+                }
+            }
+            return Json(new { isError = true, msg = "Network Failure" });
+        }
     }
 }

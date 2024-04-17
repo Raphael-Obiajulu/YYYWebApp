@@ -1010,7 +1010,7 @@ function addBibleStudy() {
 
 function DeleteBibleStudy(id) {
     $('#bible_Id').val(id);
-    $('#biblestudyToDelete').modal('show');
+   
 }
 
 function EditBibleStudy(id) {
@@ -1121,4 +1121,71 @@ function MediaToDelete(id) {
     debugger
     $('#media_Id').val(id);
 /*    $('#delete_media').modal('show');*/
+}
+function SaveEditedBibleStudy() {
+
+    var data = {};
+    data.id = $('#bible_Id').val();
+    data.title = $('#edit_biblestudyTitle').val();
+    data.details = $('#edit_biblestudyDetails').val();
+    //data.DurationFrom = $('#edit_dateFrom').val();
+    //data.DurationTill = $('#edit_dateTill').val();
+
+    if (data.title != "" && data.details != "") {
+
+        let bibledetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/SaveEditedBibleStudy',
+            dataType: 'json',
+            data:
+            {
+                details: bibledetails,
+
+            },
+            success: function (result) {
+                debugger
+                if (!result.isError) {
+                    var url = '/Admin/AddBibleStudy';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+
+}
+
+function DeleteBible() {
+
+    var id = $('#bible_Id').val();
+    $.ajax({
+        type: 'Post',
+        dataType: 'Json',
+        url: '/Admin/DeleteBibleStudy',
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (!result.isError) {
+                debugger
+                var url = '/Admin/AddBibleStudy '
+                successAlertWithRedirect(result.msg, url)
+            }
+            else {
+                errorAlert(result.msg)
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please check and try again. Please contact admin if issue persists..");
+        }
+    })
 }

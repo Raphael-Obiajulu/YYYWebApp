@@ -926,7 +926,40 @@ namespace Logic.Helpers
 
             return mediaViewModel;
         }
+        public BibleStudyViewModel Getbiblestudy(int id)
+        {
+            var bibleStudyViewModel = new BibleStudyViewModel();
+            bibleStudyViewModel = _context.BibleStudies.Where(a => a.Id == id && a.Active && !a.Deleted)
+        .Select(a => new BibleStudyViewModel()
+        {
+            Title = a.Title,
+            Details = a.Details,
+            Id = a.Id,
+            DateCreated = a.DateCreated,
+        }).FirstOrDefault();
 
+            return bibleStudyViewModel;
+        }
+
+        public bool SaveEditedBibleStudy(BibleStudyViewModel biblestudy, ApplicationUser loggedInUser)
+        {
+            if (biblestudy != null)
+            {
+                var biblestudyTOEdit = _context.BibleStudies.Where(x => x.Id == biblestudy.Id && x.Active && !x.Deleted).FirstOrDefault();
+                if (biblestudyTOEdit != null)
+                {
+                    biblestudyTOEdit.Id = biblestudy.Id;
+                    biblestudyTOEdit.Title = biblestudy?.Title;
+                    biblestudyTOEdit.Details = biblestudy.Details;
+
+                    _context.Update(biblestudyTOEdit);
+                    _context.SaveChanges();
+                    return true;
+                }
+
+            }
+            return false;
+        }
 
     }
 }
