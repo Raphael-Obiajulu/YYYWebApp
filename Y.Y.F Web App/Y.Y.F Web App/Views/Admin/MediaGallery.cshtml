@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.ViewModels.MediaGalleryViewModel>
+﻿@model Core.ViewModels.MediaGalleryViewModel
 @{
     ViewData["Title"] = "MediaGallery";
     Layout = "~/Views/Shared/_AdminDashboardLayout.cshtml";
@@ -17,18 +17,19 @@
         </nav>
     </div><!-- End Page Title -->
 
-    <div class="mb-5" style="float: right">
-        @*  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">Add Event</button> *@
-        <button type="button" class="btn btn-outline-success mb-5" data-toggle="modal" data-target="#MediaModal">Add Media Image</button>
+    <div class="mb-5 d-flex" style="float: right">
+        <button type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#MediaModal">Add Media Image</button>
+        @* <button type="button" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#MediaVideoModal">Add Media Video</button> *@
     </div>
 
+    <br /><br />
     <div class="container mt-10">
         <div class="container mt-5">
             <div class="row mt-5">
-                @if (Model != null && Model?.Count() > 0)
+                @if (Model?.AllMedia != null && Model?.AllMedia.Count() > 0)
                 {
-                    <h3 class="font-weight-bold lead"> Media Images </h3>
-                    @foreach (var images in Model)
+                    <h3 class="font-weight-bold lead mb-4"> Media Images </h3>
+                    @foreach (var images in Model.AllMedia)
                     {
                         <div class="col-lg-6 col-sm-12">
                             <div class="card" style="width:100%">
@@ -55,20 +56,55 @@
    @*  <div class="container mt-10">
         <div class="container mt-5">
             <div class="row">
-                @if (Model != null && Model.Count() > 0)
+                @if (Model?.MediaVideos != null && Model?.MediaVideos.Count() > 0)
                 {
-                    <h3 class="font-weight-bold lead"> Media Videos </h3>
-                    @foreach (var videos in Model)
+                    <h3 class="font-weight-bold lead mb-4"> Media Videos </h3>
+                    @foreach (var video in Model.MediaVideos)
                     {
                         <div class="col-lg-6 col-sm-12">
                             <div class="card" style="width:100%">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="@videos?.Video"></iframe>
-                                </div>
+                                <video width="100%" height="240" controls>
+                                    <source src="@video.MediaVideo" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 <div class="card-body text-center">
-                                    <h4 class="card-title">@videos?.MediaTitle</h4>
+                                    <h4 class="card-title">@video.VideoTitle</h4>
                                     <div class="mt-0">
-                                         <a href="#" class="btn btn-primary btn-sm" title="Edit Media"><i class="bi bi-pencil"></i></a> 
+                                        <a class="btn btn-danger btn-lg" title="Delete Media" data-toggle="modal"
+                                           data-target="#delete_media" onclick="MediaToDelete('@video.Id')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div> *@
+
+
+   @*  <div class="container mt-10">
+        <div class="container mt-5">
+            <div class="row">
+                @if (Model?.MediaVideos != null && Model?.MediaVideos.Count() > 0)
+                {
+                    <h3 class="font-weight-bold lead mb-4"> Media Videos </h3>
+                    @foreach (var videos in Model?.MediaVideos)
+                    {
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card" style="width:100%">
+                                @* <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="@videos?.MediaVideo"></iframe>
+                                </div> 
+                                <video width="100%" height="240" controls>
+                                    <iframe class="embed-responsive-item" src="@videos?.MediaVideo"></iframe>
+                                    @* <source src="@videos?.MediaVideo" type="video/mp4"> 
+                                </video>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">@videos?.VideoTitle</h4>
+                                    <div class="mt-0">
                                         <a class="btn btn-danger btn-lg" title="Delete Media" data-toggle="modal"
                                             data-target="#delete_media" onclick="MediaToDelete('@videos?.Id')">
                                             <i class="bi bi-trash"></i>
@@ -83,7 +119,7 @@
                 }
             </div>
         </div>
-    </div> *@
+    </div>  *@
 
 </main>
 <!-- End #main -->
@@ -123,6 +159,43 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="MediaVideoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header text-center bg-success text-white">
+                <h5 class="modal-title" id="">Add Media Video </h5>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inputName">Video Title</label>
+                            <input type="text" class="form-control" id="mediaVidTitle" placeholder="Enter Video Title">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inputBio">Media Video Url </label>
+                            <input type="url" class="form-control" id="mediaVid" placeholder="Enter video URL">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success offset-4" onclick="AddMediaVideo()"> Add Media Video </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Delete Modal -->
 

@@ -37,7 +37,7 @@
     <section class="section" style="">
         <div class="row" style="margin-top:70px;">
             <div class="col-lg-14">
-                <div class="card">
+                <div class="">
                     @if (Model != null && Model.Count() > 0)
                     {
                         <div class="card-body">
@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>@AddBibleStudy.Id</td>
                                             <td>@AddBibleStudy.Title</td>
-                                            <td>@AddBibleStudy.Details</td>
+                                            <td>@AddBibleStudy.Details.Substring(1, 20)</td>
                                             <td>
                                                 <a class="btn btn-success" asp-controller="User" asp-action="BibleStudy">
                                                     View Full Study
@@ -130,11 +130,11 @@
                             <input class="form-control" hidden type="text" id="bible_Id">
                             <div class="form-group">
                                 <label for="inputName">BibleStudy Title</label>
-                                <input type="text" class="form-control" id="edit_biblestudyTitle" placeholder="Enter Biblestudy Title">
+                                <input type="text" class="form-control" id="edit_biblestudyTitle">
                             </div>
                             <div class="form-group">
                                 <label for="inputBio">BibleStudy Details</label>
-                                <input type="text" class="form-control" id="edit_biblestudyDetails" placeholder="Enter Biblestudy Full Details">
+                                <input type="text" class="form-control" id="edit_biblestudyDetails">
                             </div>
                         </div>
 

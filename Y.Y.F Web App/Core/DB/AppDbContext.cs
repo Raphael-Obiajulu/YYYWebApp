@@ -25,5 +25,6 @@ namespace Core.DB
         public DbSet<PrayerRequest> PrayerRequests { get; set; }
         public DbSet<UpComingEvents> UpComingEvents { get; set; }
         public DbSet<MediaGallery> MediaGalleries { get; set; }
+        public DbSet<Video> Videos { get; set; }
     }
 }

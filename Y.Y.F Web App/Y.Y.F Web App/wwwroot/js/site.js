@@ -1014,7 +1014,6 @@ function DeleteBibleStudy(id) {
 }
 
 function EditBibleStudy(id) {
-    debugger
     $.ajax({
         type: 'Get',
         url: '/Admin/GetBibleToEdit',
@@ -1025,10 +1024,9 @@ function EditBibleStudy(id) {
         },
         success: function (result) {
             if (!result.isError) {
-                debugger
                 $("#bible_Id").val(result.id);
-                $("#edit_biblestudyTitle").val(result.biblestudyTitle);
-                $("#edit_biblestudyDetails").val(result.biblestudyDetails);
+                $("#edit_biblestudyTitle").val(result.title);
+                $("#edit_biblestudyDetails").val(result.details);
                 $("#biblestudyEditModal").modal("show");
             }
             else {
@@ -1042,8 +1040,6 @@ function EditBibleStudy(id) {
 }
 
 function AddMedia() {
-    debugger
-
     var data = {};
     data.MediaTitle = $('#mediaTitle').val();
     data.Sermons = $('#mediasermon').val();
@@ -1093,6 +1089,43 @@ function AddMedia() {
     }
 }
 
+function AddMediaVideo() {
+    debugger
+    var data = {};
+    data.VideoTitle = $('#mediaVidTitle').val();
+    data.MediaVideo = $('#mediaVid').val();
+
+    if (data.MediaVideo != "" && data.VideoTitle != "") {
+        let videoDetails = JSON.stringify(data);
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/CreateVideo',
+            dataType: 'json',
+            data:
+            {
+                videoDetails: videoDetails,
+            },
+            success: function (result) {
+                if (!result.isError) {
+                    debugger;
+                    var url = '/Admin/MediaGallery';
+                    successAlertWithRedirect(result.msg, url);
+                }
+                else {
+                    errorAlert(result.msg);
+                }
+            },
+            error: function (ex) {
+                errorAlert("Please check and try again. Contact Admin if issue persists..");
+            }
+        });
+
+    }
+    else {
+        errorAlert("Please fill the form Correctly");
+    }
+}
+
 function DeleteMedia() {
     var id = $('#media_Id').val(); 
     $.ajax({
@@ -1118,20 +1151,16 @@ function DeleteMedia() {
 }
 
 function MediaToDelete(id) {
-    debugger
     $('#media_Id').val(id);
 /*    $('#delete_media').modal('show');*/
 }
 function SaveEditedBibleStudy() {
-
     var data = {};
-    data.id = $('#bible_Id').val();
-    data.title = $('#edit_biblestudyTitle').val();
-    data.details = $('#edit_biblestudyDetails').val();
-    //data.DurationFrom = $('#edit_dateFrom').val();
-    //data.DurationTill = $('#edit_dateTill').val();
+    data.Id = $('#bible_Id').val();
+    data.Title = $('#edit_biblestudyTitle').val();
+    data.Details = $('#edit_biblestudyDetails').val();
 
-    if (data.title != "" && data.details != "") {
+    if (data.Title != "" && data.Details != "") {
 
         let bibledetails = JSON.stringify(data);
         $.ajax({
@@ -1141,10 +1170,8 @@ function SaveEditedBibleStudy() {
             data:
             {
                 details: bibledetails,
-
             },
             success: function (result) {
-                debugger
                 if (!result.isError) {
                     var url = '/Admin/AddBibleStudy';
                     successAlertWithRedirect(result.msg, url);

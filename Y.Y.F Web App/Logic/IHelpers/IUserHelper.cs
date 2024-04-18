@@ -73,6 +73,7 @@ namespace Logic.IHelpers
         BibleStudyViewModel Getbiblestudy(int id);
 
         bool SaveEditedBibleStudy(BibleStudyViewModel biblestudy, ApplicationUser loggedInUser);
-
+        List<Video> ListofVideos();
+        bool SaveVideo(Video videoDetails);
     }
 }
