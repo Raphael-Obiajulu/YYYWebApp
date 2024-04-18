@@ -1014,7 +1014,6 @@ function DeleteBibleStudy(id) {
 }
 
 function EditBibleStudy(id) {
-    debugger
     $.ajax({
         type: 'Get',
         url: '/Admin/GetBibleToEdit',
@@ -1025,10 +1024,9 @@ function EditBibleStudy(id) {
         },
         success: function (result) {
             if (!result.isError) {
-                debugger
                 $("#bible_Id").val(result.id);
-                $("#edit_biblestudyTitle").val(result.biblestudyTitle);
-                $("#edit_biblestudyDetails").val(result.biblestudyDetails);
+                $("#edit_biblestudyTitle").val(result.title);
+                $("#edit_biblestudyDetails").val(result.details);
                 $("#biblestudyEditModal").modal("show");
             }
             else {
@@ -1157,15 +1155,12 @@ function MediaToDelete(id) {
 /*    $('#delete_media').modal('show');*/
 }
 function SaveEditedBibleStudy() {
-
     var data = {};
-    data.id = $('#bible_Id').val();
-    data.title = $('#edit_biblestudyTitle').val();
-    data.details = $('#edit_biblestudyDetails').val();
-    //data.DurationFrom = $('#edit_dateFrom').val();
-    //data.DurationTill = $('#edit_dateTill').val();
+    data.Id = $('#bible_Id').val();
+    data.Title = $('#edit_biblestudyTitle').val();
+    data.Details = $('#edit_biblestudyDetails').val();
 
-    if (data.title != "" && data.details != "") {
+    if (data.Title != "" && data.Details != "") {
 
         let bibledetails = JSON.stringify(data);
         $.ajax({
@@ -1175,10 +1170,8 @@ function SaveEditedBibleStudy() {
             data:
             {
                 details: bibledetails,
-
             },
             success: function (result) {
-                debugger
                 if (!result.isError) {
                     var url = '/Admin/AddBibleStudy';
                     successAlertWithRedirect(result.msg, url);

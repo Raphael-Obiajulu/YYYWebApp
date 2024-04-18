@@ -948,7 +948,6 @@ namespace Logic.Helpers
                 var biblestudyTOEdit = _context.BibleStudies.Where(x => x.Id == biblestudy.Id && x.Active && !x.Deleted).FirstOrDefault();
                 if (biblestudyTOEdit != null)
                 {
-                    biblestudyTOEdit.Id = biblestudy.Id;
                     biblestudyTOEdit.Title = biblestudy?.Title;
                     biblestudyTOEdit.Details = biblestudy.Details;
 

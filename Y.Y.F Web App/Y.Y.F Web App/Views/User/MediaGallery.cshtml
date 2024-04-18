@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.ViewModels.MediaGalleryViewModel>
+﻿@model Core.ViewModels.MediaGalleryViewModel
 @{
     ViewData["Title"] = "MediaGallery";
     Layout = "~/Views/Shared/_UserDashboardLayout.cshtml";
@@ -25,10 +25,10 @@
     <div class="container mt-10">
         <div class="container mt-5">
             <div class="row mt-5">
-                @if (Model != null && Model?.Count() > 0)
+                @if (Model?.AllMedia != null && Model?.AllMedia?.Count() > 0)
                 {
                     <h3 class="font-weight-bold lead"> Media Images </h3>
-                    @foreach (var images in Model)
+                    @foreach (var images in Model?.AllMedia)
                     {
                         <div class="col-lg-6 col-sm-12">
                             <div class="card" style="width:100%">

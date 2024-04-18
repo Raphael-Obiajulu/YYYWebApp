@@ -195,7 +195,13 @@ namespace Y.Y.F_Web_App.Controllers
         public IActionResult MediaGallery()
         {
             var listofMedia = _userHelper.ListofMedia();
-            return View(listofMedia);
+            var listOfVideos = _userHelper.ListofVideos();
+            var model = new MediaGalleryViewModel()
+            {
+                MediaVideos = listOfVideos,
+                AllMedia = listofMedia,
+            };
+            return View(model);
         }
 		public IActionResult Profile()
 		{
