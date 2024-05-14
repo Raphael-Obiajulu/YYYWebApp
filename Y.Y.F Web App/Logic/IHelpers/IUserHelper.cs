@@ -46,6 +46,8 @@ namespace Logic.IHelpers
         int GetTotalDiscussions();
         List<ApplicationUserViewModel> ListofUsers();
         bool DeactivateUser(string userId);
+
+        bool ReactivateUser(string userId);
         ApplicationUserViewModel GetUserDetails(string userId);
         bool SaveEditedProfile(ApplicationUserViewModel profileDetails, string base64);
         bool AddAnnouncements(AnnouncementViewModel announcenent, ApplicationUser loggedInUser);

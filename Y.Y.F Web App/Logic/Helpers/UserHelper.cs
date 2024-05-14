@@ -234,7 +234,7 @@ namespace Logic.Helpers
             if (loggedInUser != null)
             {
                 var prayerRequestViewModel = new List<PrayerRequestViewModel>();
-                prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted && a.UserId == loggedInUser)
+                prayerRequestViewModel = _context.PrayerRequests.Where(a => a.Id > 0 && a.Active && !a.Deleted)
                     .Include(x => x.User)
                 .Select(a => new PrayerRequestViewModel()
                 {
@@ -572,6 +572,19 @@ namespace Logic.Helpers
             {
                 userToDeactivate.Deactivated = true;
                 _context.Update(userToDeactivate);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool ReactivateUser(string userId)
+        {
+            var userToReactivate = _context.ApplicationUsers.Where(a => a.Id == userId && a.UserName != null && a.Deactivated).FirstOrDefault();
+            if (userToReactivate != null)
+            {
+                userToReactivate.Deactivated = false;
+                _context.Update(userToReactivate);
                 _context.SaveChanges();
                 return true;
             }
