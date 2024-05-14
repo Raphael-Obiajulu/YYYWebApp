@@ -569,6 +569,31 @@ function Deactivate(id) {
     });
 }
 
+function Reactivate(id) {
+    $.ajax({
+        type: 'Post',
+        url: '/Admin/ReactivateUser',
+        dataType: 'json',
+        data:
+        {
+            userId: id,
+        },
+        success: function (result) {
+            if (!result.isError) {
+                var url = '/Admin/AllUsers';
+                successAlertWithRedirect(result.msg, url);
+            }
+            else {
+                errorAlert(result.msg);
+            }
+        },
+        error: function (ex) {
+            errorAlert("An error occured, please try again.");
+        }
+    });
+}
+
+
 function EditProfileDetails() {
     var data = {};
     data.Id = $('#userId').val();
@@ -1040,6 +1065,7 @@ function EditBibleStudy(id) {
 }
 
 function AddMedia() {
+    debugger;
     var data = {};
     data.MediaTitle = $('#mediaTitle').val();
     data.Sermons = $('#mediasermon').val();
@@ -1090,6 +1116,7 @@ function AddMedia() {
 }
 
 function AddMediaVideo() {
+    debugger;
     debugger
     var data = {};
     data.VideoTitle = $('#mediaVidTitle').val();

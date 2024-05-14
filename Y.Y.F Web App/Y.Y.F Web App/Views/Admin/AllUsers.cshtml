@@ -65,7 +65,8 @@
                                             <td>
                                                 @if (user.Deactivated == true)
                                                 {
-                                                    <button class="btn btn-danger"> Deactivated</button>
+                                                    <button class="btn btn-outline-primary" onclick="Reactivate('@user.Id')"> Reactivate</button>
+                                                   @*  <button class="btn btn-danger"> Deactivated</button> *@
                                                 }
                                                 else
                                                 {

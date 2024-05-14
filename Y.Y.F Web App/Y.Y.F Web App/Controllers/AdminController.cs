@@ -260,6 +260,19 @@ namespace Y.Y.F_Web_App.Controllers
             return Json(new { isError = true, msg = "Member not found" });
         }
 
+        public JsonResult ReactivateUser(string userId)
+        {
+            if (userId != null)
+            {
+                var reactivateUser = _userHelper.ReactivateUser(userId);
+                if (reactivateUser)
+                {
+                    return Json(new { isError = false, msg = "Member Reactivated" });
+                }
+            }
+            return Json(new { isError = true, msg = "Member not found" });
+        }
+
         public JsonResult DeleteEvent(int id)
         {
             if (id > 0)
